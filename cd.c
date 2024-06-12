@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:55:40 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/11 13:49:40 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:53:24 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	exec_cd(int fd, char **av, char **envp)
 	char	*new_cwd;
 	char	*env_pwd;
 	char	*old_pwd = NULL;
+	char	**new_envp;
+	char	**final_envp;
 
 	//getcwd, dar strjoin disso com o input do user
 	//com o chdir tentar alterar o diretorio atual, se der perfeito se nao dar uma mensagem de erro
@@ -46,6 +48,7 @@ void	exec_cd(int fd, char **av, char **envp)
 		tmp = ft_strjoin(cwd, "/");
 		new_cwd = ft_strjoin(tmp, av[1]);
 		free(tmp);
+		old_pwd = ft_strjoin("OLDPWD=", getcwd(NULL, 0));
 		if (chdir(new_cwd) == -1)
 		{
 			ft_putstr_fd("minishell: cd: ", fd);
@@ -59,7 +62,9 @@ void	exec_cd(int fd, char **av, char **envp)
 	//printf("%s\n", getcwd(NULL, 0));
 	cwd = getcwd(NULL, 0);
 	env_pwd = ft_strjoin("PWD=", cwd);
-	add_env_line(envp, env_pwd);
+	new_envp = add_env_line(envp, env_pwd);
+	final_envp = add_env_line(new_envp, old_pwd);
+	envp = final_envp;
 	//alterar o cwd no env para poder ser possivel executar pwd
 	//free(old_pwd);
 	//old_pwd = ft_strdup(env_pwd);

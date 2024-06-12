@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/11 13:03:48 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:25:48 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,21 @@ void	prompt(int ac, char **av, char **envp)
 	while (1)
 	{
 		new_ac = 0;
-		input = readline("Hellshell$ ");
+		input = readline("\x1b[38;5;91;1mHellshell> \x1b[0m");
 		new_av = ft_split(input, ' ');
 		free(input);
-		while (new_av[new_ac])
-			new_ac++;
-		decider(new_ac, new_av, envp);
-		new_ac = 0;
-		while (new_av[new_ac])
+		if (new_av && new_av[0])
 		{
-			free(new_av[new_ac]);
-			new_ac++;
+			while (new_av[new_ac])
+				new_ac++;
+			decider(new_ac, new_av, envp);
+			new_ac = 0;
+			while (new_av[new_ac])
+			{
+				free(new_av[new_ac]);
+				new_ac++;
+			}
+			free(new_av);
 		}
-		free(new_av);
 	}
 }
