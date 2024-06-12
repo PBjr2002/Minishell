@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/11 14:25:52 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:32:47 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,15 @@ typedef struct s_line
 	struct s_line	*next;
 	struct s_line	*prev;
 }				t_line;
+
+
+// 1- Reads command
+// 2- Tokenization
+// 3- Command Identification
+// 4- Command Expansion
+// 5- Quote Removal
+// 6- Redirections
+// 7- Command Execution
 
 /* ls -l | grep a > file
 
@@ -153,5 +162,9 @@ char	**env_to_print(char **envp);
 void	exec_export(int fd, char **av, char **envp);
 void	sort_env(char **new_env, int limit);
 void	print_export(int fd, char **sorted);
+
+//env.c
+void	exec_env(int fd, char **envp);
+void	exec_exit(int signal, char **av);
 
 #endif
