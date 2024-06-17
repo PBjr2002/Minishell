@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/12 13:32:47 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/06/17 16:24:23 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,52 @@
 
 typedef struct s_token
 {
+	char					*str;
+	int						index;
+	struct s_token			*next;
+}				t_token;
+
+typedef struct s_redirect
+{
+	char					*str;
+	int						index;
+	struct s_redirects		*next;
+}				t_redirect;
+
+typedef struct s_lexer
+{
+	char					*str;
+	int						index;
+	struct s_lexer			*next;
+}				t_lexer;
+
+typedef struct s_pipe
+{
+	char					*str;
+	int						index;
+	int						fd[2];
+	struct s_pipe			*next;
+}				t_pipe;
+
+typedef struct s_simple_cmd
+{
+	char					**str;
+	t_redirect				*redirects;
+	struct t_parser			*parser;
+	struct s_simple_cmd		*next;
+}				t_simple_cmd;
+
+typedef struct s_parser
+{
+	char					**env;
+	char					**export_env;
+	pid_t					pid;
+	t_pipe					*pipe;
+	t_simple_cmd			*simple_commands;
+}				t_parser;
+
+/* typedef struct s_token
+{
 	char			*str;
 	int				index;
 	struct s_token	*next;
@@ -57,7 +103,7 @@ typedef struct s_line
 	t_parser		*redirect;
 	struct s_line	*next;
 	struct s_line	*prev;
-}				t_line;
+}				t_line; */
 
 
 // 1- Reads command
@@ -67,45 +113,6 @@ typedef struct s_line
 // 5- Quote Removal
 // 6- Redirections
 // 7- Command Execution
-
-/* ls -l | grep a > file
-
-t_line0:
-cmd = ls -l;
-input = STDIN_FILENO
-output = pipe[1];
-n = 0;
-parser :
-	-redirect = NULL;
-	-n = 0;
-	-token :
-		-str = "|";
-		-n = 0;
-		-next = NULL;
-		-prev = NULL;
-	-next = NULL;
-	-prev = NULL;
-next = t_line1;
-prev = NULL;
-
-t_line1:
-cmd = grep a;
-input = pipe[0];
-output = file;
-n = 1;
-parser :
-	-redirect = file;
-	-n = 0;
-	-token :
-		-str = ">";
-		-n = 0;
-		-next = NULL;
-		-prev = NULL;
-	-next = NULL;
-	-prev = NULL;
-next = NULL;
-prev = t_line0; */
-
 
 /* 
 	Builtins:
@@ -136,26 +143,30 @@ prev = t_line0; */
 //main.c
 
 //prompt.c
-void	prompt(int ac, char **av, char **envp);
+void	prompt(int ac, char **av, t_parser *info);
 
 //builtins.c
-void	decider(int ac, char **av, char **envp);
+void	decider(int ac, char **av, t_parser *info);
 
 //builtins_helper.c
+int		ft_strlen2(char *str, int sep);
 int		search_env_line(char **envp, char *line_to_search);
 int		search_part_line(char **envp, char *line_to_search, size_t len);
 char	*return_env_line(char **envp, int index);
+char	*return_env_part_line(char **envp, int index);
 void	remove_env_line(char **envp, int index);
 char	**add_env_line(char **envp, char *info_to_add);
+char	**replace_env_line(char **envp, char *info_to_add);
+char	**copy_env(char **envp);
 
 //echo.c
 void	exec_echo(int fd, char **av);
 
 //cd.c
-void	exec_cd(int fd, char **av, char **envp);
+void	exec_cd(int fd, char **av, t_parser *info);
 
 //pwd.c
-void	exec_pwd(int fd, char **envp);
+void	exec_pwd(int fd);
 
 //export.c
 char	**env_to_print(char **envp);
@@ -164,7 +175,9 @@ void	sort_env(char **new_env, int limit);
 void	print_export(int fd, char **sorted);
 
 //env.c
-void	exec_env(int fd, char **envp);
+char	*check_path(char **paths, char **av);
+void	exec_env(int fd, t_parser *info);
 void	exec_exit(int signal, char **av);
+void	exec_other(int fd, char **av, t_parser *info);
 
 #endif
