@@ -12,10 +12,12 @@
 
 #include "minishell.h"
 
-t_token	*ft_token_new(char *str, int index)
+t_token	*ft_token_new(char *str)
 {
 	t_token	*new;
+	int index;
 
+	index = 0;
 	new = (t_token *)malloc(sizeof(t_token));
 	if (new == NULL)
 		return (NULL);
@@ -25,10 +27,12 @@ t_token	*ft_token_new(char *str, int index)
 	return (new);
 }
 
-t_redirect	*ft_redirect_new(char *str, int index)
+t_redirect	*ft_redirect_new(char *str)
 {
 	t_redirect	*new;
+	int index;
 
+	index = 0;
 	new = (t_redirect *)malloc(sizeof(t_redirect));
 	if (new == NULL)
 		return (NULL);
@@ -38,10 +42,12 @@ t_redirect	*ft_redirect_new(char *str, int index)
 	return (new);
 }
 
-t_lexer	*ft_lexer_new(char *str, int index, int argc)
+t_lexer	*ft_lexer_new(char *str, int argc)
 {
 	t_lexer	*new;
+	int index;
 
+	index = 0;
 	new = (t_lexer *)malloc((sizeof(t_lexer)) * argc);
 	if (new == NULL)
 		return (NULL);
@@ -51,20 +57,21 @@ t_lexer	*ft_lexer_new(char *str, int index, int argc)
 	return (new);
 }
 
-t_pipe	*ft_pipe_new(char *str, int index)
+t_pipe	*ft_pipe_new(char *str)
 {
 	t_pipe	*new;
+	int index;
 
+	index = 0;
 	new = (t_pipe *)malloc(sizeof(t_pipe));
 	if (new == NULL)
 		return (NULL);
-	new->str = str;
 	new->index = index;
 	new->next = NULL;
 	return (new);
 }
 
-t_simple_cmd	*ft_simple_cmd_new(char *str, int index)
+t_simple_cmd	*ft_simple_cmd_new(char *str)
 {
 	t_simple_cmd	*new;
 

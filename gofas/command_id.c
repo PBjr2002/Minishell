@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_test.c                                       :+:      :+:    :+:   */
+/*   command_id.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/05 18:10:52 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/06/17 17:18:34 by lmiguel-         ###   ########.fr       */
+/*   Created: 2024/06/17 15:47:28 by lmiguel-          #+#    #+#             */
+/*   Updated: 2024/06/17 15:49:13 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@ Parsing Rules:
 
 REMEMBER THIS ORDER:
 
-    1. Reads command x
-    2. Tokenization
+    1. Reads command
+    2. Tokenization x
     3. Command Identification
     4. Command Expansion
     5. Quote Removal
@@ -81,28 +81,4 @@ test2 would be created, but bash would return a
 
 #include "minishell.h"
 
-void	store_input(void)
-{
-	t_lexer		*lexer;
-	
-	while (1)
-	{
-		lexer->argc = 0;
-		lexer->input = readline("\x1b[38;5;91;1mHellshell> \x1b[0m");
-		lexer->argv = ft_split(lexer->input, ' ');
-		free(lexer->input);
-		if (lexer->argv && lexer->argv[0])
-		{
-			while (lexer->argv[lexer->argc])
-				lexer->argc++;
-			lexer->argc = 0;
-			while (lexer->argv[lexer->argc])
-			{
-				free(lexer->argv[lexer->argc]);
-				lexer->argc++;
-			}
-			free(lexer->argv);
-		}
-	}
-}
 
