@@ -6,20 +6,20 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:26:47 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/11 14:11:01 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/06/18 16:39:30 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec_export(int fd, char **av, char **envp)
+void	exec_export(int fd, char **av, t_parser *info)
 {
 	char	**sorted;
 	char	**new_env;
 
 	if (!av[1])
 	{
-		sorted = env_to_print(envp);
+		sorted = env_to_print(info->export_env);
 		if (!sorted)
 			return ;
 		print_export(fd, sorted);
@@ -28,8 +28,9 @@ void	exec_export(int fd, char **av, char **envp)
 	//corrigir o export=algo
 	else
 	{
-		new_env = add_env_line(envp, av[1]);
-		envp = new_env;
+		new_env = add_env_line(info->export_env, av[1]);
+		free(info->export_env);
+		info->export_env = new_env;
 		//sorted = env_to_print(new_env);
 		//if (!sorted)
 		//	return ;

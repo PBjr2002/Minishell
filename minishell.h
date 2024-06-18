@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/17 16:24:23 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/06/18 16:12:22 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_simple_cmd
 {
 	char					**str;
 	t_redirect				*redirects;
-	struct t_parser			*parser;
+	struct s_parser			*parser;
 	struct s_simple_cmd		*next;
 }				t_simple_cmd;
 
@@ -149,15 +149,21 @@ void	prompt(int ac, char **av, t_parser *info);
 void	decider(int ac, char **av, t_parser *info);
 
 //builtins_helper.c
+char	**copy_env(char **envp, int mode);
+char	**remove_env_line(char **envp, int index);
+char	**add_env_line(char **envp, char *info_to_add);
+char	**replace_line(char **envp, char *info_to_add);
+char	**replace_value(char **envp, int index, int value);
+
+//builtins_helper2.c
 int		ft_strlen2(char *str, int sep);
+int		return_value(char **envp, int index);
 int		search_env_line(char **envp, char *line_to_search);
 int		search_part_line(char **envp, char *line_to_search, size_t len);
+
+//builtins_helper3.c
 char	*return_env_line(char **envp, int index);
-char	*return_env_part_line(char **envp, int index);
-void	remove_env_line(char **envp, int index);
-char	**add_env_line(char **envp, char *info_to_add);
-char	**replace_env_line(char **envp, char *info_to_add);
-char	**copy_env(char **envp);
+char	*return_part_line(char **envp, int index, int mode);
 
 //echo.c
 void	exec_echo(int fd, char **av);
@@ -170,13 +176,14 @@ void	exec_pwd(int fd);
 
 //export.c
 char	**env_to_print(char **envp);
-void	exec_export(int fd, char **av, char **envp);
+void	exec_export(int fd, char **av, t_parser *info);
 void	sort_env(char **new_env, int limit);
 void	print_export(int fd, char **sorted);
 
 //env.c
 char	*check_path(char **paths, char **av);
 void	exec_env(int fd, t_parser *info);
+void	exec_unset(char **av, t_parser *info);
 void	exec_exit(int signal, char **av);
 void	exec_other(int fd, char **av, t_parser *info);
 

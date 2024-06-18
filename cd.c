@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:55:40 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/17 16:55:30 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/06/18 14:54:15 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,33 +18,37 @@ void	exec_cd(int fd, char **av, t_parser *info)
 	char	*tmp;
 	char	*new_cwd;
 	char	*env_pwd;
-	char	*old_pwd = NULL;
+	char	*old_pwd;
 	char	**new_envp;
-	char	**final_envp;
 
-	cwd = return_env_part_line(info->env, search_part_line(info->env, "PWD=", 4));
+	cwd = return_part_line(info->env, search_part_line(info->env, "PWD=", 4), 0);
 	if (!av[1])
 	{
-		new_cwd = return_env_part_line(info->env, search_part_line(info->env, "HOME=", 5));
-		tmp = return_env_part_line(info->env, search_part_line(info->env, "PWD=", 4));
+		new_cwd = return_part_line(info->env, search_part_line(info->env, "HOME=", 5), 0);
+		tmp = return_part_line(info->env, search_part_line(info->env, "PWD=", 4), 0);
 		old_pwd = ft_strjoin("OLDPWD=", tmp);
 		free(tmp);
 		chdir(new_cwd);
 	}
 	else if (ft_strcmp(av[1], "-") == 0)
 	{
-		new_cwd = return_env_part_line(info->env, search_part_line(info->env, "OLDPWD=", 7));
+		new_cwd = return_part_line(info->env, search_part_line(info->env, "OLDPWD=", 7), 0);
 		ft_putendl_fd(new_cwd, fd);
-		tmp = return_env_part_line(info->env, search_part_line(info->env, "PWD=", 4));
+		tmp = return_part_line(info->env, search_part_line(info->env, "PWD=", 4), 0);
 		old_pwd = ft_strjoin("OLDPWD=", tmp);
 		free(tmp);
 		chdir(new_cwd);
 	}
 	else
 	{
-		tmp = ft_strjoin(cwd, "/");
-		new_cwd = ft_strjoin(tmp, av[1]);
-		free(tmp);
+		if (ft_strlen(ft_strrchr(cwd, '/')) != 1)
+		{
+			tmp = ft_strjoin(cwd, "/");
+			new_cwd = ft_strjoin(tmp, av[1]);
+			free(tmp);
+		}
+		else
+			new_cwd = ft_strjoin(cwd, av[1]);
 		old_pwd = ft_strjoin("OLDPWD=", cwd);
 		if (chdir(av[1]) == -1)
 		{
@@ -57,10 +61,8 @@ void	exec_cd(int fd, char **av, t_parser *info)
 	}
 	free(cwd);
 	env_pwd = ft_strjoin("PWD=", new_cwd);
-	ft_putendl_fd(env_pwd, fd);
-	new_envp = replace_env_line(info->env, env_pwd);
-	ft_putendl_fd(old_pwd, fd);
-	final_envp = replace_env_line(new_envp, old_pwd);
+	new_envp = replace_line(info->env, env_pwd);
 	free(info->env);
-	info->env = copy_env(final_envp);
+	info->env = replace_line(new_envp, old_pwd);
+	free(new_envp);
 }

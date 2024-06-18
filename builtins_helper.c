@@ -6,59 +6,46 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:06:10 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/17 16:01:31 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:22:48 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	search_env_line(char **envp, char *line_to_search)
+char	**copy_env(char **envp, int mode)
 {
-	int	n;
-
-	n = 0;
-	while (envp && envp[n])
+	char	**new_env;
+	char	*lvl;
+	int		len;
+	int		l;
+	
+	len = 0;
+	lvl = return_part_line(envp, search_part_line(envp, "SHLVL=", 6), 0);
+	while (envp && envp[len])
+		len++;
+	new_env = malloc(sizeof(char *) * (len + 1));
+	len = 0;
+	while (envp && envp[len])
 	{
-		if (ft_strcmp(envp[n], line_to_search) == 0)
-			break ;
-		n++;
+		if (mode == 1 && !lvl)
+			new_env[len] = ft_strdup("SHLVL=1");
+		else if (mode == 1 && len == search_part_line(envp, "SHLVL=", 6))
+		{
+			l = ft_atoi(lvl);
+			l++;
+			free(lvl);
+			lvl = ft_itoa(l);
+			new_env[len] = ft_strjoin("SHLVL=", lvl);
+		}
+		else
+			new_env[len] = ft_strdup(envp[len]);
+		len++;
 	}
-	return (n);
+	new_env[len] = NULL;
+	return (new_env);
 }
 
-int	search_part_line(char **envp, char *line_to_search, size_t len)
-{
-	int	n;
-
-	n = 0;
-	while (envp && envp[n])
-	{
-		if (ft_strncmp(envp[n], line_to_search, len) == 0)
-			break ;
-		n++;
-	}
-	return (n);
-}
-
-char	*return_env_line(char **envp, int index)
-{
-	char	*line;
-	int		n;
-
-	n = 0;
-	while (envp && envp[n])
-	{
-		if (n == index)
-			break ;
-		n++;
-	}
-	line = ft_strdup(envp[n]);
-	if (!line)
-		return (NULL);
-	return (line);
-}
-
-void	remove_env_line(char **envp, int index)
+char	**remove_env_line(char **envp, int index)
 {
 	char	**tmp_env;
 	int		len;
@@ -70,7 +57,7 @@ void	remove_env_line(char **envp, int index)
 		len++;
 	tmp_env = malloc(sizeof(char *) * len);
 	if (!tmp_env)
-		return ;
+		return (NULL);
 	len = 0;
 	while (envp && envp[len])
 	{
@@ -78,44 +65,12 @@ void	remove_env_line(char **envp, int index)
 			len++;
 		tmp_env[n] = ft_strdup(envp[len]);
 		if (!tmp_env[n])
-			return ;
+			return (NULL);
 		n++;
 		len++;
 	}
 	tmp_env[n] = NULL;
-	free(envp);
-	envp = tmp_env;
-}
-
-char	*return_env_part_line(char **envp, int index)
-{
-	char	*line;
-	int		n;
-
-	line = NULL;
-	n = 0;
-	while (envp && envp[n])
-	{
-		if (n == index)
-			break ;
-		n++;
-	}
-	line = ft_substr(envp[n], ft_strlen2(envp[n], '=') + 1, ft_strlen(envp[n]) - ft_strlen2(envp[n], '='));
-	return (line);
-}
-
-int		ft_strlen2(char *str, int sep)
-{
-	int	n;
-
-	n = 0;
-	while (str && str[n])
-	{
-		if (str[n] == sep)
-			break ;
-		n++;
-	}
-	return (n);
+	return (tmp_env);
 }
 
 char	**add_env_line(char **envp, char *info_to_add)
@@ -148,7 +103,7 @@ char	**add_env_line(char **envp, char *info_to_add)
 	return (tmp_env);
 }
 
-char	**replace_env_line(char **envp, char *info_to_add)
+char	**replace_line(char **envp, char *info_to_add)
 {
 	char	**tmp_env;
 	int		len;
@@ -167,27 +122,45 @@ char	**replace_env_line(char **envp, char *info_to_add)
 			tmp_env[n] = ft_strdup(info_to_add);
 		else
 			tmp_env[n] = ft_strdup(envp[n]);
+		if (!tmp_env[n])
+			return (NULL);
 		n++;
 	}
 	tmp_env[n] = NULL;
 	return (tmp_env);
 }
 
-char	**copy_env(char **envp)
+char	**replace_value(char **envp, int index, int value)
 {
-	char	**new_env;
-	int		len;
-	
-	len = 0;
-	while (envp && envp[len])
-		len++;
-	new_env = malloc(sizeof(char *) * (len + 1));
-	len = 0;
-	while (envp && envp[len])
+	char	**tmp_env;
+	char	*nb;
+	char	*tmp;
+	int		n;
+
+	n = 0;
+	while (envp && envp[n])
+		n++;
+	tmp_env = malloc(sizeof(char *) * n + 1);
+	if (!tmp_env)
+		return (NULL);
+	nb = ft_itoa(value);
+	if (!nb)
+		return (NULL);
+	n = 0;
+	while (envp && envp[n])
 	{
-		new_env[len] = ft_strdup(envp[len]);
-		len++;
+		if (n == index)
+		{
+			tmp = return_part_line(envp, search_env_line(envp, tmp_env[n]), 1);
+			tmp_env[n] = ft_strjoin(tmp, nb);
+			free(tmp);
+		}
+		else
+			tmp_env[n] = ft_strdup(envp[n]);
+		if (!tmp_env[n])
+			return (NULL);
+		n++;
 	}
-	new_env[len] = NULL;
-	return (new_env);
+	tmp_env[n] = NULL;
+	return (tmp_env);
 }

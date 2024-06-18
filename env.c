@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:23:43 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/17 16:24:13 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:01:15 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,18 @@ void	exec_env(int fd, t_parser *info)
 	}
 }
 
+void	exec_unset(char **av, t_parser *info)
+{
+	char	**tmp_env;
+	
+	tmp_env = remove_env_line(info->env,
+				search_part_line(info->env, av[1], ft_strlen(av[1])));
+	free(info->env);
+	info->env = tmp_env;
+	free(info->export_env);
+	info->export_env = copy_env(info->env, 0);
+}
+
 void	exec_exit(int signal, char **av)
 {
 	(void) signal;
@@ -34,6 +46,7 @@ void	exec_exit(int signal, char **av)
 void	exec_other(int fd, char **av, t_parser *info)
 {
 	char	**paths;
+	char	**tmp;
 	char	*path;
 	int		i;
 	int		id;
@@ -55,11 +68,16 @@ void	exec_other(int fd, char **av, t_parser *info)
 		return ;
 	id = fork();
 	if (id == 0)
+	{
 		execve(path, av, info->env);
+		tmp = copy_env(info->env, 1);
+		free(info->env);
+		info->env = tmp;
+	}
 	else
 	{
 		wait(NULL);
-		free(path);
+		//free(path);
 	}
 }
 
@@ -76,9 +94,9 @@ char	*check_path(char **paths, char **av)
 		if (!tmp)
 			return (NULL);
 		path = ft_strjoin(tmp, av[0]);
+		free(tmp);
 		if (!path)
 			return (NULL);
-		free(tmp);
 		if (access(path, X_OK) == 0)
 			break ;
 		if (i == 0)
