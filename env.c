@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:23:43 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/18 17:01:15 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/06/21 17:10:26 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,58 +26,64 @@ void	exec_env(int fd, t_parser *info)
 
 void	exec_unset(char **av, t_parser *info)
 {
+	char	**tmp_export;
 	char	**tmp_env;
 	
 	tmp_env = remove_env_line(info->env,
 				search_part_line(info->env, av[1], ft_strlen(av[1])));
+	tmp_export = remove_env_line(info->export_env,
+				search_part_line(info->export_env, av[1], ft_strlen(av[1])));
 	free(info->env);
-	info->env = tmp_env;
 	free(info->export_env);
-	info->export_env = copy_env(info->env, 0);
+	info->env = tmp_env;
+	info->export_env = tmp_export;
 }
 
 void	exec_exit(int signal, char **av)
 {
 	(void) signal;
 	(void) av;
+	ft_putendl_fd("exit", 1);
 	exit(EXIT_SUCCESS);
 }
 
 void	exec_other(int fd, char **av, t_parser *info)
 {
 	char	**paths;
-	char	**tmp;
 	char	*path;
 	int		i;
 	int		id;
 
 	i = 0;
 	(void) fd;
-	while (info->env[i])
+	if (ft_strncmp("./", av[0], 2) == 0)
+		path = ft_substr(av[0], 2, ft_strlen(av[0]) - 2);
+	else
 	{
-		if (ft_strncmp(info->env[i], "PATH=", 5) == 0)
-			break ;
-		i++;
+		while (info->env[i])
+		{
+			if (ft_strncmp(info->env[i], "PATH=", 5) == 0)
+				break ;
+			i++;
+		}
+		paths = ft_split(info->env[i], ':');
+		if (!paths)
+			return ;
+		paths[0] = paths[0] + 5;
+		path = check_path(paths, av);
+		if (!path)
+			return ;
 	}
-	paths = ft_split(info->env[i], ':');
-	if (!paths)
-		return ;
-	paths[0] = paths[0] + 5;
-	path = check_path(paths, av);
-	if (!path)
-		return ;
 	id = fork();
 	if (id == 0)
 	{
-		execve(path, av, info->env);
-		tmp = copy_env(info->env, 1);
-		free(info->env);
-		info->env = tmp;
+		if (execve(path, av, info->env) == -1)
+			ft_putendl_fd("whoop", 1);
+		exit(EXIT_SUCCESS);
 	}
 	else
 	{
-		wait(NULL);
-		//free(path);
+		waitpid(-1, NULL, 0);
 	}
 }
 
@@ -104,6 +110,7 @@ char	*check_path(char **paths, char **av)
 		else
 			free(paths[i]);
 		free(path);
+		path = NULL;
 		i++;
 	}
 	while (paths && paths[i])

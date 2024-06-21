@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:55:40 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/18 14:54:15 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:47:57 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,38 @@ void	exec_cd(int fd, char **av, t_parser *info)
 	}
 	else
 	{
-		if (ft_strlen(ft_strrchr(cwd, '/')) != 1)
+		if (ft_strcmp(av[1], "..") == 0)
 		{
-			tmp = ft_strjoin(cwd, "/");
-			new_cwd = ft_strjoin(tmp, av[1]);
-			free(tmp);
+			old_pwd = ft_strjoin("OLDPWD=", cwd);
+			if (chdir(av[1]) == -1)
+			{
+				ft_putstr_fd("minishell: cd: ", fd);
+				ft_putstr_fd(av[1], fd);
+				ft_putstr_fd(": ", fd);
+				perror("");
+				return ;
+			}
+			new_cwd = getcwd(NULL, 0);
 		}
 		else
-			new_cwd = ft_strjoin(cwd, av[1]);
-		old_pwd = ft_strjoin("OLDPWD=", cwd);
-		if (chdir(av[1]) == -1)
 		{
-			ft_putstr_fd("minishell: cd: ", fd);
-			ft_putstr_fd(av[1], fd);
-			ft_putstr_fd(": ", fd);
-			perror("");
-			return ;
+			if (ft_strlen(ft_strrchr(cwd, '/')) != 1)
+			{
+				tmp = ft_strjoin(cwd, "/");
+				new_cwd = ft_strjoin(tmp, av[1]);
+				free(tmp);
+			}
+			else
+				new_cwd = ft_strjoin(cwd, av[1]);
+			old_pwd = ft_strjoin("OLDPWD=", cwd);
+			if (chdir(av[1]) == -1)
+			{
+				ft_putstr_fd("minishell: cd: ", fd);
+				ft_putstr_fd(av[1], fd);
+				ft_putstr_fd(": ", fd);
+				perror("");
+				return ;
+			}
 		}	
 	}
 	free(cwd);
