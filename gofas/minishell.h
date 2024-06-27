@@ -6,17 +6,20 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/06/17 17:19:52 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/06/17 17:54:13 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# define TYPE_REDIRECT 1
-# define TYPE_DOLLARS 2
-# define TYPE_PIPE 3
-# define TYPE_STRING 4
+# define TYPE_SINGLE_INPUT_REDIRECT 1
+# define TYPE_SINGLE_OUTPUT_REDIRECT 2
+# define TYPE_DOUBLE_INPUT_REDIRECT 3
+# define TYPE_DOUBLE_OUTPUT_REDIRECT 4
+# define TYPE_DOLLAR 5
+# define TYPE_PIPE 6
+# define TYPE_STRING 7
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
@@ -66,7 +69,7 @@ typedef struct s_pipe
 typedef struct s_simple_cmd
 {
 	char                    **str;
-	t_parser				*parser;
+	struct s_parser			parser;
 	struct s_simple_cmd		*next;
 }	t_simple_cmd;
 
