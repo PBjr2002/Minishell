@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/21 17:07:49 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:01:46 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ char	**env_to_print(char **envp);
 void	exec_export(int fd, char **av, t_parser *info);
 void	sort_env(char **new_env, int limit);
 void	print_export(int fd, char **sorted);
+int		check_line(char *line);
 
 //env.c
 char	*check_path(char **paths, char **av);

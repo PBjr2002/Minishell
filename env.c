@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:23:43 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/21 17:10:26 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:53:38 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	exec_other(int fd, char **av, t_parser *info)
 	int		id;
 
 	i = 0;
-	(void) fd;
 	if (ft_strncmp("./", av[0], 2) == 0)
 		path = ft_substr(av[0], 2, ft_strlen(av[0]) - 2);
 	else
@@ -66,19 +65,32 @@ void	exec_other(int fd, char **av, t_parser *info)
 				break ;
 			i++;
 		}
-		paths = ft_split(info->env[i], ':');
-		if (!paths)
-			return ;
-		paths[0] = paths[0] + 5;
+		if (info->env[i])
+		{
+			paths = ft_split(info->env[i], ':');
+			if (!paths || !paths[0])
+				return ;
+			paths[0] = paths[0] + 5;
+		}
+		else
+			paths = NULL;
 		path = check_path(paths, av);
 		if (!path)
+		{
+			ft_putstr_fd("minishell: ", fd);
+			ft_putstr_fd(av[0], fd);
+			ft_putstr_fd(": No such file or directory\n", fd);
 			return ;
+		}
 	}
 	id = fork();
 	if (id == 0)
 	{
 		if (execve(path, av, info->env) == -1)
-			ft_putendl_fd("whoop", 1);
+		{
+			perror("");
+			exit(EXIT_FAILURE);
+		}
 		exit(EXIT_SUCCESS);
 	}
 	else
@@ -94,6 +106,8 @@ char	*check_path(char **paths, char **av)
 	int		i;
 
 	i = 0;
+	if (!paths)
+		return (NULL);
 	while (paths && paths[i])
 	{
 		tmp = ft_strjoin(paths[i], "/");
