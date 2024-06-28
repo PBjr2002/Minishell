@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:23:43 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/27 14:53:38 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/06/28 15:10:37 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,33 @@ void	exec_unset(char **av, t_parser *info)
 	info->export_env = tmp_export;
 }
 
-void	exec_exit(int signal, char **av)
+void	exec_exit(int signal, char **av, t_parser *info)
 {
+	int	i;
+
 	(void) signal;
-	(void) av;
+	i = 0;
+	while (info->env[i])
+	{
+		free(info->env[i]);
+		i++;
+	}
+	free(info->env);
+	i = 0;
+	while (info->export_env[i])
+	{
+		free(info->export_env[i]);
+		i++;
+	}
+	free(info->export_env);
+	i = 0;
+	while (av[i])
+	{
+		free(av[i]);
+		i++;
+	}
+	free(av);
+	free(info);
 	ft_putendl_fd("exit", 1);
 	exit(EXIT_SUCCESS);
 }
@@ -96,6 +119,7 @@ void	exec_other(int fd, char **av, t_parser *info)
 	else
 	{
 		waitpid(-1, NULL, 0);
+		free(path);
 	}
 }
 

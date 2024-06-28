@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:20:09 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/17 15:28:37 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/06/28 15:32:59 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	exec_pwd(int fd)
 {
-	ft_putstr_fd(getcwd(NULL, 0), fd);
-	ft_putchar_fd('\n', fd);
+	char	*pwd;
+
+	pwd = getcwd(NULL, 0);
+	ft_putendl_fd(pwd, fd);
+	free(pwd);
 }

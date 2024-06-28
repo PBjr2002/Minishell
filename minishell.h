@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/27 16:01:46 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/06/28 14:52:43 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,7 @@ int		check_line(char *line);
 char	*check_path(char **paths, char **av);
 void	exec_env(int fd, t_parser *info);
 void	exec_unset(char **av, t_parser *info);
-void	exec_exit(int signal, char **av);
 void	exec_other(int fd, char **av, t_parser *info);
+void	exec_exit(int signal, char **av, t_parser *info);
 
 #endif

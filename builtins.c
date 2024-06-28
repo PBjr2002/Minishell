@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:30:34 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/18 16:12:27 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/06/28 14:52:29 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	decider(int ac, char **av, t_parser *info)
 	else if (ft_strcmp(av[0], "env") == 0)
 		exec_env(fd, info);
 	else if (ft_strcmp(av[0], "exit") == 0)
-		exec_exit(fd, info->env);
+		exec_exit(fd, av, info);
 	else if (ft_strcmp(av[0], "unset") == 0)
 		exec_unset(av, info);
 	else
