@@ -27,7 +27,7 @@ t_token	*ft_token_new(char *str)
 	return (new);
 }
 
-/* t_redirect	*ft_redirect_new(char *str)
+t_redirect	*ft_redirect_new(char *str)
 {
 	t_redirect	*new;
 	int index;
@@ -40,15 +40,20 @@ t_token	*ft_token_new(char *str)
 	new->index = index;
 	new->next = NULL;
 	return (new);
-} */
+}
 
 t_lexer	*ft_lexer_new(char *str, int argc)
 {
 	t_lexer	*new;
+	int index;
 
-	new = (t_lexer *)malloc((sizeof(t_lexer)));
+	index = 0;
+	new = (t_lexer *)malloc((sizeof(t_lexer)) * argc);
 	if (new == NULL)
 		return (NULL);
+	new->str = str;
+	new->index = index;
+	new->next = NULL;
 	return (new);
 }
 

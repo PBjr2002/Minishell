@@ -11,10 +11,12 @@ OBJECTS = $(addprefix $(OBJS_DIR)/, $(SOURCES:%.c=%.o))
 LIBFT_DIR = ./libft/
 LIBFT = $(LIBFT_DIR)libft.a
 
+MERDA = $(LIBFT) -lreadline 
+
 all: $(NAME)
 
 $(NAME): $(OBJECTS) $(LIBFT)
-		$(CC) -lreadline $(CFLAGS) $(OBJECTS) -o $@ $(LIBFT)
+		$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(MERDA)
 
 $(OBJS_DIR)/%.o:%.c
 	mkdir -p $(OBJS_DIR)

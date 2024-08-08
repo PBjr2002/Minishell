@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:29:58 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/06/17 18:39:01 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/06/17 16:30:48 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,52 +81,3 @@ test2 would be created, but bash would return a
 
 #include "minishell.h"
 
-void tokenization(t_lexer *lexer)
-{
-	int	n;
-	int type;
-	
-	n = 0;
-	while (lexer->input[n])
-	{
-		type = 0;
-		if ((lexer->input[n] > 9 && lexer->input[n] < 13) || lexer->input[n] == ' ')
-			n++;
-		else if (lexer->input[n] == '<' || lexer->input[n] == '>')
-		{
-			type = redirect_token_define(lexer, n);
-			if (type == TYPE_DOUBLE_INPUT_REDIRECT || type == TYPE_DOUBLE_OUTPUT_REDIRECT)
-				n++;
-			create_new_token(lexer->input[n], type, n);
-		}
-		else if (lexer->input[n] == '$')
-			create_new_token(lexer->input[n], TYPE_DOLLAR, n);
-		else if (lexer->input[n] == '|')
-			create_new_token(lexer->input[n], TYPE_PIPE, n);
-		else
-			create_new_token(lexer->input[n], TYPE_STRING, n);
-		n++;
-	}
-}
-
-int redirect_token_define(t_lexer *lexer, int n)
-{
-	int type;
-	
-	type = 0;
-	if (lexer->input[n] == '<' && lexer->input[n + 1] == '<')
-	{
-		type = TYPE_DOUBLE_INPUT_REDIRECT;
-		n++;	
-	}
-	else if (lexer->input[n] == '<' && lexer->input[n + 1] != '<')
-		type = TYPE_SINGLE_INPUT_REDIRECT;
-	else if (lexer->input[n] == '>' && lexer->input[n + 1] == '>')
-	{
-		type = TYPE_DOUBLE_OUTPUT_REDIRECT;
-		n++;	
-	}
-	else if (lexer->input[n] == '>' && lexer->input[n + 1] != '>')
-		type = TYPE_SINGLE_OUTPUT_REDIRECT;
-	return (type);
-}

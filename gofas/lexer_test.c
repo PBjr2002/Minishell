@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 18:10:52 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/06/17 17:30:38 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/06/17 17:18:34 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,21 +85,24 @@ void	store_input(void)
 {
 	t_lexer		*lexer;
 	
-	lexer->argc = 0;
-	lexer->input = readline("\x1b[38;5;91;1mHellshell> \x1b[0m");
-	lexer->argv = ft_split(lexer->input, ' ');
-	free(lexer->input);
-	if (lexer->argv && lexer->argv[0])
+	while (1)
 	{
-		while (lexer->argv[lexer->argc])
-			lexer->argc++;
 		lexer->argc = 0;
-		while (lexer->argv[lexer->argc])
+		lexer->input = readline("\x1b[38;5;91;1mHellshell> \x1b[0m");
+		lexer->argv = ft_split(lexer->input, ' ');
+		free(lexer->input);
+		if (lexer->argv && lexer->argv[0])
 		{
-			free(lexer->argv[lexer->argc]);
-			lexer->argc++;
+			while (lexer->argv[lexer->argc])
+				lexer->argc++;
+			lexer->argc = 0;
+			while (lexer->argv[lexer->argc])
+			{
+				free(lexer->argv[lexer->argc]);
+				lexer->argc++;
+			}
+			free(lexer->argv);
 		}
-		free(lexer->argv);
 	}
 }
 
