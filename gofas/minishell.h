@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/19 15:15:31 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:30:31 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ typedef struct s_token
 	char					*str;
 	int						index;
 	int						type;
-	bool					is_first_word;
 	struct s_token			*next;
 }	t_token;
 

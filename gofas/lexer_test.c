@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 18:10:52 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/19 15:15:49 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:31:34 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	store_input(t_lexer *lexer)
 		n++;
 	}
 	if (open_double_quote == true || open_single_quote == true)
-		lexer->invalid_lexer = false;
+		lexer->invalid_lexer = true;
 }
 
 	/* >>tokenization
@@ -138,8 +138,11 @@ int main(void)
 		lexer.invalid_lexer = false;
 		store_input(&lexer);
 		//command_id(&lexer);
-		if (lexer.invalid_lexer == true)
+		if (lexer.invalid_lexer == false)
+		{
 			ft_printf(lexer.input);
+			ft_printf("\n");
+		}
 	}
 	return (0);
 }
