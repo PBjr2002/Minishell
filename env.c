@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:23:43 by pauberna          #+#    #+#             */
-/*   Updated: 2024/07/17 14:56:34 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/08/14 17:02:05 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,48 +26,39 @@ void	exec_env(int fd, t_parser *info)
 
 void	exec_unset(char **av, t_parser *info)
 {
+	int		i;
 	char	**tmp_export;
 	char	**tmp_env;
 	
-	tmp_env = remove_env_line(info->env,
-				search_part_line(info->env, av[1], ft_strlen(av[1])));
-	tmp_export = remove_env_line(info->export_env,
-				search_part_line(info->export_env, av[1], ft_strlen(av[1])));
-	free(info->env);
-	free(info->export_env);
-	info->env = tmp_env;
-	info->export_env = tmp_export;
+	i = 1;
+	while (av && av[i])
+	{
+		tmp_env = remove_env_line(info->env,
+					search_part_line(info->env, av[i], ft_strlen(av[i])));
+		tmp_export = remove_env_line(info->export_env,
+					search_part_line(info->export_env, av[i], ft_strlen(av[i])));
+		if (tmp_export)
+		{
+			free_env(info->export_env);
+			info->export_env = tmp_export;
+		}
+		if (tmp_env)
+		{
+			free_env(info->env);
+			info->env = tmp_env;
+		}
+		i++;
+	}
 }
 
 void	exec_exit(int signal, char **av, t_parser *info)
 {
-	int	i;
-
-	(void) signal;
-	i = 0;
-	while (info->env[i])
-	{
-		free(info->env[i]);
-		i++;
-	}
-	free(info->env);
-	i = 0;
-	while (info->export_env[i])
-	{
-		free(info->export_env[i]);
-		i++;
-	}
-	free(info->export_env);
-	i = 0;
-	while (av[i])
-	{
-		free(av[i]);
-		i++;
-	}
-	free(av);
+	free_env(info->env);
+	free_env(info->export_env);
+	free_env(av);
 	free(info);
 	ft_putendl_fd("exit", 1);
-	exit(EXIT_SUCCESS);
+	exit(signal);
 }
 
 void	exec_other(int fd, char **av, t_parser *info)
@@ -78,6 +69,7 @@ void	exec_other(int fd, char **av, t_parser *info)
 	int		id;
 
 	i = 0;
+	signal_decider(IGNORE);
 	if (ft_strncmp("./", av[0], 2) == 0)
 		path = ft_substr(av[0], 2, ft_strlen(av[0]) - 2);
 	else
@@ -109,6 +101,7 @@ void	exec_other(int fd, char **av, t_parser *info)
 	id = fork();
 	if (id == 0)
 	{
+		signal_decider(CHILD);
 		if (execve(path, av, info->env) == -1)
 		{
 			perror("");

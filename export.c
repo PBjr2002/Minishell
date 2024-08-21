@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:26:47 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/27 17:21:16 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/08/13 13:27:15 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,7 @@ void	exec_export(int fd, char **av, t_parser *info)
 		if (!sorted)
 			return ;
 		print_export(fd, sorted);
-		while (sorted[n])
-		{
-			free(sorted[n]);
-			n++;
-		}
-		free(sorted[n]);
-		free(sorted);
+		free_env(sorted);
 	}
 	else
 	{
@@ -51,18 +45,18 @@ void	exec_export(int fd, char **av, t_parser *info)
 			if (info->export_env[n])
 			{
 				new_export = replace_line(info->export_env, av[i]);
-				free(info->export_env);
+				free_env(info->export_env);
 				info->export_env = new_export;
 			}
 			else
 			{
 				new_export = add_env_line(info->export_env, av[i]);
-				free(info->export_env);
+				free_env(info->export_env);
 				info->export_env = new_export;
 				if (check_line(av[i]) != 0)
 				{
 					new_env = add_env_line(info->env, av[i]);
-					free(info->env);
+					free_env(info->env);
 					info->env = new_env;
 				}
 			}

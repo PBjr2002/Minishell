@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/28 14:52:43 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/08/14 16:56:06 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@
 # include <stdbool.h>
 # include "libft/libft.h"
 # include "libft/get_next_line.h"
+
+typedef enum s_signal
+{
+	PARENT,
+	CHILD,
+	HERE_DOC,
+	IGNORE,
+}			t_signal;
 
 typedef struct s_token
 {
@@ -164,6 +172,7 @@ int		search_part_line(char **envp, char *line_to_search, size_t len);
 //builtins_helper3.c
 char	*return_env_line(char **envp, int index);
 char	*return_part_line(char **envp, int index, int mode);
+void	free_env(char **env);
 
 //echo.c
 void	exec_echo(int fd, char **av);
@@ -187,5 +196,10 @@ void	exec_env(int fd, t_parser *info);
 void	exec_unset(char **av, t_parser *info);
 void	exec_other(int fd, char **av, t_parser *info);
 void	exec_exit(int signal, char **av, t_parser *info);
+
+//signal.c
+void	signal_decider(t_signal type);
+void	ignore(struct sigaction *sa, int signal);
+void	ctrl_c(int signal, siginfo_t *info, void *context);
 
 #endif

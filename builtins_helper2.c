@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:18:00 by pauberna          #+#    #+#             */
-/*   Updated: 2024/07/23 16:17:07 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/08/13 15:08:36 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int		search_part_line(char **envp, char *line_to_search, size_t len)
 	int	n;
 
 	n = 0;
+	if (!line_to_search)
+		return (-1);
 	while (envp && envp[n])
 	{
 		if (ft_strncmp(envp[n], line_to_search, len) == 0)

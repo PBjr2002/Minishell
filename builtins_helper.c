@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:06:10 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/27 17:20:20 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/08/13 15:10:00 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ char	**remove_env_line(char **envp, int index)
 
 	n = 0;
 	len = 0;
+	if (index < 0)
+		return (NULL);
 	while (envp && envp[len])
 		len++;
 	tmp_env = malloc(sizeof(char *) * len);
