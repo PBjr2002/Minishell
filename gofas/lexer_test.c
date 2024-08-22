@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 18:10:52 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/22 15:29:59 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/22 17:36:07 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void ft_branch_search(t_tree *actual, int type_to_search)
 		}
 	while (actual->index != 0)
 	{
-		if (actual->type == type_to_search)
+		if (actual->type == type_to_search && actual->solved == false)
 			ft_printf("Index: %d, Content: %s, Left Side\n", actual->index, actual->str);
 		actual->solved = true;
 		ft_printf("Marking as solved.\n");
@@ -152,7 +152,7 @@ void ft_branch_search(t_tree *actual, int type_to_search)
 		}
 	while (actual->index != 0)
 	{
-		if (actual->type == type_to_search)
+		if (actual->type == type_to_search && actual->solved == false)
 			ft_printf("Index: %d, Content: %s, Right Side\n", actual->index, actual->str);
 		actual->solved = true;
 		ft_printf("Marking as solved.\n");
@@ -198,6 +198,8 @@ void ft_branch_search(t_tree *actual, int type_to_search)
 } */
 
 //this is used to test the creation, appending and scanning of our tree for all branches containing the type specified in ft_branch_search (starting point seems to not matter.)
+//(it does matter, function will not work correctly unless starting point is on the left side of the tree, however can be fixed by traversing the parents up to index 0.)
+
 
 int main (void)
 {
@@ -232,5 +234,7 @@ int main (void)
 	ft_branch_attach(cat2, l2, 2);
 	ft_branch_attach(eof, pipe2, 1);
 	ft_branch_attach(pipe2, cat3, 1);
-	ft_branch_search(pipe0, 7);
+	ft_branch_search(pipe0, 6);
 }
+
+//cat Makefile | <<eof cat -l | echo 1 2 3 4 5 | ls -l

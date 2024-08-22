@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/22 13:22:08 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/22 17:35:07 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ typedef struct s_token
 	char					*str;
 	int						index;
 	int						type;
-	struct s_token			*next;
 }	t_token;
 
 typedef struct s_tree
