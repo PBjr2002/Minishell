@@ -16,8 +16,8 @@ Parsing Rules:
 REMEMBER THIS ORDER:
 
     1. Reads command
-    2. Tokenization x
-    3. Command Identification
+    2. Tokenization 
+    3. Command Identification x
     4. Command Expansion
     5. Quote Removal
     6. Redirections

@@ -6,7 +6,7 @@
 #    By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/05 14:28:19 by lmiguel-          #+#    #+#              #
-#    Updated: 2024/08/14 15:56:11 by lmiguel-         ###   ########.fr        #
+#    Updated: 2024/08/22 13:52:50 by lmiguel-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,9 @@ FLAGS		= -Wall -Werror -Wextra
 
 SRC			= 	$(SOURCES)
 SOURCES		=	lexer_test.c\
+				utils1.c\
+				tree_and_list_append.c\
+				tree_and_list_init.c\
 
 OBJ_DIR		= obj
 OBJ			= $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))

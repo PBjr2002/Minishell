@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/19 16:30:31 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/22 13:22:08 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,17 @@ typedef struct s_token
 	struct s_token			*next;
 }	t_token;
 
+typedef struct s_tree
+{
+	char					*str;
+	int						index;
+	int						type;
+	bool					solved;
+	struct s_tree			*parent;
+	struct s_tree			*left;
+	struct s_tree			*right;
+}	t_tree;
+
 /* typedef struct s_redirect
 {
 	char 					*str;
@@ -57,6 +68,7 @@ typedef struct s_token
 typedef struct s_lexer
 {
 	char    				*input;
+	char					*test_input;
 	char					**argv;
 	int						argc;
 	bool					invalid_lexer;
@@ -100,11 +112,15 @@ typedef struct s_parser
 //int, unsigned int, long, long long
 
 /* int 			redirect_token_define(t_lexer *lexer, int n); */
+int				bracket_solver(t_lexer *lexer, int n);
+int 			bracket_dollar_solver(t_lexer *lexer, char *str, int n);
 
 //void
 
 void			store_input(t_lexer *lexer);
 /* void 			tokenization(t_lexer *lexer); */
+void			ft_branch_attach(t_tree *tree, t_tree *new, int branch_type);
+t_tree			*ft_branch_new(char *str, int index, int type);
 
 //lists
 

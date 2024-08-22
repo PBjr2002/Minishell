@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 18:10:52 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/19 15:31:34 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:29:59 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@ Parsing Rules:
 
 REMEMBER THIS ORDER:
 
-    1. Reads command x
-    2. Tokenization
-    3. Command Identification
-    4. Command Expansion
-    5. Quote Removal
-    6. Redirections
-    7. Command Execution
+    1. Reads command x (done)
+    2. Tokenization 
+    3. Command Identification 
+    4. Command Expansion 
+    5. Quote Removal 
+    6. Redirections 
+    7. Command Execution 
 
 ------------------------------TOKENS--------------------------------
 
@@ -79,10 +79,9 @@ test2 would be created, but bash would return a
 
 */
 
-/* this splits the inputs and stores them in the lexer list... I think. */
-
 #include "minishell.h"
 
+//this function will read the input and store it in the lexer->input node, while also checking for open quotes (of both kinds).
 void	store_input(t_lexer *lexer)
 {
 	int n;
@@ -115,21 +114,69 @@ void	store_input(t_lexer *lexer)
 		lexer->invalid_lexer = true;
 }
 
-	/* >>tokenization
-	free(lexer->input);
-	if (lexer->argv && lexer->argv[0])
-	{
-		while (lexer->argv[lexer->argc])
-			lexer->argc++;
-		while (lexer->argv[argnum] && argnum <= lexer->argc)
-		{
-			free(lexer->argv[argnum]);
-			argnum++;
-		}
-		free(lexer->argv); 
-	}*/
 
-int main(void)
+//This function searches the whole tree for a type that corresponds to the type given to it by type_to_search (obvious downsizing necessary)
+void ft_branch_search(t_tree *actual, int type_to_search)
+{
+	while (actual->left != NULL)
+		{
+			actual = actual->left;
+			ft_printf("Left branch detected, moving left.\n");
+		}
+	while (actual->index != 0)
+	{
+		if (actual->type == type_to_search)
+			ft_printf("Index: %d, Content: %s, Left Side\n", actual->index, actual->str);
+		actual->solved = true;
+		ft_printf("Marking as solved.\n");
+		if (actual->right != NULL && actual->right->solved == false)
+			{
+				actual = actual->right;
+				ft_printf("Right branch detected, moving right.\n");
+			}
+		else
+			{
+				actual = actual->parent;
+				ft_printf("Returning to parent.\n");
+			}
+	}
+	if (actual->right != NULL)
+		{
+			actual = actual->right;
+			ft_printf("Right branch detected, moving right.\n");
+		}
+	while (actual->left != NULL)
+		{
+			actual = actual->left;
+			ft_printf("Left branch detected, moving left.\n");
+		}
+	while (actual->index != 0)
+	{
+		if (actual->type == type_to_search)
+			ft_printf("Index: %d, Content: %s, Right Side\n", actual->index, actual->str);
+		actual->solved = true;
+		ft_printf("Marking as solved.\n");
+		if (actual->right != NULL && actual->right->solved == false)
+			{
+				actual = actual->right;
+				ft_printf("Right branch detected, moving right.\n");
+			}
+		else
+			{
+				actual = actual->parent;
+				ft_printf("Returning to parent.\n");
+			}
+	}
+	if (actual->index == 0 && actual->type == type_to_search)
+			ft_printf("Index: %d, Content: %s, Top of the tree\n", actual->index, actual->str);
+}
+
+////////////////////////////////////////////////////////////////////////////TESTING GROUNDS/////////////////////////////////////////////////////////////////////////////////////
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!CREATE A NEW MAIN FOR EVERYTHING YOU TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+
+//this is a simple test of the input storing and quotes checker, as well as solving anything inside single or double quotes (ensure the quotes are the first slot in your input)
+
+/* int main(void)
 {
 	t_lexer lexer;
 	
@@ -139,11 +186,51 @@ int main(void)
 		store_input(&lexer);
 		//command_id(&lexer);
 		if (lexer.invalid_lexer == false)
+			continue;
+		else
 		{
-			ft_printf(lexer.input);
-			ft_printf("\n");
+			add_history(lexer.input);
+			ft_printf("This is the input: %s\n", lexer.input);
 		}
+		bracket_solver(&lexer, 0);
 	}
 	return (0);
-}
+} */
 
+//this is used to test the creation, appending and scanning of our tree for all branches containing the type specified in ft_branch_search (starting point seems to not matter.)
+
+int main (void)
+{
+	char *str1 = "cat";
+	char *str2 = "|";
+	char *str3 = "cat";
+	char *str4 = "<< eof";
+	char *str5 = "|";
+	char *str6 = "cat";
+	char *str7 = "|";
+	char *str8 = "ls";
+	char *str9 = "-l";
+	char *str10 = "-l";
+
+	t_tree *pipe0 = ft_branch_new(str7, 0, 6);
+	t_tree *pipe1 = ft_branch_new(str5, 2, 6);
+	t_tree *pipe2 = ft_branch_new(str2, 4, 6);
+	t_tree *cat1 = ft_branch_new(str6, 1, 8);
+	t_tree *cat2 = ft_branch_new(str3, 3, 8);
+	t_tree *cat3 = ft_branch_new(str1, 5, 8);
+	t_tree *ls1 = ft_branch_new(str8, 1, 8);
+	t_tree *l1 = ft_branch_new(str9, 2, 7);
+	t_tree *l2 = ft_branch_new(str10, 2, 7);
+	t_tree *eof = ft_branch_new(str4, 3, 3);
+	
+	ft_branch_attach(pipe0, cat1, 1);
+	ft_branch_attach(pipe0, ls1, 2);
+	ft_branch_attach(cat1, pipe1, 1);
+	ft_branch_attach(ls1, l1, 2);
+	ft_branch_attach(pipe1, eof, 1);
+	ft_branch_attach(pipe1, cat2, 2);
+	ft_branch_attach(cat2, l2, 2);
+	ft_branch_attach(eof, pipe2, 1);
+	ft_branch_attach(pipe2, cat3, 1);
+	ft_branch_search(pipe0, 7);
+}

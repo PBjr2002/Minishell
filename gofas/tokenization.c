@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:29:58 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/19 18:20:03 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/20 16:43:53 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ Parsing Rules:
 REMEMBER THIS ORDER:
 
     1. Reads command
-    2. Tokenization x
+    2. Tokenization x (in progress)
     3. Command Identification
     4. Command Expansion
     5. Quote Removal
@@ -117,32 +117,6 @@ void tokenization(t_lexer *lexer, t_token *token)
 	}
 }
 
-int bracket_solver(t_lexer *lexer, int n)
-{
-	int export;
-
-	export = n;
-	if (lexer->input[n] == '\'')
-	{
-		n++;
-		export++;
-		while (lexer->input[n] != '\'')
-			n++;
-		//INSERT DESTINATION FOR OUTPUT ft_substr(lexer->input, export, (n - export))
-	}
-	else if (lexer->input[n] == '"')
-	{
-		n++;
-		export++;
-		while (lexer->input[n] != '"')
-		{
-			if (lexer->input[n] == '$')
-				n = dollar_solver(lexer->input, n);
-			n++;
-		}
-		//INSERT DESTINATION FOR OUTPUT ft_substr(lexer->input, export, (n - export))
-	}
-}
 
 int create_new_token(t_lexer *lexer, int type, int n)
 {
@@ -171,8 +145,4 @@ int redirect_token_define(t_lexer *lexer, int n)
 	return (type);
 }
 
-int dollar_solver(char *str, int n)
-{
-	
-}
 
