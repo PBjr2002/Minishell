@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/28 14:49:48 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:55:53 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	prompt(int ac, char **av, t_parser *info)
 	(void) av;
 	while (1)
 	{
+		signal_decider(PARENT);
 		new_ac = 0;
 		input = readline("\x1b[38;5;91;1mHellshell> \x1b[0m");
 		new_av = ft_split(input, ' ');

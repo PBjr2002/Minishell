@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 18:06:30 by pauberna          #+#    #+#             */
-/*   Updated: 2023/10/17 11:59:17 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:16:53 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	ft_countstr(char const *str, char sep)
 
 	count = 0;
 	n = 0;
-	while (str[n])
+	while (str && str[n])
 	{
 		while (str[n] == sep)
 			n++;
@@ -65,24 +65,20 @@ char	**ft_split(char const *s, char c)
 	int		n;
 
 	size = ft_countstr(s, c);
-	array = (char **)malloc(sizeof(char *) * (size + 1));
-	if (array == NULL)
+	if (size == 0)
 		return (NULL);
-	n = 0;
-	while (n <= size)
-	{
-		array[n] = NULL;
-		n++;
-	}
+	array = ft_calloc(sizeof(char *), size + 1);
+	if (!array)
+		return (NULL);
 	if (ft_almem(array, s, c) == 0)
 	{
-		while (n > 0)
+		n = 0;
+		while (array[n])
 		{
-			free(array[n - 1]);
-			n--;
+			free(array[n]);
+			n++;
 		}
-		free(array);
-		return (NULL);
+		return (free(array), NULL);
 	}
 	return (array);
 }

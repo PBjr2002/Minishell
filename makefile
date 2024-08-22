@@ -3,20 +3,20 @@ CFLAGS = -Wall -Wextra -Werror
 NAME = minishell
 
 SOURCES = main.c builtins.c builtins_helper.c builtins_helper2.c builtins_helper3.c echo.c\
-			cd.c pwd.c export.c prompt.c env.c
+			cd.c pwd.c export.c prompt.c env.c signal.c
 
 OBJS_DIR = obj
 OBJECTS = $(addprefix $(OBJS_DIR)/, $(SOURCES:%.c=%.o))
 
 LIBFT_DIR = ./libft/
 LIBFT = $(LIBFT_DIR)libft.a
+LIBFLAG = $(LIBFT) -lreadline 
 
-MERDA = $(LIBFT) -lreadline 
 
 all: $(NAME)
 
 $(NAME): $(OBJECTS) $(LIBFT)
-		$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(MERDA)
+		$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(LIBFLAG)
 
 $(OBJS_DIR)/%.o:%.c
 	mkdir -p $(OBJS_DIR)
