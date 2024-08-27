@@ -6,26 +6,27 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:47 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/22 13:23:06 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/27 15:17:44 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* this initializes lists and the main tree. (not sure which one is necessary)(both are.) */
+//This initializes tokens and the main tree. (not sure which one is necessary)(both are.)
 
 t_token	*ft_token_new(char *str)
 {
 	t_token	*new;
-	int index;
+	int 	index;
 
-	index = 0;
+	index = -1;
 	new = (t_token *)malloc(sizeof(t_token));
 	if (new == NULL)
 		return (NULL);
 	new->str = str;
 	new->index = index;
 	new->next = NULL;
+	new->previous = NULL;
 	return (new);
 }
 
@@ -46,6 +47,14 @@ t_tree	*ft_branch_new(char *str, int index, int type)
 	return (new);
 }
 
+t_token	*temp_token_remove(t_token *temp)
+{
+	while (temp->previous != NULL)
+		temp = temp->previous;
+	temp = temp->next;
+	temp->previous = NULL;
+	return (temp);
+}
 
 /* t_redirect	*ft_redirect_new(char *str)
 {

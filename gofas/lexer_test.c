@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 18:10:52 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/22 17:36:07 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/27 15:36:16 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,8 @@ void	store_input(t_lexer *lexer)
 }
 
 
-//This function searches the whole tree for a type that corresponds to the type given to it by type_to_search (obvious downsizing necessary)
+//This function searches the whole tree for a type that corresponds to the type given to it by type_to_search (obvious downsizing necessary).
+//My project partner gave me a great idea, repurpose this function to free everything allocated in the tree... testing needed.
 void ft_branch_search(t_tree *actual, int type_to_search)
 {
 	while (actual->left != NULL)
@@ -176,32 +177,39 @@ void ft_branch_search(t_tree *actual, int type_to_search)
 
 //this is a simple test of the input storing and quotes checker, as well as solving anything inside single or double quotes (ensure the quotes are the first slot in your input)
 
-/* int main(void)
+int main(void)
 {
 	t_lexer lexer;
+	t_token	*token_list;
 	
 	while (1)
 	{
 		lexer.invalid_lexer = false;
 		store_input(&lexer);
 		//command_id(&lexer);
-		if (lexer.invalid_lexer == false)
+		if (lexer.invalid_lexer == true)
 			continue;
 		else
 		{
-			add_history(lexer.input);
+			//add_history(lexer.input);
 			ft_printf("This is the input: %s\n", lexer.input);
 		}
-		bracket_solver(&lexer, 0);
+		token_list = tokenization(&lexer);
+		while (token_list)
+		{
+			ft_printf("Token index: %d, Token type: %d, Token contains: %s\n", 
+				token_list->index, token_list->type, token_list->str);
+			token_list = token_list->next;
+		}
 	}
 	return (0);
-} */
+}
 
 //this is used to test the creation, appending and scanning of our tree for all branches containing the type specified in ft_branch_search (starting point seems to not matter.)
 //(it does matter, function will not work correctly unless starting point is on the left side of the tree, however can be fixed by traversing the parents up to index 0.)
 
 
-int main (void)
+/* int main (void)
 {
 	char *str1 = "cat";
 	char *str2 = "|";
@@ -235,6 +243,6 @@ int main (void)
 	ft_branch_attach(eof, pipe2, 1);
 	ft_branch_attach(pipe2, cat3, 1);
 	ft_branch_search(pipe0, 6);
-}
+} */
 
 //cat Makefile | <<eof cat -l | echo 1 2 3 4 5 | ls -l

@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/22 17:35:07 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/27 15:23:35 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct s_token
 	char					*str;
 	int						index;
 	int						type;
+	struct s_token			*previous;
+	struct s_token			*next;
 }	t_token;
 
 typedef struct s_tree
@@ -68,8 +70,6 @@ typedef struct s_lexer
 {
 	char    				*input;
 	char					*test_input;
-	char					**argv;
-	int						argc;
 	bool					invalid_lexer;
 }	t_lexer;
 
@@ -111,20 +111,27 @@ typedef struct s_parser
 //int, unsigned int, long, long long
 
 /* int 			redirect_token_define(t_lexer *lexer, int n); */
-int				bracket_solver(t_lexer *lexer, int n);
-int 			bracket_dollar_solver(t_lexer *lexer, char *str, int n);
+int 			com_token_define(t_lexer *lexer, t_token *token_list, int n);
+int				dollar_token_define(t_lexer *lexer, t_token *token_list, int n);
+int				pipe_token_define(t_token *token_list, int n);
+int 			quote_token_define(t_lexer *lexer, t_token *token_list, int n);
+int 			quote_dollar_solver(t_lexer *lexer, char *str, int n);
+int 			redirect_token_define(t_lexer *lexer, t_token *token_list, int n);
+int 			redirect_token_type_solver(t_lexer *lexer, int n);
 
 //void
 
-void			store_input(t_lexer *lexer);
-/* void 			tokenization(t_lexer *lexer); */
 void			ft_branch_attach(t_tree *tree, t_tree *new, int branch_type);
+void			ft_token_append(t_token *token_list, t_token *new, char *str);
+void			store_input(t_lexer *lexer);
+
+//lists and trees
+
 t_tree			*ft_branch_new(char *str, int index, int type);
-
-//lists
-
-/* t_lexer			*ft_lexer_new(void);
 t_token			*ft_token_new(char *str);
+t_token			*temp_token_remove(t_token *temp);
+t_token			*tokenization(t_lexer *lexer);
+/* t_lexer		*ft_lexer_new(void);
 t_pipe			*ft_pipe_new(char *str, int index);
 t_simple_cmd	*ft_simple_cmd_new(char *str); */
 

@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:29:58 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/20 16:43:53 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/27 15:41:16 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,70 +79,36 @@ test2 would be created, but bash would return a
 
 */
 
-/* this identifies and assigns a type to each token present in the lexer input. Pretty sure. */
-
 #include "minishell.h"
 
-void tokenization(t_lexer *lexer, t_token *token)
+/* this recieves the user input and separates it into tokens to send to the tree. */
+
+t_token *tokenization(t_lexer *lexer)
 {
 	int	n;
-	int j;
 	int type;
-	t_token *tokens;
+	t_token	*temp;
 	
 	n = 0;
-	j = 0;
-	while (lexer->input[n])
+	temp = ft_token_new("temp\0");
+	while (lexer->input && lexer->input[n])
 	{
 		type = 0;
 		while ((lexer->input[n] > 9 && lexer->input[n] < 13) || lexer->input[n] == ' ')
 			n++;
-		j = n;
 		if (lexer->input[n] == '\'' || lexer->input[n] == '"')
-			bracket_solver(lexer->input[n], n);
-		if (lexer->input[n] == '<' || lexer->input[n] == '>')
-		{
-			type = redirect_token_define(lexer, n);
-			if (type == DOUBLE_IN || type == DOUBLE_OUT)
-				n++;
-			create_new_token(lexer->input[j], type, n);
-		}
+			n = quote_token_define(lexer, temp, n);
+		else if (lexer->input[n] == '<' || lexer->input[n] == '>')
+			n = redirect_token_define(lexer, temp, n);
 		else if (lexer->input[n] == '$')
-			create_new_token(lexer->input[j], TYPE_DOLLAR, n);
+			n = dollar_token_define(lexer, temp, n);
 		else if (lexer->input[n] == '|')
-			create_new_token(lexer->input[j], TYPE_PIPE, n);
+			n = pipe_token_define(temp, n);
 		else
-			com_arg_definer(lexer->input[j], n);
-		n++;
+			n = com_token_define(lexer, temp, n);
 	}
+	return (temp->next);
 }
 
-
-int create_new_token(t_lexer *lexer, int type, int n)
-{
-	
-}
-
-int redirect_token_define(t_lexer *lexer, int n)
-{
-	int type;
-	
-	type = 0;
-	if (lexer->input[n] == '<' && lexer->input[n + 1] == '<')
-	{
-		type = DOUBLE_IN;
-		n++;
-	}
-	else if (lexer->input[n] == '<' && lexer->input[n + 1] != '<')
-		type = SINGLE_IN;
-	else if (lexer->input[n] == '>' && lexer->input[n + 1] == '>')
-	{
-		type = DOUBLE_OUT;
-		n++;
-	}
-	else if (lexer->input[n] == '>' && lexer->input[n + 1] != '>')
-		type = SINGLE_OUT;
-	return (type);
-}
 
 

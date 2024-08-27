@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:52:11 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/22 15:40:41 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/27 15:30:52 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,20 @@ void	ft_branch_attach(t_tree *tree, t_tree *new, int branch_type)
 		tree->right = new;
 		new->index = (tree->index + 1);
 	}
+}
+
+void	ft_token_append(t_token *token_list, t_token *new, char *str)
+{
+	int index_num;
+
+	index_num = 0;
+	while (token_list->next != NULL)
+	{
+		index_num++;
+		token_list = token_list->next;
+	}
+	token_list->next = new;
+	new->previous = token_list;
+	new->index = index_num + 1;
+	new->str = str;
 }
