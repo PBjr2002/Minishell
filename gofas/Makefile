@@ -6,12 +6,12 @@
 #    By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/05 14:28:19 by lmiguel-          #+#    #+#              #
-#    Updated: 2024/08/27 15:04:36 by lmiguel-         ###   ########.fr        #
+#    Updated: 2024/08/28 15:49:08 by lmiguel-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minishell
-CC			= cc
+CC			= cc -g
 FLAGS		= -Wall -Werror -Wextra
 
 SRC			= 	$(SOURCES)
@@ -21,6 +21,7 @@ SOURCES		=	lexer_test.c\
 				tree_and_list_append.c\
 				tree_and_list_init.c\
 				tokenization.c\
+				parsing_utils.c\
 
 OBJ_DIR		= obj
 OBJ			= $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))

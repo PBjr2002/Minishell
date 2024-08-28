@@ -80,8 +80,3 @@ test2 would be created, but bash would return a
 */
 
 #include "minishell.h"
-
-void command_id(t_lexer *lexer)
-{
-	
-}

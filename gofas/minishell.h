@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/27 15:23:35 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/28 14:38:07 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define TYPE_PIPE 6
 # define TYPE_ARGUMENT 7
 # define TYPE_COMMAND 8
+# define TYPE_LIMITER 9
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
@@ -59,13 +60,6 @@ typedef struct s_tree
 	struct s_tree			*right;
 }	t_tree;
 
-/* typedef struct s_redirect
-{
-	char 					*str;
-	int						index;
-	struct s_redirects		*next;
-}	t_redirect; */
-
 typedef struct s_lexer
 {
 	char    				*input;
@@ -73,7 +67,22 @@ typedef struct s_lexer
 	bool					invalid_lexer;
 }	t_lexer;
 
-typedef struct s_pipe
+/* typedef struct s_parser
+{
+	char					**env;
+	char					**export_env;
+	pid_t					pid;
+	t_pipe					*pipe;
+}	t_parser; */
+
+/* typedef struct s_redirect
+{
+	char 					*str;
+	int						index;
+	struct s_redirects		*next;
+}	t_redirect; */
+
+/* typedef struct s_pipe
 {
 	int						index;
 	int						fd[2];
@@ -85,16 +94,7 @@ typedef struct s_simple_cmd
 	char                    **str;
 	struct s_parser			*parser;
 	struct s_simple_cmd		*next;
-}	t_simple_cmd;
-
-typedef struct s_parser
-{
-	char					**env;
-	char					**export_env;
-	pid_t					pid;
-	t_pipe					*pipe;
-	t_simple_cmd			*simple_commands;
-}	t_parser;
+}	t_simple_cmd; */
 
 /*
 >d echo ola bom <a >o | <g wc -c $USER >k
@@ -121,6 +121,7 @@ int 			redirect_token_type_solver(t_lexer *lexer, int n);
 
 //void
 
+void 			command_id(t_token *token_list);
 void			ft_branch_attach(t_tree *tree, t_tree *new, int branch_type);
 void			ft_token_append(t_token *token_list, t_token *new, char *str);
 void			store_input(t_lexer *lexer);
@@ -129,7 +130,8 @@ void			store_input(t_lexer *lexer);
 
 t_tree			*ft_branch_new(char *str, int index, int type);
 t_token			*ft_token_new(char *str);
-t_token			*temp_token_remove(t_token *temp);
+//t_token			*temp_token_remove(t_token *temp);
+t_token			*temp_list_cleaner(t_token *list);
 t_token			*tokenization(t_lexer *lexer);
 /* t_lexer		*ft_lexer_new(void);
 t_pipe			*ft_pipe_new(char *str, int index);

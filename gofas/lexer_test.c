@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 18:10:52 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/27 16:28:40 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:47:46 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ REMEMBER THIS ORDER:
 
     1. Reads command x (done)
     2. Tokenization 
-    3. Command Identification 
+    3. Command Identification x (done ?)
     4. Command Expansion 
     5. Quote Removal 
     6. Redirections 
@@ -92,7 +92,7 @@ void	store_input(t_lexer *lexer)
 	open_single_quote = false;
 	open_double_quote = false;
 	lexer->input = readline("\x1b[38;5;91;1mGofastlose input tester> \x1b[0m");
-	while(lexer->input[n])
+	while(lexer->input && lexer->input[n])
 	{
 		if (lexer->input[n] == 39)
 		{
@@ -110,10 +110,24 @@ void	store_input(t_lexer *lexer)
 		}
 		n++;
 	}
-	if (open_double_quote == true || open_single_quote == true)
+	if ((open_double_quote == true || open_single_quote == true)
+		|| !lexer->input || lexer->input[0] == '\0')
 		lexer->invalid_lexer = true;
 }
 
+int input_checker(t_lexer *lexer)
+{
+	int n;
+	
+	n = 0;
+	while(lexer->input[n])
+	{
+		if (lexer->input[n] > 32 && lexer->input[n] < 127)
+			return (1);
+		n++;
+	}
+	return (0);
+}
 
 //This function searches the whole tree for a type that corresponds to the type given to it by type_to_search (obvious downsizing necessary).
 //My project partner gave me a great idea, repurpose this function to free everything allocated in the tree... testing needed.
@@ -179,28 +193,27 @@ void ft_branch_search(t_tree *actual, int type_to_search)
 
 int main(void)
 {
-	t_lexer lexer;
-	t_token	*token_list;
+	t_lexer 	lexer;
+	t_token		*token_list;
+	//t_parser	*parser;
 	
 	while (1)
 	{
 		lexer.invalid_lexer = false;
 		store_input(&lexer);
-		//command_id(&lexer);
-		if (lexer.invalid_lexer == true)
+		if (lexer.invalid_lexer == true || input_checker(&lexer) == 0)
 			continue;
-		else
-		{
-			//add_history(lexer.input);
-			ft_printf("This is the input: %s\n", lexer.input);
-		}
+		add_history(lexer.input);
+		ft_printf("This is the input: %s\n", lexer.input);
 		token_list = tokenization(&lexer);
+		command_id(token_list);
 		while (token_list)
 		{
 			ft_printf("Token index: %d, Token type: %d, Token contains: %s\n", 
-				token_list->index, token_list->type, token_list->str);
+			token_list->index, token_list->type, token_list->str);
 			token_list = token_list->next;
 		}
+		//parser = parsing(&token_list);
 	}
 	return (0);
 }

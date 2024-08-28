@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:52:11 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/27 15:30:52 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/27 17:16:34 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_token_append(t_token *token_list, t_token *new, char *str)
 {
 	int index_num;
 
-	index_num = 0;
+	index_num = -1;
 	while (token_list->next != NULL)
 	{
 		index_num++;

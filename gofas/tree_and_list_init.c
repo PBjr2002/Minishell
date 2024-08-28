@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:47 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/27 15:17:44 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/27 17:03:04 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,17 @@ t_tree	*ft_branch_new(char *str, int index, int type)
 	return (new);
 }
 
+//removes the temporary token from the tokenization function and frees it (supposedly)
 t_token	*temp_token_remove(t_token *temp)
 {
+	t_token *temp2;
+	
 	while (temp->previous != NULL)
 		temp = temp->previous;
 	temp = temp->next;
+	temp2 = temp->previous;
 	temp->previous = NULL;
+	free(temp2);
 	return (temp);
 }
 

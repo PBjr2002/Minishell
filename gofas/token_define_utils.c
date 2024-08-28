@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:56:14 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/27 16:05:16 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:21:39 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int quote_token_define(t_lexer *lexer, t_token *token_list, int n)
 {
+	//simply copies the quotes and everything inside them (could give them a type...)
 	int 	export;
 	t_token	*new_token;
 
@@ -24,6 +25,7 @@ int quote_token_define(t_lexer *lexer, t_token *token_list, int n)
 		while (lexer->input[n] != '\'')
 			n++;
 		new_token = ft_token_new(ft_substr(lexer->input, export, ((n - export) + 1)));
+		new_token->type = TYPE_COMMAND;
 		ft_token_append(token_list, new_token, new_token->str);
 	}
 	else if (lexer->input[n] == '"')
@@ -32,6 +34,7 @@ int quote_token_define(t_lexer *lexer, t_token *token_list, int n)
 		while (lexer->input[n] != '"')
 				n++;
 		new_token = ft_token_new(ft_substr(lexer->input, export, ((n - export) + 1)));
+		new_token->type = TYPE_COMMAND;
 		ft_token_append(token_list, new_token, new_token->str);
 	}
 	n++;
@@ -46,9 +49,10 @@ int redirect_token_define(t_lexer *lexer, t_token *token_list, int n)
 	t_token *new_token;
 
 	export = n;
-	n++;
-	if (lexer->input[n + 1] == '<' || lexer->input[n + 1] == '>')
+	if ((lexer->input[n] == '<' && lexer->input[n + 1] == '<') 
+		|| (lexer->input[n] == '>' && lexer->input[n + 1] == '>'))
 		n++;
+	n++;
 	while ((lexer->input[n] > 9 && lexer->input[n] < 13) || lexer->input[n] == ' ')
 		n++;
 	while ((lexer->input[n] > 32 && lexer->input[n] < 127))
@@ -80,6 +84,7 @@ int	dollar_token_define(t_lexer *lexer, t_token *token_list, int n)
 
 int	pipe_token_define(t_token *token_list, int n)
 {
+	//this function simply adds a pipe token, no need to get fancy
 	t_token *new_token;
 	
 	new_token = ft_token_new("|\0");
@@ -91,6 +96,7 @@ int	pipe_token_define(t_token *token_list, int n)
 
 int com_token_define(t_lexer *lexer, t_token *token_list, int n)
 {
+	//transcribes everything that isn't checked by the tokenization function as a command
 	int 	export;
 	t_token	*new_token;
 	

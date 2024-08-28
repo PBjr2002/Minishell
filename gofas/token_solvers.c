@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:32:46 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/27 14:06:23 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/27 17:04:14 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int quote_dollar_solver(t_lexer *lexer, char *str, int n)
 
 int redirect_token_type_solver(t_lexer *lexer, int n)
 {
+	//identifies which type the redirection token is
 	int type;
 	
 	type = 0;

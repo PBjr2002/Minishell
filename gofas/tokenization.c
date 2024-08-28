@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:29:58 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/27 15:41:16 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:30:13 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ Parsing Rules:
 REMEMBER THIS ORDER:
 
     1. Reads command
-    2. Tokenization x (in progress)
+    2. Tokenization x (basically done)
     3. Command Identification
     4. Command Expansion
     5. Quote Removal
@@ -81,19 +81,18 @@ test2 would be created, but bash would return a
 
 #include "minishell.h"
 
-/* this recieves the user input and separates it into tokens to send to the tree. */
+/* this recieves the user input and separates it into tokens to send to the token list, 
+	in order of appearance */
 
 t_token *tokenization(t_lexer *lexer)
 {
 	int	n;
-	int type;
 	t_token	*temp;
 	
 	n = 0;
 	temp = ft_token_new("temp\0");
 	while (lexer->input && lexer->input[n])
 	{
-		type = 0;
 		while ((lexer->input[n] > 9 && lexer->input[n] < 13) || lexer->input[n] == ' ')
 			n++;
 		if (lexer->input[n] == '\'' || lexer->input[n] == '"')
@@ -104,11 +103,23 @@ t_token *tokenization(t_lexer *lexer)
 			n = dollar_token_define(lexer, temp, n);
 		else if (lexer->input[n] == '|')
 			n = pipe_token_define(temp, n);
-		else
+		else if (lexer->input[n])
 			n = com_token_define(lexer, temp, n);
 	}
-	return (temp->next);
+	temp = temp_list_cleaner(temp);
+	return (temp);
 }
 
-
-
+t_token	*temp_list_cleaner(t_token *list)
+{
+	t_token	*temp;
+	
+	temp = list;
+	if (list->next)
+	{
+		list = list->next;
+		list->previous = NULL;
+	}
+	free(temp);
+	return (list);
+}
