@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/28 14:38:07 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/29 15:10:14 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define TYPE_PIPE 6
 # define TYPE_ARGUMENT 7
 # define TYPE_COMMAND 8
-# define TYPE_LIMITER 9
+# define TYPE_DOUBLE_QUOTE_EXPAND 9
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
@@ -124,6 +124,8 @@ int 			redirect_token_type_solver(t_lexer *lexer, int n);
 void 			command_id(t_token *token_list);
 void			ft_branch_attach(t_tree *tree, t_tree *new, int branch_type);
 void			ft_token_append(t_token *token_list, t_token *new, char *str);
+void			quote_token_remover(t_token *token, int export, int n);
+void			redirection_handler(t_token *list, int n, int export);
 void			store_input(t_lexer *lexer);
 
 //lists and trees
@@ -131,6 +133,7 @@ void			store_input(t_lexer *lexer);
 t_tree			*ft_branch_new(char *str, int index, int type);
 t_token			*ft_token_new(char *str);
 //t_token			*temp_token_remove(t_token *temp);
+t_token			*parsing(t_token *token_list);
 t_token			*temp_list_cleaner(t_token *list);
 t_token			*tokenization(t_lexer *lexer);
 /* t_lexer		*ft_lexer_new(void);

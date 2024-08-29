@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 18:10:52 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/28 16:47:46 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/29 17:09:06 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ REMEMBER THIS ORDER:
 
     1. Reads command x (done)
     2. Tokenization 
-    3. Command Identification x (done ?)
+    3. Command Identification
     4. Command Expansion 
     5. Quote Removal 
     6. Redirections 
@@ -80,7 +80,7 @@ test2 would be created, but bash would return a
 */
 
 #include "minishell.h"
-
+//\x1b[38;5;91;1mGofastlose input tester> \x1b[0m
 //this function will read the input and store it in the lexer->input node, while also checking for open quotes (of both kinds).
 void	store_input(t_lexer *lexer)
 {
@@ -91,7 +91,8 @@ void	store_input(t_lexer *lexer)
 	n = 0;
 	open_single_quote = false;
 	open_double_quote = false;
-	lexer->input = readline("\x1b[38;5;91;1mGofastlose input tester> \x1b[0m");
+	rl_on_new_line();
+	lexer->input = readline("Gofastlose input tester>");
 	while(lexer->input && lexer->input[n])
 	{
 		if (lexer->input[n] == 39)
@@ -201,18 +202,18 @@ int main(void)
 	{
 		lexer.invalid_lexer = false;
 		store_input(&lexer);
-		if (lexer.invalid_lexer == true || input_checker(&lexer) == 0)
+		if (ft_strlen(lexer.input) == 0)
+		{
+			free(lexer.input);
+			continue;
+		}
+		else if (lexer.invalid_lexer == true || input_checker(&lexer) == 0)
 			continue;
 		add_history(lexer.input);
 		ft_printf("This is the input: %s\n", lexer.input);
+		ft_printf("-------------INITIATING TOKENIZATION-----------------\n");
 		token_list = tokenization(&lexer);
-		command_id(token_list);
-		while (token_list)
-		{
-			ft_printf("Token index: %d, Token type: %d, Token contains: %s\n", 
-			token_list->index, token_list->type, token_list->str);
-			token_list = token_list->next;
-		}
+		token_list = parsing(token_list);
 		//parser = parsing(&token_list);
 	}
 	return (0);

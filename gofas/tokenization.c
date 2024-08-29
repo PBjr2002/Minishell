@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:29:58 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/28 16:30:13 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:17:32 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ Parsing Rules:
 REMEMBER THIS ORDER:
 
     1. Reads command
-    2. Tokenization x (basically done)
+    2. Tokenization x (done)
     3. Command Identification
     4. Command Expansion
     5. Quote Removal
@@ -83,7 +83,6 @@ test2 would be created, but bash would return a
 
 /* this recieves the user input and separates it into tokens to send to the token list, 
 	in order of appearance */
-
 t_token *tokenization(t_lexer *lexer)
 {
 	int	n;
@@ -110,6 +109,7 @@ t_token *tokenization(t_lexer *lexer)
 	return (temp);
 }
 
+//clears the temp token that serves as a starting reference to create the token list
 t_token	*temp_list_cleaner(t_token *list)
 {
 	t_token	*temp;

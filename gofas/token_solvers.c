@@ -6,31 +6,15 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:32:46 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/27 17:04:14 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/29 13:53:06 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int quote_dollar_solver(t_lexer *lexer, char *str, int n)
-{
-	//numbers, uppercase, lowercase or underscore only, everything else ends the dollar quote solver and exports the result under the DOLLAR type
-	int export;
-	
-	export = n;
-	n++;
-	while ((str[n] > 47 && str[n] < 58) || (str[n] > 64 && str[n] < 91) 
-		|| (str[n] > 96 && str[n] < 123) || (str[n] == 95))
-		n++;
-	lexer->test_input = ft_substr(str, export, (n - export));
-	ft_printf("This is the solved dollar in quotes: %s\n", lexer->test_input);
-	//INSERT DESTINATION FOR OUTPUT ft_substr(*str, export, (n - export))
-	return (n);
-}
-
+//identifies which type the redirection token is
 int redirect_token_type_solver(t_lexer *lexer, int n)
 {
-	//identifies which type the redirection token is
 	int type;
 	
 	type = 0;

@@ -6,15 +6,15 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:56:14 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/28 16:21:39 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:35:06 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//simply copies the quotes and everything inside them (could give them a type...)
 int quote_token_define(t_lexer *lexer, t_token *token_list, int n)
 {
-	//simply copies the quotes and everything inside them (could give them a type...)
 	int 	export;
 	t_token	*new_token;
 
@@ -41,10 +41,10 @@ int quote_token_define(t_lexer *lexer, t_token *token_list, int n)
 	return (n);
 }
 
+//recycle (export) to use as a pointer to where the redirect token is at. 
+//useful to send towards (redirect_token_solver)
 int redirect_token_define(t_lexer *lexer, t_token *token_list, int n)
 {
-	//recycle (export) to use as a pointer to where the redirect token is at. 
-	//useful to send towards (redirect_token_solver)
 	int 	export;
 	t_token *new_token;
 
@@ -63,9 +63,9 @@ int redirect_token_define(t_lexer *lexer, t_token *token_list, int n)
 	return (n);
 }
 
+//numbers, uppercase, lowercase or underscore only, everything else ends the dollar definer and exports the result under the DOLLAR type
 int	dollar_token_define(t_lexer *lexer, t_token *token_list, int n)
 {
-	//numbers, uppercase, lowercase or underscore only, everything else ends the dollar definer and exports the result under the DOLLAR type
 	int export;
 	t_token	*new_token;
 
@@ -82,9 +82,9 @@ int	dollar_token_define(t_lexer *lexer, t_token *token_list, int n)
 	return (n);
 }
 
+//this function simply adds a pipe token, no need to get fancy
 int	pipe_token_define(t_token *token_list, int n)
 {
-	//this function simply adds a pipe token, no need to get fancy
 	t_token *new_token;
 	
 	new_token = ft_token_new("|\0");
@@ -94,9 +94,9 @@ int	pipe_token_define(t_token *token_list, int n)
 	return(n);
 }
 
+//transcribes everything that isn't checked by the tokenization function as a command
 int com_token_define(t_lexer *lexer, t_token *token_list, int n)
 {
-	//transcribes everything that isn't checked by the tokenization function as a command
 	int 	export;
 	t_token	*new_token;
 	
@@ -113,37 +113,3 @@ int com_token_define(t_lexer *lexer, t_token *token_list, int n)
 	return (n);
 }
 
-/* int quote_token_remover(t_lexer *lexer, int n)
-{
-	//everything inside the single quotes are treated as a word, no matter what they are.
-	//everything except dollar signs are treated as words inside double quotes
-	int export;
-
-	export = n;
-	if (lexer->input[n] == '\'')
-	{
-		n++;
-		export++;
-		while (lexer->input[n] != '\'')
-			n++;
-		lexer->test_input = ft_substr(lexer->input, export, (n - export));
-		ft_printf("This is the solved single quotes: %s\n", lexer->test_input);
-		return (n);
-	}
-	else if (lexer->input[n] == '"')
-	{
-		n++;
-		export++;
-		while (lexer->input[n] != '"')
-		{
-			if (lexer->input[n] == '$')
-				n = bracket_dollar_solver(lexer, lexer->input, n);
-			else
-				n++;
-		}
-		lexer->test_input = ft_substr(lexer->input, export, (n - export));
-		ft_printf("This is the solved double quotes: %s\n", lexer->test_input);
-		return (n);
-	}
-	return (n);
-} */
