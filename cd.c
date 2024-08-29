@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:55:40 by pauberna          #+#    #+#             */
-/*   Updated: 2024/06/28 16:02:16 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/08/29 13:09:22 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	exec_cd(int fd, char **av, t_parser *info)
 	char	*old_pwd;
 	char	**new_envp;
 	char	**new_export;
-	int		i;
 
 	cwd = return_part_line(info->env, search_part_line(info->env, "PWD=", 4), 0);
 	if (!av[1])
@@ -83,37 +82,13 @@ void	exec_cd(int fd, char **av, t_parser *info)
 	free(cwd);
 	env_pwd = ft_strjoin("PWD=", new_cwd);
 	new_envp = replace_line(info->env, env_pwd);
-	i = 0;
-	while (info->env[i])
-	{
-		free(info->env[i]);
-		i++;
-	}
-	free(info->env);
+	free_env(info->env);
 	info->env = replace_line(new_envp, old_pwd);
-	i = 0;
-	while (new_envp[i])
-	{
-		free(new_envp[i]);
-		i++;
-	}
-	free(new_envp);
+	free_env(new_envp);
 	new_export = replace_line(info->export_env, env_pwd);
-	i = 0;
-	while (info->export_env[i])
-	{
-		free(info->export_env[i]);
-		i++;
-	}
-	free(info->export_env);
+	free_env(info->export_env);
 	info->export_env = replace_line(new_export, old_pwd);
-	i = 0;
-	while (new_export[i])
-	{
-		free(new_export[i]);
-		i++;
-	}
-	free(new_export);
+	free_env(new_export);
 	free(new_cwd);
 	free(env_pwd);
 	free(old_pwd);

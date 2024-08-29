@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 15:46:24 by pauberna          #+#    #+#             */
-/*   Updated: 2024/03/11 11:20:37 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/08/29 17:22:30 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (ptr == NULL)
 		return (NULL);
 	n = 0;
-	while (s1[n])
+	while (s1 && s1[n])
 	{
 		ptr[n] = s1[n];
 		n++;
 	}
 	i = 0;
-	while (s2[i])
+	while (s2 && s2[i])
 	{
 		ptr[n] = s2[i];
 		n++;

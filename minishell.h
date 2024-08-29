@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/08/14 16:56:06 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/08/29 17:37:30 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ typedef struct s_line
 //main.c
 
 //prompt.c
-void	prompt(int ac, char **av, t_parser *info);
+void	prompt(t_parser *info);
 
 //builtins.c
 void	decider(int ac, char **av, t_parser *info);
@@ -175,7 +175,7 @@ char	*return_part_line(char **envp, int index, int mode);
 void	free_env(char **env);
 
 //echo.c
-void	exec_echo(int fd, char **av);
+void	exec_echo(int fd, char **av, t_parser *info);
 
 //cd.c
 void	exec_cd(int fd, char **av, t_parser *info);
@@ -189,17 +189,27 @@ void	exec_export(int fd, char **av, t_parser *info);
 void	sort_env(char **new_env, int limit);
 void	print_export(int fd, char **sorted);
 int		check_line(char *line);
+int		check_argument(char *str);
 
 //env.c
 char	*check_path(char **paths, char **av);
 void	exec_env(int fd, t_parser *info);
+char	*path_creator(char **av, t_parser *info);
 void	exec_unset(char **av, t_parser *info);
 void	exec_other(int fd, char **av, t_parser *info);
-void	exec_exit(int signal, char **av, t_parser *info);
 
 //signal.c
 void	signal_decider(t_signal type);
+void	prepare_exit(char **av, t_parser *info);
 void	ignore(struct sigaction *sa, int signal);
+void	exec_exit(int signal, char **av, t_parser *info);
 void	ctrl_c(int signal, siginfo_t *info, void *context);
+
+//expansions.c
+int		check_for_dollar(char *str);
+char	*connect(char *pre, char *pos);
+char	*exec_expansion(char **env, char *str);
+char	*get_rest(char *str);
+char	*cut_str(char **env, char *str);
 
 #endif

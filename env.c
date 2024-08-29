@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:23:43 by pauberna          #+#    #+#             */
-/*   Updated: 2024/08/14 17:02:05 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/08/29 15:08:19 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,69 +51,60 @@ void	exec_unset(char **av, t_parser *info)
 	}
 }
 
-void	exec_exit(int signal, char **av, t_parser *info)
-{
-	free_env(info->env);
-	free_env(info->export_env);
-	free_env(av);
-	free(info);
-	ft_putendl_fd("exit", 1);
-	exit(signal);
-}
-
 void	exec_other(int fd, char **av, t_parser *info)
 {
-	char	**paths;
 	char	*path;
-	int		i;
-	int		id;
+	pid_t	id;
 
-	i = 0;
-	signal_decider(IGNORE);
-	if (ft_strncmp("./", av[0], 2) == 0)
-		path = ft_substr(av[0], 2, ft_strlen(av[0]) - 2);
-	else
+	
+	path = path_creator(av, info);
+	if (!path)
 	{
-		while (info->env[i])
-		{
-			if (ft_strncmp(info->env[i], "PATH=", 5) == 0)
-				break ;
-			i++;
-		}
-		if (info->env[i])
-		{
-			paths = ft_split(info->env[i], ':');
-			if (!paths || !paths[0])
-				return ;
-			paths[0] = paths[0] + 5;
-		}
-		else
-			paths = NULL;
-		path = check_path(paths, av);
-		if (!path)
-		{
-			ft_putstr_fd("minishell: ", fd);
-			ft_putstr_fd(av[0], fd);
-			ft_putstr_fd(": No such file or directory\n", fd);
-			return ;
-		}
+		ft_putstr_fd(av[0], fd);
+		ft_putstr_fd(": No such file or directory\n", fd);
+		return ;
 	}
+	signal_decider(IGNORE);
 	id = fork();
 	if (id == 0)
 	{
 		signal_decider(CHILD);
 		if (execve(path, av, info->env) == -1)
-		{
 			perror("");
-			exit(EXIT_FAILURE);
-		}
-		exit(EXIT_SUCCESS);
+		exec_exit(0, av, info);
 	}
 	else
 	{
-		waitpid(-1, NULL, 0);
+		waitpid(id, NULL, 0);
 		free(path);
 	}
+}
+
+char	*path_creator(char **av, t_parser *info)
+{
+	char	**paths;
+	char	*path;
+	int		i;
+
+	i = 0;
+	if (ft_strncmp("./", av[0], 2) == 0)
+		path = ft_substr(av[0], 2, ft_strlen(av[0]) - 2);
+	else
+	{
+		i = search_part_line(info->env, "PATH=", 5);
+		if (info->env[i])
+		{
+			paths = ft_split(info->env[i], ':');
+			if (!paths || !paths[0])
+				return (NULL);
+			paths[0] = paths[0] + 5;
+		}
+		else
+			paths = NULL;
+		path = check_path(paths, av);
+		
+	}
+	return (path);
 }
 
 char	*check_path(char **paths, char **av)

@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:26:47 by pauberna          #+#    #+#             */
-/*   Updated: 2024/08/13 13:27:15 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/08/21 18:24:47 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,47 @@ void	exec_export(int fd, char **av, t_parser *info)
 			}
 			else
 			{
-				new_export = add_env_line(info->export_env, av[i]);
-				free_env(info->export_env);
-				info->export_env = new_export;
-				if (check_line(av[i]) != 0)
+				if (check_argument(av[i]) == 0)
 				{
-					new_env = add_env_line(info->env, av[i]);
-					free_env(info->env);
-					info->env = new_env;
+					new_export = add_env_line(info->export_env, av[i]);
+					free_env(info->export_env);
+					info->export_env = new_export;
+					if (check_line(av[i]) != 0)
+					{
+						new_env = add_env_line(info->env, av[i]);
+						free_env(info->env);
+						info->env = new_env;
+					}
+				}
+				else
+				{
+					ft_putstr_fd("minishell: export: ", fd);
+					ft_putstr_fd(av[i], fd);
+					ft_putstr_fd(": ", fd);
+					perror("");
 				}
 			}
 			i++;
 		}
 	}
+}
+
+int		check_argument(char *str)
+{
+	int	n;
+
+	n = 0;
+	while (str && str[n])
+	{
+		if (str[n] == '=')
+			break ;
+		else if (ft_isalnum(str[n] == 0) && str[n] != '_')
+			return (-1);
+		n++;
+	}
+	if (n == 0)
+		return (-1);
+	return (0);
 }
 
 char	**env_to_print(char **envp)

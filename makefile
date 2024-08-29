@@ -1,9 +1,9 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror
 NAME = minishell
 
 SOURCES = main.c builtins.c builtins_helper.c builtins_helper2.c builtins_helper3.c echo.c\
-			cd.c pwd.c export.c prompt.c env.c signal.c
+			cd.c pwd.c export.c prompt.c env.c signal.c expansions.c
 
 OBJS_DIR = obj
 OBJECTS = $(addprefix $(OBJS_DIR)/, $(SOURCES:%.c=%.o))

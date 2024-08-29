@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:22:12 by pauberna          #+#    #+#             */
-/*   Updated: 2024/08/13 13:24:06 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/08/29 17:47:17 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,21 @@ char	*return_part_line(char **envp, int index, int mode)
 
 	line = NULL;
 	n = 0;
+	if (index == -1)
+		return (NULL);
 	while (envp && envp[n])
 	{
 		if (n == index)
 			break ;
 		n++;
 	}
-	if (mode == 0)
-		line = ft_substr(envp[n], ft_strlen2(envp[n], '=') + 1, ft_strlen(envp[n]) - ft_strlen2(envp[n], '='));
-	else if (mode == 1)
-		line = ft_substr(envp[n], 0, ft_strlen2(envp[n], '='));
+	if (envp[n])
+	{
+		if (mode == 0)
+			line = ft_substr(envp[n], ft_strlen2(envp[n], '=') + 1, ft_strlen(envp[n]) - ft_strlen2(envp[n], '='));
+		else if (mode == 1)
+			line = ft_substr(envp[n], 0, ft_strlen2(envp[n], '='));
+	}
 	return (line);
 }
 

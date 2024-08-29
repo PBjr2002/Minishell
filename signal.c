@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:18:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/08/14 17:00:48 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/08/28 17:50:34 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,30 @@ void	signal_decider(t_signal type)
 		ignore(&sa, SIGINT);
 		ignore(&sa, SIGQUIT);
 	}
+}
+
+void	prepare_exit(char **av, t_parser *info)
+{
+	int	signal;
+
+	if (av[1])
+	{
+		signal = ft_atoi(av[1]);
+		exec_exit(signal, av, info);
+	}
+	else
+		exec_exit(0, av, info);
+}
+
+void	exec_exit(int signal, char **av, t_parser *info)
+{
+	if (info->env)
+		free_env(info->env);
+	if (info->export_env)
+		free_env(info->export_env);
+	if (av)
+		free_env(av);
+	free(info);
+	ft_putendl_fd("exit", 1);
+	exit(signal);
 }
