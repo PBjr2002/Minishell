@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/08/29 17:37:30 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/08/30 16:24:52 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ int		search_part_line(char **envp, char *line_to_search, size_t len);
 char	*return_env_line(char **envp, int index);
 char	*return_part_line(char **envp, int index, int mode);
 void	free_env(char **env);
+char	*ft_getpid(void);
 
 //echo.c
 void	exec_echo(int fd, char **av, t_parser *info);

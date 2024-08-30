@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:22:12 by pauberna          #+#    #+#             */
-/*   Updated: 2024/08/29 17:47:17 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/08/30 16:24:40 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,26 @@ void	free_env(char **env)
 		n++;
 	}
 	free(env);
+}
+
+char	*ft_getpid(void)
+{
+	char	**split;
+	char	*pid;
+	int		fd;
+
+	fd = open("/proc/self/stat", O_RDONLY);
+	if (fd == -1)
+		return (NULL);
+	pid = get_next_line(fd);
+	close(fd);
+	if (!pid)
+		return (NULL);
+	split = ft_split(pid, ' ');
+	if (!split)
+		return (NULL);
+	free(pid);
+	pid = ft_strdup(split[0]);
+	free_env(split);
+	return (pid);
 }

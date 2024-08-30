@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:18:00 by pauberna          #+#    #+#             */
-/*   Updated: 2024/08/13 15:08:36 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/08/30 15:31:08 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int		search_part_line(char **envp, char *line_to_search, size_t len)
 		return (-1);
 	while (envp && envp[n])
 	{
-		if (ft_strncmp(envp[n], line_to_search, len) == 0)
+		if (ft_strncmp(envp[n], line_to_search, len) == 0 && ft_strlen2(envp[n], '=') == ft_strlen2(line_to_search, '='))
 			break ;
 		n++;
 	}

@@ -10,13 +10,24 @@ OBJECTS = $(addprefix $(OBJS_DIR)/, $(SOURCES:%.c=%.o))
 
 LIBFT_DIR = ./libft/
 LIBFT = $(LIBFT_DIR)libft.a
-LIBFLAG = $(LIBFT) -lreadline 
+LIBFLAG = $(LIBFT) -lreadline
+
+Color_Off='\033[0m'       # Text Reset
+IGreen='\033[0;92m'       # Green
+IYellow='\033[0;93m'      # Yellow
+ICyan='\033[0;96m'        # Cyan
+
+
+MSG1 = @echo ${IGreen}"Compiled Successfully ✔︎"${Color_Off}
+MSG2 = @echo ${IYellow}"Cleaned Successfully ✔︎"${Color_Off}
+MSG3 = @echo ${ICyan}"Cleaned ${NAME} Successfully ✔︎"${Color_Off}
 
 
 all: $(NAME)
 
 $(NAME): $(OBJECTS) $(LIBFT)
 		$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(LIBFLAG)
+		$(MSG1)
 
 $(OBJS_DIR)/%.o:%.c
 	mkdir -p $(OBJS_DIR)
@@ -28,10 +39,12 @@ $(LIBFT):
 clean:
 		$(MAKE) clean -C $(LIBFT_DIR)
 		rm -rf $(OBJS_DIR)
+		$(MSG2)
 
 fclean: clean
 		$(MAKE) fclean -C $(LIBFT_DIR)
 		rm -f $(NAME)
+		$(MSG3)
 
 re: fclean all
 
