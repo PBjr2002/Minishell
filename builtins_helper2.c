@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:18:00 by pauberna          #+#    #+#             */
-/*   Updated: 2024/08/30 15:31:08 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:05:55 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int		search_env_line(char **envp, char *line_to_search)
 			break ;
 		n++;
 	}
+	if (!envp[n])
+		return (-1);
 	return (n);
 }
 

@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/08/29 13:21:35 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/02 12:23:01 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	prompt(t_parser *info)
 	{
 		signal_decider(PARENT);
 		new_ac = 0;
-		input = readline("\x1b[38;5;91;1mHellshell> \x1b[0m");
+		input = readline("Hellshell> ");
 		new_av = ft_split(input, ' ');
 		if (input && input[0])
 			add_history(input);
@@ -38,3 +38,6 @@ void	prompt(t_parser *info)
 		}
 	}
 }
+
+/* input = readline("\x1b[38;5;91;1mHellshell> \x1b[0m"); */
+

@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:26:47 by pauberna          #+#    #+#             */
-/*   Updated: 2024/08/21 18:24:47 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:07:41 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ void	exec_export(int fd, char **av, t_parser *info)
 				new_export = replace_line(info->export_env, av[i]);
 				free_env(info->export_env);
 				info->export_env = new_export;
+				if (search_part_line(info->env, av[i], ft_strlen2(av[i], '=')) != -1)
+				{
+					new_env = replace_line(info->export_env, av[i]);
+					free_env(info->env);
+					info->env = new_env;
+				}
 			}
 			else
 			{

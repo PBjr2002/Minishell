@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:23:43 by pauberna          #+#    #+#             */
-/*   Updated: 2024/08/29 15:08:19 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/02 16:03:09 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,9 @@ void	exec_other(int fd, char **av, t_parser *info)
 	if (id == 0)
 	{
 		signal_decider(CHILD);
-		if (execve(path, av, info->env) == -1)
-			perror("");
+		if (access(path, X_OK) == 0)
+			if (execve(path, av, info->env) == -1)
+				perror("");
 		exec_exit(0, av, info);
 	}
 	else
@@ -86,7 +87,7 @@ char	*path_creator(char **av, t_parser *info)
 	char	*path;
 	int		i;
 
-	i = 0;
+	paths = NULL;
 	if (ft_strncmp("./", av[0], 2) == 0)
 		path = ft_substr(av[0], 2, ft_strlen(av[0]) - 2);
 	else
@@ -99,12 +100,14 @@ char	*path_creator(char **av, t_parser *info)
 				return (NULL);
 			paths[0] = paths[0] + 5;
 		}
-		else
-			paths = NULL;
 		path = check_path(paths, av);
 		
 	}
-	return (path);
+	if (path)
+		if (access(path, F_OK) == 0)
+			if (access(path, X_OK) == 0)
+				return (path);
+	return (NULL);
 }
 
 char	*check_path(char **paths, char **av)
@@ -125,7 +128,7 @@ char	*check_path(char **paths, char **av)
 		free(tmp);
 		if (!path)
 			return (NULL);
-		if (access(path, X_OK) == 0)
+		if (access(path, F_OK) == 0)
 			break ;
 		if (i == 0)
 			free(paths[i] - 5);

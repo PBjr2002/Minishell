@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:22:12 by pauberna          #+#    #+#             */
-/*   Updated: 2024/08/30 16:24:40 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:52:03 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,27 @@ char	*ft_getpid(void)
 	pid = ft_strdup(split[0]);
 	free_env(split);
 	return (pid);
+}
+
+char	*cut_strhelper(char **env, char *str, char *var, int n)
+{
+	char	*value;
+	int		i;
+
+	if (check_for_dollar(str, 0) == 2)
+	{
+		n += 2;
+		value = ft_getpid();
+	}
+	else
+	{
+		n++;
+		i = n;
+		while (str && str[i] && ft_isalnum(str[i]) != 0)
+			i++;
+		var = ft_substr(str, n, i - n);
+		value = return_part_line(env, search_part_line(env, var, ft_strlen(var)), 0);
+		free(var);
+	}
+	return (value);
 }

@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:38:16 by pauberna          #+#    #+#             */
-/*   Updated: 2024/08/30 15:18:15 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/02 12:22:37 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	exec_echo(int fd, char **av, t_parser *info)
 			ft_putchar_fd(' ', fd);
 		if (n == 1 && av[n][0] == '-')
 		{
-			while (av[n][i] && av[n][i] != ' ' && av[n][i] != 'n')
+			while (av[n][i] && av[n][i] != ' ' && av[n][i] == 'n')
 				i++;
 			if (av[n][i] == ' ' || av[n++][i] == '\0')
 				nl = 1;
@@ -40,30 +40,3 @@ void	exec_echo(int fd, char **av, t_parser *info)
 	if (nl == 0)
 		ft_putchar_fd('\n', fd);
 }
-
-/* while (av[n])
-{
-	if (n > 1)
-		ft_putchar_fd(' ', fd);
-	if (n == 1 && av[n][0] == '-')
-	{
-		while (av[n][i] && av[n][i] != ' ')
-		{
-			if (av[n][i] != 'n')
-				break ;
-			i++;
-		}
-		if (av[n][i] == ' ' || av[n][i] == '\0')
-		{
-			nl = 1;
-			n++;
-		}
-	}
-	if (av[n])
-	{
-		ft_putstr_fd(av[n], fd);
-		n++;
-	}
-}
-if (nl == 0)
-	ft_putchar_fd('\n', fd); */

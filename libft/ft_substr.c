@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 17:47:00 by pauberna          #+#    #+#             */
-/*   Updated: 2023/10/06 15:57:39 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/03 13:02:42 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char	*str;
 	size_t	n;
 
+	if (len == 0)
+		return (NULL);
 	if (start > ft_strlen(s))
 		len = 0;
 	else if (start + len > ft_strlen(s))
