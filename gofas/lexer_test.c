@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 18:10:52 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/29 17:09:06 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:50:39 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int input_checker(t_lexer *lexer)
 
 //This function searches the whole tree for a type that corresponds to the type given to it by type_to_search (obvious downsizing necessary).
 //My project partner gave me a great idea, repurpose this function to free everything allocated in the tree... testing needed.
-void ft_branch_search(t_tree *actual, int type_to_search)
+/* void ft_branch_search(t_tree *actual, int type_to_search)
 {
 	while (actual->left != NULL)
 		{
@@ -185,12 +185,22 @@ void ft_branch_search(t_tree *actual, int type_to_search)
 	}
 	if (actual->index == 0 && actual->type == type_to_search)
 			ft_printf("Index: %d, Content: %s, Top of the tree\n", actual->index, actual->str);
-}
+} */
 
 ////////////////////////////////////////////////////////////////////////////TESTING GROUNDS/////////////////////////////////////////////////////////////////////////////////////
 /* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!CREATE A NEW MAIN FOR EVERYTHING YOU TEST!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 
 //this is a simple test of the input storing and quotes checker, as well as solving anything inside single or double quotes (ensure the quotes are the first slot in your input)
+
+char **ft_get_env(char **genv)
+{
+	static char **env;
+
+	if (genv)
+		env = genv;
+	return(env);
+	
+}
 
 int main(void)
 {
@@ -200,6 +210,7 @@ int main(void)
 	
 	while (1)
 	{
+		
 		lexer.invalid_lexer = false;
 		store_input(&lexer);
 		if (ft_strlen(lexer.input) == 0)

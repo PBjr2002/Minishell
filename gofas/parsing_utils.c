@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:44:40 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/29 15:44:09 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:04:00 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,27 @@ void command_id(t_token *token_list)
 	
 	first_word = true;
 	temp = token_list;
-	if (token_list)
 	while (token_list->index != 0)
 		token_list = token_list->previous;
 	while (token_list)
 	{
-		if (token_list->type == TYPE_COMMAND && first_word == true)
-			first_word = false;
+		if ((token_list->type == TYPE_COMMAND || token_list->type == TYPE_DOLLAR) && first_word == true)
+			{
+				first_word = false;
+				if (token_list->type == TYPE_DOLLAR)
+					token_list->type = TYPE_DOLLAR_COMMAND;
+			}
 		else if (token_list->type == TYPE_PIPE)
 			first_word = true;
 		else if (token_list -> type == TYPE_COMMAND && first_word == false)
 			token_list->type = TYPE_ARGUMENT;
 		token_list = token_list->next;
 	}
+}
+
+void command_expand ()
+{
+	
 }
 
 //everything inside the single quotes are treated as a word, no matter what they are.

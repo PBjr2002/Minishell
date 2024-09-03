@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:30:15 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/29 15:50:14 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:23:45 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ REMEMBER THIS ORDER:
     1. Reads command
     2. Tokenization 
     3. Command Identification x (done)
-    4. Command Expansion
+    4. Command Expansion x (URGENT DO NOW)
     5. Quote Removal x (done)
     6. Redirections x (done)
     7. Command Execution 
@@ -40,15 +40,16 @@ REMEMBER THIS ORDER:
 
 */
 
-#include "minishell.h"
-
 //this function takes care of the 3 sections of parsing highlighted with an x in the above list
+
+#include "minishell.h"
 
 t_token	*parsing(t_token *token_list)
 {
 	t_token	*temp;
 
 	command_id(token_list);
+	command_expand(token_list);
 	temp = token_list;
 	while (token_list)
 	{
@@ -78,3 +79,11 @@ t_token	*parsing(t_token *token_list)
 	//add dunction that searches and destroys (marks?) empty tokens (or exclude them from tree)
 	return (token_list);
 }
+
+//This function constructs the tree to send to the executor
+
+/* t_tree tree_creation(t_token *token_list)
+{
+	pipe_scanner(token_list);
+	
+} */

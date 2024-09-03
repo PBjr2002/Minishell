@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/08/29 15:10:14 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:52:17 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define TYPE_ARGUMENT 7
 # define TYPE_COMMAND 8
 # define TYPE_DOUBLE_QUOTE_EXPAND 9
+# define TYPE_DOLLAR_COMMAND 10
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
@@ -49,11 +50,25 @@ typedef struct s_token
 	struct s_token			*next;
 }	t_token;
 
+/* typedef struct s_simple_tree
+{
+	char	*str;
+	int		index;
+	int		type;
+	int		fd_in;
+	int		fd_out;
+	struct	s_simple_tree	*previous;
+	struct	s_simple_tree	*next;
+}	t_simple_tree; */
+
 typedef struct s_tree
 {
 	char					*str;
-	int						index;
+	int						pipeline;
 	int						type;
+	int						fd_in;
+	int						fd_out;
+	int						heredoc_input_fd;
 	bool					solved;
 	struct s_tree			*parent;
 	struct s_tree			*left;
@@ -70,7 +85,6 @@ typedef struct s_lexer
 /* typedef struct s_parser
 {
 	char					**env;
-	char					**export_env;
 	pid_t					pid;
 	t_pipe					*pipe;
 }	t_parser; */
@@ -122,7 +136,7 @@ int 			redirect_token_type_solver(t_lexer *lexer, int n);
 //void
 
 void 			command_id(t_token *token_list);
-void			ft_branch_attach(t_tree *tree, t_tree *new, int branch_type);
+void			ft_branch_attach(t_tree *tree, t_tree *new, int branch_type, int pipeline);
 void			ft_token_append(t_token *token_list, t_token *new, char *str);
 void			quote_token_remover(t_token *token, int export, int n);
 void			redirection_handler(t_token *list, int n, int export);
@@ -130,7 +144,7 @@ void			store_input(t_lexer *lexer);
 
 //lists and trees
 
-t_tree			*ft_branch_new(char *str, int index, int type);
+t_tree			*ft_branch_new(char *str, int type);
 t_token			*ft_token_new(char *str);
 //t_token			*temp_token_remove(t_token *temp);
 t_token			*parsing(t_token *token_list);
