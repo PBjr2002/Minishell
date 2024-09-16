@@ -15,6 +15,7 @@
 void	exec_cd(int fd, char **av, t_parser *info)
 {
 	char	*cwd;
+
 	char	*tmp;
 	char	*new_cwd;
 	char	*env_pwd;
