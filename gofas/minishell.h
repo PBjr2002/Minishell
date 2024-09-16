@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/03 16:52:17 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/11 15:41:37 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,19 @@ typedef struct s_token
 	struct	s_simple_tree	*next;
 }	t_simple_tree; */
 
+typedef	struct s_environment
+{
+	char					**env;
+} t_environment;
+
 typedef struct s_tree
 {
 	char					*str;
-	int						pipeline;
+	int						pipeline; //if this is 0, no pipes exist
 	int						type;
 	int						fd_in;
 	int						fd_out;
-	int						heredoc_input_fd;
+	int						*heredoc_input_fd; //default value is 0, change it to whatever you want Paulo
 	bool					solved;
 	struct s_tree			*parent;
 	struct s_tree			*left;
@@ -120,11 +125,12 @@ typedef struct s_simple_cmd
 
 //char, char*
 
-
+char 			*ft_command_expander(char *str, t_environment *env);
+char 			*dollar_removal(char *str, int expand_start, int expand_end, t_environment *env);
+char 			*env_search(char *expand, t_environment *env);
 
 //int, unsigned int, long, long long
 
-/* int 			redirect_token_define(t_lexer *lexer, int n); */
 int 			com_token_define(t_lexer *lexer, t_token *token_list, int n);
 int				dollar_token_define(t_lexer *lexer, t_token *token_list, int n);
 int				pipe_token_define(t_token *token_list, int n);
@@ -135,6 +141,7 @@ int 			redirect_token_type_solver(t_lexer *lexer, int n);
 
 //void
 
+void 			command_expand (t_token *token_list, t_environment *env);
 void 			command_id(t_token *token_list);
 void			ft_branch_attach(t_tree *tree, t_tree *new, int branch_type, int pipeline);
 void			ft_token_append(t_token *token_list, t_token *new, char *str);
@@ -144,12 +151,14 @@ void			store_input(t_lexer *lexer);
 
 //lists and trees
 
-t_tree			*ft_branch_new(char *str, int type);
+t_tree			*ft_branch_new(char *str, int type, int pipeline);
+t_tree			*ft_pipe_branch_attach(t_tree *tree, t_tree *new, int pipeline);
 t_token			*ft_token_new(char *str);
 //t_token			*temp_token_remove(t_token *temp);
-t_token			*parsing(t_token *token_list);
+t_tree			*parsing(t_token *token_list, t_environment *env);
 t_token			*temp_list_cleaner(t_token *list);
 t_token			*tokenization(t_lexer *lexer);
+t_environment 	*env_setup(char **envp);
 /* t_lexer		*ft_lexer_new(void);
 t_pipe			*ft_pipe_new(char *str, int index);
 t_simple_cmd	*ft_simple_cmd_new(char *str); */

@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:44:40 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/03 17:04:00 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:34:45 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 //this function identifies commands and arguments
 void command_id(t_token *token_list)
 {
-	t_token *temp;
 	bool	first_word;
 	
 	first_word = true;
-	temp = token_list;
 	while (token_list->index != 0)
 		token_list = token_list->previous;
 	while (token_list)
@@ -32,15 +30,41 @@ void command_id(t_token *token_list)
 			}
 		else if (token_list->type == TYPE_PIPE)
 			first_word = true;
-		else if (token_list -> type == TYPE_COMMAND && first_word == false)
+		else if (token_list->type == TYPE_COMMAND && first_word == false)
 			token_list->type = TYPE_ARGUMENT;
 		token_list = token_list->next;
 	}
 }
 
-void command_expand ()
+//this function will scan all commands and expand them if necessary
+void command_expand (t_token *token_list, t_environment *env)
 {
-	
+	int n;
+
+	while (token_list)
+	{
+		n = 0;
+		if (token_list->type == TYPE_COMMAND || token_list->type == TYPE_DOLLAR_COMMAND)
+		{
+			if (token_list->str[0] == '\'')
+				token_list = token_list->next;
+			else
+			{
+				while (token_list->str[n])
+				{
+					if (token_list->str[n] == '$')
+					{
+						token_list->str = ft_command_expander(token_list->str, env);
+						break ;
+					}
+					n++;
+				}
+				token_list = token_list->next;
+			}
+		}
+		else
+			token_list = token_list->next;
+	}
 }
 
 //everything inside the single quotes are treated as a word, no matter what they are.

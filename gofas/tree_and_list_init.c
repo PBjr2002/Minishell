@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:47 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/03 16:14:21 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/09 15:09:35 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_token	*ft_token_new(char *str)
 	return (new);
 }
 
-t_tree	*ft_branch_new(char *str, int type)
+t_tree	*ft_branch_new(char *str, int type, int pipeline)
 {
 	t_tree	*new;
 
@@ -38,7 +38,7 @@ t_tree	*ft_branch_new(char *str, int type)
 	if (new == NULL)
 		return (NULL);
 	new->str = str;
-	new->pipeline = 0;
+	new->pipeline = pipeline;
 	new->type = type;
 	new->fd_in = STDIN_FILENO;
 	new->fd_out = STDOUT_FILENO;
@@ -62,6 +62,28 @@ t_token	*temp_token_remove(t_token *temp)
 	temp->previous = NULL;
 	free(temp2);
 	return (temp);
+}
+
+//copies the environment variable list to our own environment struct
+t_environment *env_setup(char **envp)
+{	
+	int len;
+	int i;
+	t_environment *environment;
+
+	len = 0;
+	i = 0;
+	environment = (t_environment*)malloc(sizeof(t_environment));
+	while (envp && envp[len])
+		len++;
+	environment->env = (char **)malloc(sizeof(char *) * (len));
+	while (envp && envp[i])
+	{
+		environment->env[i] = ft_strdup(envp[i]);
+		i++;
+	}
+	environment->env[i] = NULL;
+	return(environment);
 }
 
 /* t_redirect	*ft_redirect_new(char *str)

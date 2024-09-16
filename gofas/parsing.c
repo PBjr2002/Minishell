@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:30:15 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/03 17:23:45 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/11 14:18:05 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ REMEMBER THIS ORDER:
     1. Reads command
     2. Tokenization 
     3. Command Identification x (done)
-    4. Command Expansion x (URGENT DO NOW)
+    4. Command Expansion x (URGENT DO NOW) (done, for some reason delegated to me)
     5. Quote Removal x (done)
     6. Redirections x (done)
     7. Command Execution 
@@ -44,13 +44,24 @@ REMEMBER THIS ORDER:
 
 #include "minishell.h"
 
-t_token	*parsing(t_token *token_list)
+t_tree	*parsing(t_token *token_list, t_environment *env)
 {
 	t_token	*temp;
+	t_tree	*temp_tree;
+	t_tree	*tree;
 
-	command_id(token_list);
-	command_expand(token_list);
+	(void)env;
 	temp = token_list;
+	command_id(token_list);
+	while (token_list)
+	{
+		ft_printf("Token index: %d, Token type: %d, Token contains: %s\n", 
+		token_list->index, token_list->type, token_list->str);
+		token_list = token_list->next;
+	}
+	token_list = temp;
+	command_expand(token_list, env);
+	ft_printf("-------------INITIATING COMMAND EXPANDER-------------\n");
 	while (token_list)
 	{
 		ft_printf("Token index: %d, Token type: %d, Token contains: %s\n", 
@@ -76,14 +87,17 @@ t_token	*parsing(t_token *token_list)
 		token_list = token_list->next;
 	}
 	token_list = temp;
-	//add dunction that searches and destroys (marks?) empty tokens (or exclude them from tree)
-	return (token_list);
+	//add function that searches and destroys (marks?) empty tokens (or exclude them from tree)
+	tree = tree_creation_function(token_list);
+	/* ft_printf("-------------INITIATING TREE CREATION----------------\n");
+	while (tree)
+	{
+		ft_printf("Branch parent: Token type: %d, Token contains: %s\n", 
+		token_list->index, token_list->type, token_list->str);
+		token_list = token_list->next;
+	} */
+	return (tree);
 }
 
-//This function constructs the tree to send to the executor
 
-/* t_tree tree_creation(t_token *token_list)
-{
-	pipe_scanner(token_list);
-	
-} */
+

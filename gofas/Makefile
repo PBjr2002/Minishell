@@ -6,7 +6,7 @@
 #    By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/05 14:28:19 by lmiguel-          #+#    #+#              #
-#    Updated: 2024/08/29 15:12:37 by lmiguel-         ###   ########.fr        #
+#    Updated: 2024/09/05 14:04:21 by lmiguel-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SOURCES		=	lexer_test.c\
 				tokenization.c\
 				parsing_utils.c\
 				parsing.c\
+				expander_utils.c\
 
 OBJ_DIR		= obj
 OBJ			= $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))

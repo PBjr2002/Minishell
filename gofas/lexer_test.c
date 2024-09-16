@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 18:10:52 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/03 16:50:39 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/11 14:17:36 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ Parsing Rules:
 REMEMBER THIS ORDER:
 
     1. Reads command x (done)
-    2. Tokenization 
+    2. Tokenization
     3. Command Identification
-    4. Command Expansion 
-    5. Quote Removal 
-    6. Redirections 
-    7. Command Execution 
+    4. Command Expansion
+    5. Quote Removal
+    6. Redirections
+    7. Command Execution
 
 ------------------------------TOKENS--------------------------------
 
@@ -132,7 +132,7 @@ int input_checker(t_lexer *lexer)
 
 //This function searches the whole tree for a type that corresponds to the type given to it by type_to_search (obvious downsizing necessary).
 //My project partner gave me a great idea, repurpose this function to free everything allocated in the tree... testing needed.
-/* void ft_branch_search(t_tree *actual, int type_to_search)
+/*void ft_branch_search(t_tree *actual, int type_to_search)
 {
 	while (actual->left != NULL)
 		{
@@ -199,18 +199,23 @@ char **ft_get_env(char **genv)
 	if (genv)
 		env = genv;
 	return(env);
-	
 }
 
-int main(void)
+int main(int argc, char **argv, char **envp)
 {
-	t_lexer 	lexer;
-	t_token		*token_list;
+	t_lexer 		lexer;
+	t_token			*token_list;
+	t_environment	*environment;
+	t_tree			*tree;
 	//t_parser	*parser;
 	
+	(void)argv;
+	(void)argc;
+	environment = env_setup(envp);
 	while (1)
 	{
-		
+		ft_get_env(environment->env);
+		//ft_print_array(environment.env);
 		lexer.invalid_lexer = false;
 		store_input(&lexer);
 		if (ft_strlen(lexer.input) == 0)
@@ -224,7 +229,7 @@ int main(void)
 		ft_printf("This is the input: %s\n", lexer.input);
 		ft_printf("-------------INITIATING TOKENIZATION-----------------\n");
 		token_list = tokenization(&lexer);
-		token_list = parsing(token_list);
+		token_list = parsing(token_list, environment);
 		//parser = parsing(&token_list);
 	}
 	return (0);
