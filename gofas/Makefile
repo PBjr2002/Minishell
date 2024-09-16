@@ -6,7 +6,7 @@
 #    By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/05 14:28:19 by lmiguel-          #+#    #+#              #
-#    Updated: 2024/09/05 14:04:21 by lmiguel-         ###   ########.fr        #
+#    Updated: 2024/09/16 17:49:59 by lmiguel-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SOURCES		=	lexer_test.c\
 				token_solvers.c\
 				tree_and_list_append.c\
 				tree_and_list_init.c\
+				tree_creation_utils.c\
 				tokenization.c\
 				parsing_utils.c\
 				parsing.c\

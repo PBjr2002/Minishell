@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 13:15:38 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/12 18:24:52 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:45:21 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,12 +170,60 @@ t_tree	*ft_fill_tree_zero(t_token *token_list, t_tree *current, int pipeline, in
 	return (current);
 }
 
+// this attaches the command and argument tokens to our current pipeline 1 top;
+// it goes without saying that it should be the last function called during pipeline construction.
+t_tree	*ft_fill_tree1(t_token *token_list, t_tree *current, int pipeline, int pipenum)
+{
+	t_tree	*temp;
+	int		current_pipeline;
+
+	temp = current;
+	while (current->left != NULL && current->pipeline != pipeline);
+			current = current->left;
+	while (token_list != TYPE_PIPE && token_list)
+	{
+		if (token_list->type == TYPE_COMMAND || token_list->type == TYPE_DOLLAR_COMMAND)
+		{
+			ft_command_branch_attach1(current, ft_branch_new(token_list->str, 
+				token_list->type, pipeline));
+			current = current->left;
+		}
+		if (token_list->type == 5 || token_list->type == 7 || token_list->type == 9)
+		{
+			ft_argument_branch_attach(current, ft_branch_new(token_list->str, 
+				token_list->type, pipeline));
+		}
+		token_list = token_list->next;
+	}
+} 
+//5 7 9
+
 // this attaches the command and argument tokens to our current tree top;
 // it goes without saying that it should be the last function called during pipeline construction.
-t_tree	*ft_fill_tree(t_token *token_list, t_tree *current, int pipeline, int pipenum)
+t_tree	*ft_fill_tree2(t_token *token_list, t_tree *current, int pipeline, int pipenum)
 {
 	t_tree	*temp;
 	
 	temp = current;
-	
+	while (current->pipeline != pipeline && (current->type != 8 || current->type != 10))
+	{
+		if (current->pipeline = pipenum + 1)
+			break ;
+		current = current->left;
+	}
+	while (token_list != TYPE_PIPE && token_list)
+	{
+		if (token_list->type == TYPE_COMMAND || token_list->type == TYPE_DOLLAR_COMMAND)
+		{
+			ft_command_branch_attach2(current, ft_branch_new(token_list->str, 
+				token_list->type, pipeline));
+			current = current->right;
+		}
+		if (token_list->type == 5 || token_list->type == 7 || token_list->type == 9)
+		{
+			ft_argument_branch_attach(current, ft_branch_new(token_list->str, 
+				token_list->type, pipeline));
+		}
+		token_list = token_list->next;
+	}
 }
