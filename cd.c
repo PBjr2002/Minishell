@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:55:40 by pauberna          #+#    #+#             */
-/*   Updated: 2024/08/29 13:09:22 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/16 23:25:07 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	exec_cd(int fd, char **av, t_parser *info)
 	}
 	else
 	{
+		
 		if (ft_strcmp(av[1], "..") == 0)
 		{
 			old_pwd = ft_strjoin("OLDPWD=", cwd);
