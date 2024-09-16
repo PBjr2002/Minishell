@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/03 15:19:06 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/16 12:11:54 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,15 @@ typedef struct s_line
 	
  */
 
+typedef struct s_expand
+{
+	char	*pos;
+	char	*value;
+	int		n;
+	int		i;
+	int		a;
+}				t_expand;
+
 //main.c
 
 //prompt.c
@@ -174,7 +183,7 @@ char	*return_env_line(char **envp, int index);
 char	*return_part_line(char **envp, int index, int mode);
 void	free_env(char **env);
 char	*ft_getpid(void);
-char	*cut_strhelper(char **env, char *str, char *var, int n);
+char	*cut_strhelper(t_expand *ex, char **env, char *str, char *var);
 
 //echo.c
 void	exec_echo(int fd, char **av, t_parser *info);
@@ -211,7 +220,7 @@ void	ctrl_c(int signal, siginfo_t *info, void *context);
 int		check_for_dollar(char *str, int n);
 char	*connect(char *pre, char *pos);
 char	*exec_expansion(char **env, char *str);
-char	*get_rest(char *str, int n);
-char	*cut_str(char **env, char *str, int n);
+void	get_rest(char *str, t_expand *ex);
+void	cut_str(char **env, char *str, t_expand *ex);
 
 #endif
