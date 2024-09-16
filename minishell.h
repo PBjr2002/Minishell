@@ -6,19 +6,18 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/16 12:11:54 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:08:52 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef MINISHELL_1_H
+# define MINISHELL_1_H
 
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <fcntl.h>
-# include <stddef.h>
 # include <sys/time.h>
 # include <sys/wait.h>
 # include <sys/types.h>
@@ -28,125 +27,9 @@
 # include <signal.h>
 # include <errno.h>
 # include <stdbool.h>
+# include "gofas/minishell2.h"
 # include "libft/libft.h"
 # include "libft/get_next_line.h"
-
-typedef enum s_signal
-{
-	PARENT,
-	CHILD,
-	HERE_DOC,
-	IGNORE,
-}			t_signal;
-
-typedef struct s_token
-{
-	char					*str;
-	int						index;
-	struct s_token			*next;
-}				t_token;
-
-typedef struct s_redirect
-{
-	char					*str;
-	int						index;
-	struct s_redirects		*next;
-}				t_redirect;
-
-typedef struct s_lexer
-{
-	char					*str;
-	int						index;
-	struct s_lexer			*next;
-}				t_lexer;
-
-typedef struct s_pipe
-{
-	char					*str;
-	int						index;
-	int						fd[2];
-	struct s_pipe			*next;
-}				t_pipe;
-
-typedef struct s_simple_cmd
-{
-	char					**str;
-	t_redirect				*redirects;
-	struct s_parser			*parser;
-	struct s_simple_cmd		*next;
-}				t_simple_cmd;
-
-typedef struct s_parser
-{
-	char					**env;
-	char					**export_env;
-	pid_t					pid;
-	t_pipe					*pipe;
-	t_simple_cmd			*simple_commands;
-}				t_parser;
-
-/* typedef struct s_token
-{
-	char			*str;
-	int				index;
-	struct s_token	*next;
-	struct s_token	*prev;
-}				t_token;
-
-typedef struct s_parser
-{
-	char			*redirect;
-	int				index;
-	t_token			*token;
-	struct s_parser	*next;
-	struct s_parser	*prev;
-}				t_parser;
-
-typedef struct s_line
-{
-	char			**cmd;
-	int				input;
-	int				output;
-	int				index;
-	t_parser		*redirect;
-	struct s_line	*next;
-	struct s_line	*prev;
-}				t_line; */
-
-
-// 1- Reads command
-// 2- Tokenization
-// 3- Command Identification
-// 4- Command Expansion
-// 5- Quote Removal
-// 6- Redirections
-// 7- Command Execution
-
-/* 
-	Builtins:
-	-echo with -n option
-	-cd
-	-pwd
-	-export
-	-unset
-	-env
-	-exit
-
-	Metacharacters :
-	- |
-	- > and <
-	- *
-	- ~
-	- $
-	- ^
-
-	Having a history
-
-	Use of absolute path(search in pipex)
-	Use of relative path
-
-	
- */
 
 typedef struct s_expand
 {
@@ -160,10 +43,10 @@ typedef struct s_expand
 //main.c
 
 //prompt.c
-void	prompt(t_parser *info);
+void	prompt(t_environment *info);
 
 //builtins.c
-void	decider(int ac, char **av, t_parser *info);
+void	decider(t_tree *tree, t_environment *info);
 
 //builtins_helper.c
 char	**copy_env(char **envp, int mode);

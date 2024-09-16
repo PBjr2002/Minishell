@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:56:06 by pauberna          #+#    #+#             */
-/*   Updated: 2024/08/29 13:13:30 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:55:18 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int	main(int ac, char **av, char **envp)
 {
-	t_parser	*info;
-	char		**env;
+	t_environment	*info;
+	char			**env;
 
 	(void) av;
 	if (ac != 1)
 		return (1);
-	info = malloc(sizeof(t_parser));
+	info = malloc(sizeof(t_environment));
 	if (search_part_line(envp, "SHLVL", ft_strlen("SHLVL")) == -1)
 	{
 		env = add_env_line(envp, "SHLVL=1");

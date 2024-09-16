@@ -6,29 +6,37 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/02 12:23:01 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:07:50 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	prompt(t_parser *info)
+void	prompt(t_environment *info)
 {
-	char	*input;
+	t_lexer	*lexer;
+	t_token	*token_list;
+	t_tree	*tree;
 	char	**new_av;
 	int		new_ac;
 
+	ft_calloc(sizeof(t_lexer), 1);
 	while (1)
 	{
 		signal_decider(PARENT);
 		new_ac = 0;
-		input = readline("Hellshell> ");
-		new_av = ft_split(input, ' ');
-		if (input && input[0])
-			add_history(input);
-		else if (!input)
+		lexer->invalid_lexer = false;
+		store_input(lexer);
+		add_history(lexer->input);
+		if (ft_strlen(lexer->input) == 0 || !lexer->input)
+		{
+			free(lexer->input);
 			exec_exit(0, new_av, info);
-		free(input);
+		}
+		else if (lexer->invalid_lexer == true || input_checker(lexer) == 0)
+			continue;
+		token_list = tokenization(&lexer);
+		tree = parsing(token_list, info);
 		if (new_av && new_av[0])
 		{
 			while (new_av[new_ac])

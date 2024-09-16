@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_test.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 18:10:52 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/11 14:17:36 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:05:56 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,8 @@ int main(int argc, char **argv, char **envp)
 	//t_parser	*parser;
 	
 	(void)argv;
-	(void)argc;
+	if (argc != 1)
+		return (1);
 	environment = env_setup(envp);
 	while (1)
 	{
@@ -218,6 +219,7 @@ int main(int argc, char **argv, char **envp)
 		//ft_print_array(environment.env);
 		lexer.invalid_lexer = false;
 		store_input(&lexer);
+		add_history(lexer.input);
 		if (ft_strlen(lexer.input) == 0)
 		{
 			free(lexer.input);
@@ -225,11 +227,10 @@ int main(int argc, char **argv, char **envp)
 		}
 		else if (lexer.invalid_lexer == true || input_checker(&lexer) == 0)
 			continue;
-		add_history(lexer.input);
 		ft_printf("This is the input: %s\n", lexer.input);
 		ft_printf("-------------INITIATING TOKENIZATION-----------------\n");
 		token_list = tokenization(&lexer);
-		token_list = parsing(token_list, environment);
+		tree = parsing(token_list, environment);
 		//parser = parsing(&token_list);
 	}
 	return (0);
