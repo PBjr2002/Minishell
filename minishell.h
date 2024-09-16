@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/16 15:08:52 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:30:29 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*ft_getpid(void);
 char	*cut_strhelper(t_expand *ex, char **env, char *str, char *var);
 
 //echo.c
-void	exec_echo(int fd, char **av, t_parser *info);
+void	exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr);
 
 //cd.c
 void	exec_cd(int fd, char **av, t_parser *info);
