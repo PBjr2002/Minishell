@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 13:15:38 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/17 15:42:05 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:25:54 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ t_tree *tree_creation_function(t_token *token_list)
 		top = ft_construct_pipelines(token_list, top, pipenum, pipeline);
 		pipeline++;
 	}
+	//ft_printf("%s\n", top->str);
+	//top = top->right;
+	//ft_printf("%s\n", top->str);
 	return (top);
 }
 
