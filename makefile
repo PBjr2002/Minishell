@@ -2,13 +2,20 @@ CC = cc
 CFLAGS = -g -Wall -Wextra -Werror
 NAME = minishell
 
-SOURCES = main.c builtins.c builtins_helper.c builtins_helper2.c builtins_helper3.c echo.c\
-			cd.c pwd.c export.c prompt.c env.c signal.c expansions.c
+SRC = $(addprefix src/, $(SOURCES))
+SOURCES =	main/main.c main/prompt.c \
+			builtins/builtins.c builtins/builtins_helper.c builtins/builtins_helper2.c \
+			builtins/builtins_helper3.c builtins/builtins_helper4.c builtins/echo.c \
+			builtins/cd.c builtins/pwd.c builtins/export.c builtins/env.c \
+			expansions/expansions.c expansions/expander_utils.c expansions/signal.c \
+			parser/lexer_test.c parser/token_define_utils.c parser/token_solvers.c \
+			parser/tree_and_list_append.c parser/tree_and_list_init.c parser/tree_creation_utils.c \
+			parser/tree_creation_utils2.c parser/tokenization.c parser/parsing_utils.c parser/parsing.c
 
 OBJS_DIR = obj
-OBJECTS = $(addprefix $(OBJS_DIR)/, $(SOURCES:%.c=%.o))
+OBJECTS = $(addprefix $(OBJS_DIR)/, $(SRC:src/%.c=%.o))
 
-LIBFT_DIR = ./libft/
+LIBFT_DIR = ./inc/libft/
 LIBFT = $(LIBFT_DIR)libft.a
 LIBFLAG = $(LIBFT) -lreadline
 
@@ -29,8 +36,8 @@ $(NAME): $(OBJECTS) $(LIBFT)
 		$(CC) $(CFLAGS) $(OBJECTS) -o $@ $(LIBFLAG)
 		$(MSG1)
 
-$(OBJS_DIR)/%.o:%.c
-	mkdir -p $(OBJS_DIR)
+$(OBJS_DIR)/%.o: src/%.c
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT):
