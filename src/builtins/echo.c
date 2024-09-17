@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:38:16 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/17 17:34:11 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:48:36 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr)
 
 	i = 1;
 	nl = 0;
+	//echo esta a printar com espaços quando n devia
 	while (tree)
 	{
 		//printf("tree->str = %s\n", tree->str);
