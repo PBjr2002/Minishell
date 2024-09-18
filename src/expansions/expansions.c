@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 15:08:53 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/17 15:39:37 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/18 12:01:53 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@ int	check_for_dollar(char *str, int n)
 	{
 		if (str[n] == '$' && str[n + 1])
 		{
-			if (ft_isalnum(str[n + 1]) == 1 || str[n + 1] == '$')
+			if (ft_isalnum(str[n + 1]) == 1 || str[n + 1] == '$'
+				|| str[n + 1] == '?')
 			{
 				checker = 1;
 				n++;
 				if (str[n] == '$')
 					checker = 2;
+				else if (str[n] == '?')
+					checker = 3;
 				break ;
 			}
 		}
@@ -49,7 +52,7 @@ char	*connect(char *pre, char *pos)
 	return (connected);
 }
 
-char	*exec_expansion(char **env, char *str)
+char	*exec_expansion(char *str, t_environment *envr)
 {
 	t_expand	*ex;
 	char		*expanded;
@@ -58,7 +61,7 @@ char	*exec_expansion(char **env, char *str)
 	expanded = ft_strdup(str);
 	while (check_for_dollar(expanded, ex->n) != 0)
 	{
-		cut_str(env, expanded, ex);
+		cut_str(expanded, ex, envr);
 		get_rest(expanded, ex);
 		free(expanded);
 		expanded = connect(ex->value, ex->pos);
@@ -72,7 +75,7 @@ void	get_rest(char *str, t_expand *ex)
 	ex->i = ex->n;
 	if (ex->value)
 	{
-		if (check_for_dollar(str, ex->i) == 2)
+		if (check_for_dollar(str, ex->i) == 2 || check_for_dollar(str, ex->i) == 3)
 			ex->i += 2;
 		else if (check_for_dollar(str, ex->i) == 1)
 		{
@@ -96,7 +99,7 @@ void	get_rest(char *str, t_expand *ex)
 		ex->n++;
 }
 
-void	cut_str(char **env, char *str, t_expand *ex)
+void	cut_str(char *str, t_expand *ex, t_environment *envr)
 {
 	char	*var;
 	char	*pre;
@@ -106,12 +109,13 @@ void	cut_str(char **env, char *str, t_expand *ex)
 	while (str && str[ex->n] && str[ex->n + 1])
 	{
 		if (str[ex->n] == '$'
-			&& (ft_isalnum(str[ex->n + 1]) == 1 || str[ex->n + 1] == '$'))
+			&& (ft_isalnum(str[ex->n + 1]) == 1 || str[ex->n + 1] == '$'
+			|| str[ex->n + 1] == '?'))
 			break ;
 		ex->n++;
 	}
 	pre = ft_substr(str, 0, ex->n);
-	var = cut_strhelper(ex, env, str, var);
+	var = cut_strhelper(ex, envr, str, var);
 	if (!var)
 	{
 		ex->value = pre;

@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:02:58 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/17 15:42:08 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/18 18:31:29 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_scan_for_redirects3(t_token *token_list, t_tree *current, int pipeline)
 			current_pipeline++;
 		token_list = token_list->next;
 	}
-	while (token_list->type != TYPE_PIPE && token_list)
+	while (token_list && token_list->type != TYPE_PIPE)
 	{
 		if (token_list->type == SINGLE_IN || token_list->type == SINGLE_OUT
 			|| token_list->type == DOUBLE_IN || token_list->type == DOUBLE_OUT)

@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/17 16:05:11 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/18 12:03:50 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef	struct s_environment
 	char					**env;
 	char					**export_env;
 	char					**cmds;
+	int						status;
 	pid_t					pid;
 } t_environment;
 

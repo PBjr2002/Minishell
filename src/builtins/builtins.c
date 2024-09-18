@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:30:34 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/17 15:40:11 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:03:20 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	decider(t_tree *tree, t_environment *envr)
 		tree = tree->right;
 		exec_other(tree, tmp, envr);
 	}
+	envr->status = 0;
 }
 
 void	search_tree(t_tree *tree, t_environment *envr)

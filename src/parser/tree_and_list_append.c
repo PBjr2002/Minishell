@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:52:11 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/17 17:25:24 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/18 18:10:34 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	ft_redirect_branch_attach1(t_tree *tree, t_tree *new)
 // this attaches redirect branches to the right side of the pipe
 void	ft_redirect_branch_attach2(t_tree *tree, t_tree *new)
 {
+	printf("whoop\n");
 	if (tree->right == NULL)
 	{
 		new->parent = tree;

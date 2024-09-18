@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:22:12 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/17 15:40:05 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/18 12:04:01 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,19 @@ char	*ft_getpid(void)
 	return (pid);
 }
 
-char	*cut_strhelper(t_expand *ex, char **env, char *str, char *var)
+char	*cut_strhelper(t_expand *ex, t_environment *envr, char *str, char *var)
 {
 	char	*value;
 	int		i;
 
 	ex->i = ex->n;
-	if (check_for_dollar(str, 0) == 2)
+	if (check_for_dollar(str, 0) == 2 || check_for_dollar(str, 0) == 3)
 	{
 		ex->i += 2;
-		value = ft_getpid();
+		if (check_for_dollar(str, 0) == 3)
+			value = ft_itoa(envr->status);
+		else
+			value = ft_getpid();
 	}
 	else
 	{
@@ -108,7 +111,7 @@ char	*cut_strhelper(t_expand *ex, char **env, char *str, char *var)
 		while (str && str[i] && (ft_isalnum(str[i]) != 0 || str[i] == '_'))
 			i++;
 		var = ft_substr(str, ex->i, i - ex->i);
-		value = return_part_line(env, search_part_line(env, var, ft_strlen(var)), 0);
+		value = return_part_line(envr->env, search_part_line(envr->env, var, ft_strlen(var)), 0);
 		free(var);
 	}
 	return (value);

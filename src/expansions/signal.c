@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:18:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/17 15:39:25 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:03:23 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,15 @@ void	prepare_exit(t_tree *tree, t_tree *cmd, t_environment *envr)
 	int	signal;
 
 	if (!tree)
-		exec_exit(0, tree, cmd, envr);
+		exec_exit(envr->status, tree, cmd, envr);
 	else
 	{
+		if (tree->right)
+		{
+			ft_putendl_fd("exit", cmd->fd_out);
+			ft_putendl_fd("minishell: exit: too many arguments", cmd->fd_out);
+			return ;
+		}
 		signal = ft_atoi(tree->str);
 		exec_exit(signal, tree, cmd, envr);
 	}

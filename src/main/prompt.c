@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/17 16:43:34 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:05:47 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,14 @@ void	prompt(t_environment *info)
 		lexer->invalid_lexer = false;
 		store_input(lexer);
 		add_history(lexer->input);
-		if (ft_strlen(lexer->input) == 0 || !lexer->input)
-		{
-			free(lexer->input);
+		if (!lexer->input)
 			exec_exit(0, NULL, tree, info);
-		}
 		else if (lexer->invalid_lexer == true || input_checker(lexer) == 0)
 			continue;
 		token_list = tokenization(lexer);
 		tree = parsing(token_list, info);
+		//printf("whoop\n");
 		search_tree(tree, info);
-		//if (new_av && new_av[0])
-		//{
-		//	while (new_av[new_ac])
-		//		new_ac++;
-		//	decider(new_ac, new_av, info);
-		//	free_env(new_av);
-		//}
 	}
 }
 

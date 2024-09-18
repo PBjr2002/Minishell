@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 13:15:38 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/17 17:25:54 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/18 18:50:16 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,6 @@ t_tree *tree_creation_function(t_token *token_list)
 		top = ft_construct_pipelines(token_list, top, pipenum, pipeline);
 		pipeline++;
 	}
-	//ft_printf("%s\n", top->str);
-	//top = top->right;
-	//ft_printf("%s\n", top->str);
 	return (top);
 }
 
@@ -145,6 +142,7 @@ t_tree	*ft_construct_pipelines(t_token *token_list, t_tree *top, int pipenum, in
 	if (pipeline > 1)
 	{
 		ft_scan_for_redirects3(token_list, current, pipeline);
+		printf("wheep\n");
 		ft_fill_tree2(token_list, current, pipeline, pipenum);
 	}
 	return (current);
@@ -202,6 +200,13 @@ void	ft_fill_tree2(t_token *token_list, t_tree *current, int pipeline, int pipen
 {
 	while (current->pipeline != pipeline && (current->type != 8 || current->type != 10))
 	{
+		//printf("whiip\n");
+		/* printf("----------------------------\n");
+		printf("current = %s\n", current->str);
+		printf("current pipe = %d\n", current->pipeline);
+		printf("pipenum = %d\n", pipenum);
+		printf("pipeline = %d\n", pipeline); */
+		//cenas a testar porque o pipenum n está correto
 		if (current->pipeline == pipenum + 1)
 			break ;
 		current = current->left;

@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:26:47 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/17 15:40:27 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/18 10:41:51 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ void	exec_export(t_tree *tree, t_tree *cmd, t_environment *envr)
 				{
 					ft_putstr_fd("minishell: export: ", cmd->fd_out);
 					ft_putstr_fd(tree->str, cmd->fd_out);
-					ft_putstr_fd(": ", cmd->fd_out);
-					perror("");
+					ft_putendl_fd(": not a valid identifier", cmd->fd_out);
 				}
 			}
 			tree = tree->right;
@@ -87,7 +86,8 @@ int		check_argument(char *str)
 	{
 		if (str[n] == '=')
 			break ;
-		else if (ft_isalnum(str[n] == 0) && str[n] != '_')
+		else if ((ft_isalnum(str[n] == 0) && str[n] != '_')
+				|| (ft_isdigit(str[n]) == 1 && n == 0))
 			return (-1);
 		n++;
 	}

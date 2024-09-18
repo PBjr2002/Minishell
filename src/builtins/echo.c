@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:38:16 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/17 17:48:36 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/18 12:00:26 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr)
 	//echo esta a printar com espaços quando n devia
 	while (tree)
 	{
-		//printf("tree->str = %s\n", tree->str);
 		if (tree->parent != cmd)
 			ft_putchar_fd(' ', cmd->fd_out);
 		if (tree->parent == cmd && ft_strncmp(tree->str, "-n", 2) == 0)
@@ -34,7 +33,7 @@ void	exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr)
 				nl = 1;
 			tree = tree->right;
 		}
-		str = exec_expansion(envr->env, tree->str);
+		str = exec_expansion(tree->str, envr);
 		ft_putstr_fd(str, cmd->fd_out);
 		free(str);
 		tree = tree->right;

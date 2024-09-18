@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:30:15 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/17 16:47:12 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:06:21 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ t_tree	*parsing(t_token *token_list, t_environment *env)
 	token_list = temp;
 	//add function that searches and destroys (marks?) empty tokens (or exclude them from tree)
 	tree = tree_creation_function(token_list);
+	//printf("whoop\n");
 	/* ft_printf("-------------INITIATING TREE CREATION----------------\n");
 	while (tree)
 	{

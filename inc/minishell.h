@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/17 16:04:59 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/18 11:56:08 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*return_env_line(char **envp, int index);
 char	*return_part_line(char **envp, int index, int mode);
 void	free_env(char **env);
 char	*ft_getpid(void);
-char	*cut_strhelper(t_expand *ex, char **env, char *str, char *var);
+char	*cut_strhelper(t_expand *ex, t_environment *envr, char *str, char *var);
 
 //builtins_helper4.c
 char	**build_av(t_tree *tree, t_tree *cmd);
@@ -108,8 +108,8 @@ void	ctrl_c(int signal, siginfo_t *info, void *context);
 //expansions.c
 int		check_for_dollar(char *str, int n);
 char	*connect(char *pre, char *pos);
-char	*exec_expansion(char **env, char *str);
+char	*exec_expansion(char *str, t_environment *envr);
 void	get_rest(char *str, t_expand *ex);
-void	cut_str(char **env, char *str, t_expand *ex);
+void	cut_str(char *str, t_expand *ex, t_environment *envr);
 
 #endif

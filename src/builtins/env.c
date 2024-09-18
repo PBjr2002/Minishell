@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:23:43 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/17 15:40:20 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/18 14:36:39 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr)
 	}
 	else
 	{
-		waitpid(envr->pid, NULL, 0);
+		waitpid(envr->pid, &envr->status, 0);
+		envr->status = envr->status / 256;
 		free_env(av);
 		free(path);
 	}
@@ -90,10 +91,12 @@ char	*path_creator(t_tree *cmd, t_environment *envr)
 	paths = NULL;
 	if (ft_strncmp("./", cmd->str, 2) == 0)
 		path = ft_substr(cmd->str, 2, ft_strlen(cmd->str) - 2);
+	else if (ft_strncmp("/", cmd->str, 1) == 0)
+		path = ft_strdup(cmd->str);
 	else
 	{
 		i = search_part_line(envr->env, "PATH=", 5);
-		if (envr->env[i])
+		if (i >= 0 && envr->env && envr->env[i])
 		{
 			paths = ft_split(envr->env[i], ':');
 			if (!paths || !paths[0])

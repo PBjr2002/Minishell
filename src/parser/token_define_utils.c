@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:56:14 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/17 15:41:46 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/18 11:59:26 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	dollar_token_define(t_lexer *lexer, t_token *token_list, int n)
 	while ((lexer->input[n] > 47 && lexer->input[n] < 58) 
 		|| (lexer->input[n] > 64 && lexer->input[n] < 91) 
 		|| (lexer->input[n] > 96 && lexer->input[n] < 123) 
-		|| (lexer->input[n] == 95))
+		|| (lexer->input[n] == 95) || (lexer->input[n] == 36) || (lexer->input[n] == 63))
 		n++;
 	new_token = ft_token_new(ft_substr(lexer->input, export, (n - export)));
 	new_token->type = TYPE_DOLLAR;
