@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_cleanup_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:06:39 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/19 17:53:56 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:02:51 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 //just a simple function, to save space, if syntax error, status = 2
 void	tree_cleanup_function(t_tree *treetop, t_environment *info)
 {
-	t_tree *temp;
+	//t_tree *temp;
 
-	temp = treetop;
+	//temp = treetop;
 	if (check_valid_pipes(treetop) == -1)
 		info->status = 2;
 }
@@ -26,9 +26,9 @@ void	tree_cleanup_function(t_tree *treetop, t_environment *info)
 //without my intention, it also checks if commands are present if a pipeless input is sent...
 int check_valid_pipes(t_tree *treetop)
 {
-	t_tree *temp;
-
-	temp = treetop;
+	//t_tree *temp;
+//
+	//temp = treetop;
 	if (treetop->type != TYPE_PIPE)
 	{
 		if (treetop->type != TYPE_COMMAND)

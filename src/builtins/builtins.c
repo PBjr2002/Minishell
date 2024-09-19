@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:30:34 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/19 17:59:39 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:18:42 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,26 @@
 
 void	decider(t_tree *tree, t_tree *cmd, t_environment *envr)
 {
-	if (ft_strcmp(cmd->str, "echo") == 0)
+	if (ft_strcmp(cmd->str, "echo") == 0 && tree)
 		envr->status = exec_echo(tree, cmd, envr);
 	else if (ft_strcmp(cmd->str, "cd") == 0)
 		envr->status = exec_cd(tree, cmd, envr);
-	else if (ft_strcmp(tree->str, "pwd") == 0)
+	else if (ft_strcmp(cmd->str, "pwd") == 0)
 		envr->status = exec_pwd(cmd);
-	else if (ft_strcmp(tree->str, "export") == 0)
+	else if (ft_strcmp(cmd->str, "export") == 0)
 		envr->status = exec_export(tree, cmd, envr);
-	else if (ft_strcmp(tree->str, "env") == 0)
+	else if (ft_strcmp(cmd->str, "env") == 0)
 		envr->status = exec_env(cmd, envr);
-	else if (ft_strcmp(tree->str, "exit") == 0)
+	else if (ft_strcmp(cmd->str, "exit") == 0)
 		prepare_exit(tree, cmd, envr);
-	else if (ft_strcmp(tree->str, "unset") == 0)
+	else if (ft_strcmp(cmd->str, "unset") == 0)
 		envr->status = exec_unset(tree, envr);
 	else
 		exec_other(tree, cmd, envr);
-	tree->solved = true;
+	if (tree)
+		tree->solved = true;
+	else
+		cmd->solved = true;
 }
 
 void	search_tree(t_tree *tree, t_environment *envr)
@@ -45,11 +48,12 @@ void	search_tree(t_tree *tree, t_environment *envr)
 	else if (tree->right && tree->type == TYPE_COMMAND)
 	{
 		tmp = tree;
+		if (tree->right)
 		tree = tree->right;
 		decider(tree, tmp, envr);
 	}
-	//else if (tree->type == TYPE_COMMAND)
-	//	decider(NULL, tree, envr);
+	else
+		decider(NULL, tree, envr);
 	tree->solved = true;
 	/* while (tree)
 	{
