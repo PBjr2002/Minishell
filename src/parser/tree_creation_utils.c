@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 13:15:38 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/18 18:50:16 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/19 11:09:26 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ t_tree	*ft_construct_pipelines(t_token *token_list, t_tree *top, int pipenum, in
 	if (pipeline > 1)
 	{
 		ft_scan_for_redirects3(token_list, current, pipeline);
-		printf("wheep\n");
+		//printf("wheep\n");
 		ft_fill_tree2(token_list, current, pipeline, pipenum);
 	}
 	return (current);

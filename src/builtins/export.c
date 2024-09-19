@@ -6,13 +6,13 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:26:47 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/18 10:41:51 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/19 11:28:53 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	exec_export(t_tree *tree, t_tree *cmd, t_environment *envr)
+int	exec_export(t_tree *tree, t_tree *cmd, t_environment *envr)
 {
 	int		n;
 	char	**sorted;
@@ -23,7 +23,7 @@ void	exec_export(t_tree *tree, t_tree *cmd, t_environment *envr)
 	{
 		sorted = env_to_print(envr->export_env);
 		if (!sorted)
-			return ;
+			return (1);
 		print_export(cmd->fd_out, sorted);
 		free_env(sorted);
 	}
@@ -75,6 +75,7 @@ void	exec_export(t_tree *tree, t_tree *cmd, t_environment *envr)
 			tree = tree->right;
 		}
 	}
+	return (0);
 }
 
 int		check_argument(char *str)

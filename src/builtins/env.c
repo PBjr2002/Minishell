@@ -6,13 +6,13 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:23:43 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/18 14:36:39 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/19 12:45:25 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	exec_env(t_tree *cmd, t_environment *envr)
+int	exec_env(t_tree *cmd, t_environment *envr)
 {
 	int		n;
 
@@ -22,9 +22,10 @@ void	exec_env(t_tree *cmd, t_environment *envr)
 		ft_putendl_fd(envr->env[n], cmd->fd_out);
 		n++;
 	}
+	return (0);
 }
 
-void	exec_unset(t_tree *tree, t_environment *envr)
+int	exec_unset(t_tree *tree, t_environment *envr)
 {
 	char	**tmp_export;
 	char	**tmp_env;
@@ -47,6 +48,7 @@ void	exec_unset(t_tree *tree, t_environment *envr)
 		}
 		tree = tree->right;
 	}
+	return (0);
 }
 
 void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr)
@@ -143,7 +145,10 @@ char	*check_path(char **paths, char *cmd)
 	}
 	while (paths && paths[i])
 	{
-		free(paths[i]);
+		if (i == 0)
+			free(paths[i] - 5);
+		else
+			free(paths[i]);
 		i++;
 	}
 	return (free(paths), path);
