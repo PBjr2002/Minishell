@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_define_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:56:14 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/18 11:59:26 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/19 14:12:21 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ int	dollar_token_define(t_lexer *lexer, t_token *token_list, int n)
 	int export;
 	t_token	*new_token;
 
-	export = n;
-	n++;
+	export = n++;
 	while ((lexer->input[n] > 47 && lexer->input[n] < 58) 
 		|| (lexer->input[n] > 64 && lexer->input[n] < 91) 
 		|| (lexer->input[n] > 96 && lexer->input[n] < 123) 
@@ -104,8 +103,8 @@ int com_token_define(t_lexer *lexer, t_token *token_list, int n)
 	n++;
 	while ((lexer->input[n] != '|') && (lexer->input[n] != ' ')
 			&& (lexer->input[n] != '\'') && (lexer->input[n] != '"') 
-			&& (lexer->input[n] != '$') && (lexer->input[n] != '<') 
-			&& (lexer->input[n] != '>') && lexer->input[n])
+			&& (lexer->input[n] != '<') && (lexer->input[n] != '>') 
+			&& lexer->input[n])
 		n++;
 	new_token = ft_token_new(ft_substr(lexer->input, export, (n - export)));
 	new_token->type = TYPE_COMMAND;

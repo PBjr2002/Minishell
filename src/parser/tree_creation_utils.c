@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_creation_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 13:15:38 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/18 18:50:16 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/19 13:37:41 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ void	ft_fill_tree1(t_token *token_list, t_tree *current, int pipeline)
 // it goes without saying that it should be the last function called during pipeline construction.
 void	ft_fill_tree2(t_token *token_list, t_tree *current, int pipeline, int pipenum)
 {
-	while (current->pipeline != pipeline && (current->type != 8 || current->type != 10))
+	while ((current->pipeline != pipeline))
 	{
 		//printf("whiip\n");
 		/* printf("----------------------------\n");
