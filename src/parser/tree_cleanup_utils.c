@@ -6,29 +6,24 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:06:39 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/19 17:53:56 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:12:22 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parser.h"
 
 //just a simple function, to save space, if syntax error, status = 2
-void	tree_cleanup_function(t_tree *treetop, t_environment *info)
+t_environment	*tree_cleanup_function(t_tree *treetop, t_environment *info)
 {
-	t_tree *temp;
-
-	temp = treetop;
 	if (check_valid_pipes(treetop) == -1)
 		info->status = 2;
+	return (info);
 }
 
 //checks to see if pipes have commands attached to them, to avoid segfaults
 //without my intention, it also checks if commands are present if a pipeless input is sent...
 int check_valid_pipes(t_tree *treetop)
 {
-	t_tree *temp;
-
-	temp = treetop;
 	if (treetop->type != TYPE_PIPE)
 	{
 		if (treetop->type != TYPE_COMMAND)

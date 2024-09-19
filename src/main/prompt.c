@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/19 17:09:40 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:11:11 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	prompt(t_environment *info)
 			continue;
 		token_list = tokenization(lexer);
 		tree = parsing(token_list, info);
-		tree_cleanup_function(tree, info);
+		info = tree_cleanup_function(tree, info);
 		search_tree(tree, info);
 	}
 }

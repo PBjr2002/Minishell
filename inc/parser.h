@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/19 17:25:50 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:12:54 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,6 @@ void			ft_scan_for_redirects3(t_token *token_list, t_tree *current, int pipeline
 void			quote_token_remover(t_token *token, int export, int n);
 void			redirection_handler(t_token *list, int n, int export);
 void			store_input(t_lexer *lexer);
-void			tree_cleanup_function(t_tree *treetop, t_environment *info);
 
 //lists and trees
 
@@ -196,6 +195,7 @@ t_tree			*parsing(t_token *token_list, t_environment *env);
 t_token			*temp_list_cleaner(t_token *list);
 t_token			*tokenization(t_lexer *lexer);
 t_environment 	*env_setup(char **envp);
+t_environment	*tree_cleanup_function(t_tree *treetop, t_environment *info);
 /* t_lexer		*ft_lexer_new(void);
 t_pipe			*ft_pipe_new(char *str, int index);
 t_simple_cmd	*ft_simple_cmd_new(char *str); */

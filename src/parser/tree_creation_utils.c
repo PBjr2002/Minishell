@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 13:15:38 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/19 14:42:20 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:18:32 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ t_tree	*ft_construct_pipelines(t_token *token_list, t_tree *top, int pipenum, in
 	if (pipeline > 1)
 	{
 		ft_scan_for_redirects3(token_list, current, pipeline);
-		//printf("wheep\n");
 		ft_fill_tree2(token_list, current, pipeline, pipenum);
 	}
 	return (current);
@@ -170,7 +169,7 @@ t_tree	*ft_fill_tree_zero(t_token *token_list, t_tree *current, int pipeline)
 	return (current);
 }
 
-// this attaches the command and argument tokens to our current pipeline 1 top;
+// this attaches the command and argument tokens to our current pipeline 1;
 // it goes without saying that it should be the last function called during pipeline construction.
 void	ft_fill_tree1(t_token *token_list, t_tree *current, int pipeline)
 {
