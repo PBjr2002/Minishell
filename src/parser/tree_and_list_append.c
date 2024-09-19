@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:52:11 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/19 15:57:46 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/19 17:35:57 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ void	ft_command_branch_attach2(t_tree *tree, t_tree *new)
 //this attaches argument branches, hopefully only to commands and only on the right side
 void	ft_argument_branch_attach(t_tree *tree, t_tree *new)
 {
+	t_tree	*tmp;
+	
 	if (tree->right == NULL)
 	{
 		new->parent = tree;
@@ -108,22 +110,20 @@ void	ft_argument_branch_attach(t_tree *tree, t_tree *new)
 	}
 	else
 	{
-		tree->right->parent = new;
-		new->right = tree->right;
-		tree->right = new;
-		new->parent = tree;
-	}
-//n sei se era o suposto mas os argumentos estavam a sair na ordem errada então corrigi
-//fixed, estavam na ordem correta
-	
-	//t_tree	*tmp;
-	
-		/* tmp = tree;
+		tmp = tree;
 		while (tree->right)
 			tree = tree->right;
 		tree->right = new;
 		new->parent = tree;
-		tree = tmp; */
+		tree = tmp;
+	}
+//n sei se era o suposto mas os argumentos estavam a sair na ordem errada então corrigi
+//fixed, estavam na ordem correta
+	
+		/* tree->right->parent = new;
+		new->right = tree->right;
+		tree->right = new;
+		new->parent = tree; */
 }
 
 // exactly what it says, appends a token to an existing token list

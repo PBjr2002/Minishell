@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/18 12:03:50 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/19 17:25:50 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ char 			*env_search(char *expand, t_environment *env);
 //int, unsigned int, long, long long
 
 int 			com_token_define(t_lexer *lexer, t_token *token_list, int n);
+int				check_valid_pipes(t_tree *treetop);
 int				dollar_token_define(t_lexer *lexer, t_token *token_list, int n);
 int 			input_checker(t_lexer *lexer);
 int 			pipe_scanner(t_token *token_list);
@@ -161,27 +162,28 @@ int 			redirect_token_type_solver(t_lexer *lexer, int n);
 
 void 			command_expand (t_token *token_list, t_environment *env);
 void 			command_id(t_token *token_list);
-void			ft_branch_attach(t_tree *tree, t_tree *new, int branch_type, int pipeline);
-void			ft_token_append(t_token *token_list, t_token *new, char *str);
-void			quote_token_remover(t_token *token, int export, int n);
-void			redirection_handler(t_token *list, int n, int export);
-void			store_input(t_lexer *lexer);
-void			ft_scan_for_redirects1(t_token *token_list, t_tree *current, int pipeline);
-void			ft_scan_for_redirects2(t_token *token_list, t_tree *current, int pipeline);
-void			ft_scan_for_redirects3(t_token *token_list, t_tree *current, int pipeline);
 void			ft_argument_branch_attach(t_tree *tree, t_tree *new);
+void			ft_branch_attach(t_tree *tree, t_tree *new, int branch_type, int pipeline);
 void			ft_command_branch_attach1(t_tree *tree, t_tree *new);
 void			ft_command_branch_attach2(t_tree *tree, t_tree *new);
 void			ft_fill_tree1(t_token *token_list, t_tree *current, int pipeline);
 void			ft_fill_tree2(t_token *token_list, t_tree *current, int pipeline, int pipenum);
 void			ft_redirect_branch_attach1(t_tree *tree, t_tree *new);
 void			ft_redirect_branch_attach2(t_tree *tree, t_tree *new);
+void			ft_token_append(t_token *token_list, t_token *new, char *str);
+void			ft_scan_for_redirects1(t_token *token_list, t_tree *current, int pipeline);
+void			ft_scan_for_redirects2(t_token *token_list, t_tree *current, int pipeline);
+void			ft_scan_for_redirects3(t_token *token_list, t_tree *current, int pipeline);
+void			quote_token_remover(t_token *token, int export, int n);
+void			redirection_handler(t_token *list, int n, int export);
+void			store_input(t_lexer *lexer);
+void			tree_cleanup_function(t_tree *treetop, t_environment *info);
 
 //lists and trees
 
+t_tree			*find_pipes(t_token *token_list, t_tree *top, int pipenum);
 t_tree			*ft_branch_new(char *str, int type, int pipeline);
 t_tree			*ft_tree_spawn(t_token *token_list);
-t_tree			*find_pipes(t_token *token_list, t_tree *top, int pipenum);
 t_tree			*ft_construct_pipelines_zero(t_token *token_list, t_tree *top, int pipeline);
 t_tree 			*ft_construct_pipelines(t_token *token_list, t_tree *top, int pipenum, int pipeline);
 t_tree			*ft_pipe_branch_attach(t_tree *tree, t_tree *new);

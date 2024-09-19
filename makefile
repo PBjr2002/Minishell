@@ -9,7 +9,8 @@ SOURCES =	main/main.c main/prompt.c \
 			builtins/cd.c builtins/pwd.c builtins/export.c builtins/env.c \
 			expansions/expansions.c expansions/expander_utils.c expansions/signal.c \
 			parser/lexer_test.c parser/token_define_utils.c parser/token_solvers.c \
-			parser/tree_and_list_append.c parser/tree_and_list_init.c parser/tree_creation_utils.c \
+			parser/tree_and_list_append.c parser/tree_and_list_init.c \
+			parser/tree_cleanup_utils.c parser/tree_creation_utils.c \
 			parser/tree_creation_utils2.c parser/tokenization.c parser/parsing_utils.c parser/parsing.c
 
 OBJS_DIR = obj
