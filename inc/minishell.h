@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/19 11:26:26 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/19 16:36:03 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ typedef struct s_expand
 void	prompt(t_environment *info);
 
 //builtins.c
-void	decider(t_tree *tree, t_environment *info);
+void	decider(t_tree *tree, t_tree *cmd, t_environment *envr);
 void	search_tree(t_tree *tree, t_environment *envr);
-void	redirect_solver(t_tree *tree, t_tree *cmd);
+void	redirect_solver(t_tree *tree);
 
 //builtins_helper.c
 char	**copy_env(char **envp, int mode);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_and_list_append.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:52:11 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/19 15:57:46 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/19 17:56:39 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_redirect_branch_attach1(t_tree *tree, t_tree *new)
 // this attaches redirect branches to the right side of the pipe
 void	ft_redirect_branch_attach2(t_tree *tree, t_tree *new)
 {
-	printf("whoop\n");
+	//printf("whoop\n");
 	if (tree->right == NULL)
 	{
 		new->parent = tree;
