@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:29:58 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/19 14:28:32 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/19 15:36:23 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ t_token *tokenization(t_lexer *lexer)
 			n = quote_token_define(lexer, temp, n);
 		else if (lexer->input[n] == '<' || lexer->input[n] == '>')
 			n = redirect_token_define(lexer, temp, n);
-		else if (lexer->input[n] == '$' && ((lexer->input[n - 1] > 9 && lexer->input[n - 1] < 13) || lexer->input[n - 1] == ' '))
+		else if (lexer->input[n] == '$' && ((lexer->input[n - 1] > 9 && lexer->input[n - 1] < 13) 
+			|| lexer->input[n - 1] == ' '))
 			n = dollar_token_define(lexer, temp, n);
 		else if (lexer->input[n] == '|')
 			n = pipe_token_define(temp, n);

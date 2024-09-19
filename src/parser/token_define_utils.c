@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:56:14 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/19 14:12:21 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/19 14:58:34 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,19 @@ int	dollar_token_define(t_lexer *lexer, t_token *token_list, int n)
 		|| (lexer->input[n] > 96 && lexer->input[n] < 123) 
 		|| (lexer->input[n] == 95) || (lexer->input[n] == 36) || (lexer->input[n] == 63))
 		n++;
-	new_token = ft_token_new(ft_substr(lexer->input, export, (n - export)));
+	if	((lexer->input[n] != '|') && (lexer->input[n] != ' ')
+		&& (lexer->input[n] != '\'') && (lexer->input[n] != '"') 
+		&& (lexer->input[n] != '<') && (lexer->input[n] != '>') 
+		&& lexer->input[n])
+	{
+		while ((lexer->input[n] != '|') && (lexer->input[n] != ' ')
+			&& (lexer->input[n] != '\'') && (lexer->input[n] != '"') 
+			&& (lexer->input[n] != '<') && (lexer->input[n] != '>') && lexer->input[n])
+			n++;
+		new_token = ft_token_new(ft_substr(lexer->input, export, (n - export)));
+	}
+	else
+		new_token = ft_token_new(ft_substr(lexer->input, export, (n - export)));
 	new_token->type = TYPE_DOLLAR;
 	ft_token_append(token_list, new_token, new_token->str);
 	return (n);

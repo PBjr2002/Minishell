@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:44:40 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/17 15:41:32 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/19 15:30:44 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,14 @@ void	quote_token_remover(t_token *token, int export, int n)
 		export++;
 		while (token->str[n] != '\'')
 			n++;
-		temp = token->str;
-		token->str = ft_substr(token->str, export, (n - export));
-		free(temp);
+		if (n == export)
+			token->str = "\0";
+		else
+		{
+			temp = token->str;
+			token->str = ft_substr(token->str, export, (n - export));
+			free(temp);
+		}
 	}
 	else if (token->str[n] == '"')
 	{
@@ -95,9 +100,14 @@ void	quote_token_remover(t_token *token, int export, int n)
 				token->type = TYPE_DOUBLE_QUOTE_EXPAND;
 			n++;
 		}
-		temp = token->str;
-		token->str = ft_substr(token->str, export, (n - export));
-		free(temp);
+		if (n == export)
+			token->str = "\0";
+		else
+		{
+			temp = token->str;
+			token->str = ft_substr(token->str, export, (n - export));
+			free(temp);	
+		}
 	}
 	n++;
 	}
