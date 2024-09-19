@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:30:34 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/18 15:03:20 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/19 12:47:06 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,22 @@ void	decider(t_tree *tree, t_environment *envr)
 	if (ft_strcmp(tree->str, "echo") == 0)
 	{
 		tree = tree->right;
-		exec_echo(tree, tmp, envr);
+		envr->status = exec_echo(tree, tmp, envr);
 	}
 	else if (ft_strcmp(tree->str, "cd") == 0)
 	{
 		tree = tree->right;
-		exec_cd(tree, tmp, envr);
+		envr->status = exec_cd(tree, tmp, envr);
 	}
 	else if (ft_strcmp(tree->str, "pwd") == 0)
-		exec_pwd(tmp);
+		envr->status = exec_pwd(tmp);
 	else if (ft_strcmp(tree->str, "export") == 0)
 	{
 		tree = tree->right;
-		exec_export(tree, tmp, envr);
+		envr->status = exec_export(tree, tmp, envr);
 	}
 	else if (ft_strcmp(tree->str, "env") == 0)
-		exec_env(tmp, envr);
+		envr->status = exec_env(tmp, envr);
 	else if (ft_strcmp(tree->str, "exit") == 0)
 	{
 		tree = tree->right;
@@ -44,14 +44,13 @@ void	decider(t_tree *tree, t_environment *envr)
 	else if (ft_strcmp(tree->str, "unset") == 0)
 	{
 		tree = tree->right;
-		exec_unset(tree, envr);
+		envr->status = exec_unset(tree, envr);
 	}
 	else
 	{
 		tree = tree->right;
 		exec_other(tree, tmp, envr);
 	}
-	envr->status = 0;
 }
 
 void	search_tree(t_tree *tree, t_environment *envr)

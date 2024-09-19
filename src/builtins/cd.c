@@ -6,13 +6,13 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:55:40 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/17 15:40:14 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/19 11:28:36 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	exec_cd(t_tree *tree, t_tree *cmd, t_environment *envr)
+int	exec_cd(t_tree *tree, t_tree *cmd, t_environment *envr)
 {
 	char	*cwd;
 
@@ -53,7 +53,7 @@ void	exec_cd(t_tree *tree, t_tree *cmd, t_environment *envr)
 				ft_putstr_fd(tree->str, cmd->fd_out);
 				ft_putstr_fd(": ", cmd->fd_out);
 				perror("");
-				return ;
+				return (1);
 			}
 			new_cwd = getcwd(NULL, 0);
 		}
@@ -77,7 +77,7 @@ void	exec_cd(t_tree *tree, t_tree *cmd, t_environment *envr)
 				ft_putstr_fd(tree->str, cmd->fd_out);
 				ft_putstr_fd(": ", cmd->fd_out);
 				perror("");
-				return ;
+				return (1);
 			}
 		}	
 	}
@@ -94,4 +94,5 @@ void	exec_cd(t_tree *tree, t_tree *cmd, t_environment *envr)
 	free(new_cwd);
 	free(env_pwd);
 	free(old_pwd);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/18 11:56:08 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/19 11:26:26 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,17 @@ char	*cut_strhelper(t_expand *ex, t_environment *envr, char *str, char *var);
 char	**build_av(t_tree *tree, t_tree *cmd);
 
 //echo.c
-void	exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr);
+int		exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr);
 
 //cd.c
-void	exec_cd(t_tree *tree, t_tree *cmd, t_environment *envr);
+int		exec_cd(t_tree *tree, t_tree *cmd, t_environment *envr);
 
 //pwd.c
-void	exec_pwd(t_tree *cmd);
+int		exec_pwd(t_tree *cmd);
 
 //export.c
 char	**env_to_print(char **envp);
-void	exec_export(t_tree *tree, t_tree *cmd, t_environment *envr);
+int		exec_export(t_tree *tree, t_tree *cmd, t_environment *envr);
 void	sort_env(char **new_env, int limit);
 void	print_export(int fd, char **sorted);
 int		check_line(char *line);
@@ -93,9 +93,9 @@ int		check_argument(char *str);
 
 //env.c
 char	*check_path(char **paths, char *cmd);
-void	exec_env(t_tree *cmd, t_environment *env);
+int		exec_env(t_tree *cmd, t_environment *env);
 char	*path_creator(t_tree *cmd, t_environment *envr);
-void	exec_unset(t_tree *tree, t_environment *envr);
+int		exec_unset(t_tree *tree, t_environment *envr);
 void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr);
 
 //signal.c

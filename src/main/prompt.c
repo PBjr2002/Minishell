@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/18 15:05:47 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/19 11:14:09 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	prompt(t_environment *info)
 			continue;
 		token_list = tokenization(lexer);
 		tree = parsing(token_list, info);
-		//printf("whoop\n");
 		search_tree(tree, info);
 	}
 }
