@@ -6,11 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 13:15:38 by lmiguel-          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/09/19 13:37:41 by lmiguel-         ###   ########.fr       */
-=======
-/*   Updated: 2024/09/19 11:09:26 by pauberna         ###   ########.fr       */
->>>>>>> aa35c67807c7d49fdb5170e4457550ee1d8fd007
+/*   Updated: 2024/09/19 14:42:20 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,15 +198,8 @@ void	ft_fill_tree1(t_token *token_list, t_tree *current, int pipeline)
 // it goes without saying that it should be the last function called during pipeline construction.
 void	ft_fill_tree2(t_token *token_list, t_tree *current, int pipeline, int pipenum)
 {
-	while ((current->pipeline != pipeline))
+	while ((current->pipeline != pipeline) && current->left != NULL)
 	{
-		//printf("whiip\n");
-		/* printf("----------------------------\n");
-		printf("current = %s\n", current->str);
-		printf("current pipe = %d\n", current->pipeline);
-		printf("pipenum = %d\n", pipenum);
-		printf("pipeline = %d\n", pipeline); */
-		//cenas a testar porque o pipenum n está correto
 		if (current->pipeline == pipenum + 1)
 			break ;
 		current = current->left;

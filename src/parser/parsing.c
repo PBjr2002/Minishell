@@ -6,11 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:30:15 by lmiguel-          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/09/19 13:47:42 by lmiguel-         ###   ########.fr       */
-=======
-/*   Updated: 2024/09/19 10:40:04 by pauberna         ###   ########.fr       */
->>>>>>> aa35c67807c7d49fdb5170e4457550ee1d8fd007
+/*   Updated: 2024/09/19 14:26:56 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +52,6 @@ t_tree	*parsing(t_token *token_list, t_environment *env)
 	(void)env;
 	temp = token_list;
 	command_id(token_list);
-/* 	while (token_list)
-	{
-		ft_printf("Token index: %d, Token type: %d, Token contains: %s\n", 
-		token_list->index, token_list->type, token_list->str);
-		token_list = token_list->next;
-	}
-	token_list = temp; */
-	command_expand(token_list, env);
-/* 	ft_printf("-------------INITIATING COMMAND EXPANDER-------------\n");
 	while (token_list)
 	{
 		ft_printf("Token index: %d, Token type: %d, Token contains: %s\n", 
@@ -72,25 +59,34 @@ t_tree	*parsing(t_token *token_list, t_environment *env)
 		token_list = token_list->next;
 	}
 	token_list = temp;
-	ft_printf("-------------INITIATING QUOTE REMOVER----------------\n"); */
+	command_expand(token_list, env);
+	ft_printf("-------------INITIATING COMMAND EXPANDER-------------\n");
+	while (token_list)
+	{
+		ft_printf("Token index: %d, Token type: %d, Token contains: %s\n", 
+		token_list->index, token_list->type, token_list->str);
+		token_list = token_list->next;
+	}
+	token_list = temp;
+	ft_printf("-------------INITIATING QUOTE REMOVER----------------\n");
 	while (token_list)
 	{
 		quote_token_remover(token_list, 0, 0);
-/* 		ft_printf("Token index: %d, Token type: %d, Token contains: %s\n", 
-		token_list->index, token_list->type, token_list->str); */
+		ft_printf("Token index: %d, Token type: %d, Token contains: %s\n", 
+		token_list->index, token_list->type, token_list->str);
 		token_list = token_list->next;
 	}
-/* 	token_list = temp;
-	ft_printf("-------------INITIATING REDIRECT HANDLER-------------\n"); */
+	token_list = temp;
+	ft_printf("-------------INITIATING REDIRECT HANDLER-------------\n");
 	while (token_list)
 	{
 		redirection_handler(token_list, 0, 0);
-/* 		ft_printf("Token index: %d, Token type: %d, Token contains: %s\n", 
-		token_list->index, token_list->type, token_list->str); */
+		ft_printf("Token index: %d, Token type: %d, Token contains: %s\n", 
+		token_list->index, token_list->type, token_list->str);
 		token_list = token_list->next;
 	}
-/* 	token_list = temp;
-	add function that searches and destroys (marks?) empty tokens (or exclude them from tree) */
+	token_list = temp;
+	//add function that searches and destroys (marks?) empty tokens (or exclude them from tree)
 	tree = tree_creation_function(token_list);
 	//printf("whoop\n");
 	/* ft_printf("-------------INITIATING TREE CREATION----------------\n");
