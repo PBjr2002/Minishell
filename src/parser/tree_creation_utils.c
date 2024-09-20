@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 13:15:38 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/19 18:18:32 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/20 17:04:39 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 t_tree *tree_creation_function(t_token *token_list)
 {
 	t_tree 	*top;
+	t_tree	*current;
 	//t_token	*temp_token;
 	int 	pipenum;
 	int		pipeline;
@@ -33,6 +34,24 @@ t_tree *tree_creation_function(t_token *token_list)
 	{
 		top = ft_construct_pipelines(token_list, top, pipenum, pipeline);
 		pipeline++;
+	}
+	current = top;
+	while (current->left != NULL && current->type == TYPE_PIPE)
+	{
+		ft_printf("Current->str = %s\n", current->str);
+		ft_printf("current->pipeline = %d\n", current->pipeline);
+		if (current->right)
+		{
+			ft_printf("current->right->str = %s\n", current->right->str);
+			ft_printf("current->right->pipeline = %d\n", current->right->pipeline);
+		}
+		if (current->left)
+		{
+			ft_printf("current->left->str = %s\n", current->left->str);
+			ft_printf("current->left->pipeline = %d\n", current->left->pipeline);
+		}
+		current = current->left;
+		printf("--------------------GOING DOWN-------------------\n");
 	}
 	return (top);
 }
@@ -106,6 +125,8 @@ t_tree	*find_pipes(t_token *token_list, t_tree *top, int pipenum)
 			}
 			top = ft_pipe_branch_attach(top, 
 				ft_branch_new(token_list->str, token_list->type, pipeline));
+			if (pipeline < pipenum)
+				pipeline++;
 		}
 		token_list = token_list->next;
 	}
@@ -197,13 +218,32 @@ void	ft_fill_tree1(t_token *token_list, t_tree *current, int pipeline)
 // it goes without saying that it should be the last function called during pipeline construction.
 void	ft_fill_tree2(t_token *token_list, t_tree *current, int pipeline, int pipenum)
 {
-	while ((current->pipeline != pipeline) && current->left != NULL)
+	int			current_pipe;
+	t_token		*temp;
+
+	current_pipe = 1;
+	temp = token_list;
+	(void)pipenum;
+	while (current->left != NULL)
 	{
-		if (current->pipeline == pipenum + 1)
+		if (current->pipeline + 1 == pipeline)
 			break ;
 		current = current->left;
 	}
-	while (token_list->type != TYPE_PIPE && token_list)
+	while (token_list)
+	{
+		if (token_list->type == TYPE_PIPE)
+		{
+			current_pipe++;
+			if (current_pipe == pipeline)
+			{
+				token_list = token_list->next;
+				break ;
+			}
+		}
+		token_list = token_list->next;
+	}
+	while (token_list)
 	{
 		if (token_list->type == TYPE_COMMAND || token_list->type == TYPE_DOLLAR_COMMAND)
 		{
@@ -216,6 +256,9 @@ void	ft_fill_tree2(t_token *token_list, t_tree *current, int pipeline, int pipen
 			ft_argument_branch_attach(current, ft_branch_new(token_list->str, 
 				token_list->type, pipeline));
 		}
+		if (token_list->type == TYPE_PIPE)
+			break ;
 		token_list = token_list->next;
 	}
 }
+//oo

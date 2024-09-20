@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:52:11 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/19 18:22:09 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/20 17:07:10 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ t_tree	*ft_pipe_branch_attach(t_tree *tree, t_tree *new)
 {
 	tree->parent = new;
 	new->left = tree;
-	new->pipeline = new->pipeline + 1;
 	return (new);
 }
 

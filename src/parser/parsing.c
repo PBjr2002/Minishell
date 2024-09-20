@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:30:15 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/19 18:22:00 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:31:47 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,5 @@ t_tree	*parsing(t_token *token_list, t_environment *env)
 	token_list = temp;
 	//add function that searches and destroys (marks?) empty tokens (or exclude them from tree)
 	tree = tree_creation_function(token_list);
-	//printf("whoop\n");
-	/* ft_printf("-------------INITIATING TREE CREATION----------------\n");
-	while (tree)
-	{
-		ft_printf("Branch parent: Token type: %d, Token contains: %s\n", 
-		token_list->index, token_list->type, token_list->str);
-		token_list = token_list->next;
-	} */
 	return (tree);
 }
-
-
-
