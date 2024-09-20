@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:59:47 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/20 12:49:47 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:00:24 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ void	token_cleaner(t_token *token_list)
 
 	while (token_list)
 	{
-		free(token_list->str);
+		if (token_list->str && token_list->str[0])
+			free(token_list->str);
 		tmp = token_list->next;
 		free(token_list);
 		token_list = tmp;

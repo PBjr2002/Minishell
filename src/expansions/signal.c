@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:18:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/20 12:44:21 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:17:23 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,11 @@ void	exec_exit(int signal, t_tree *tree, t_tree *cmd, t_environment *envr)
 	if (envr->export_env)
 		free_env(envr->export_env);
 	free(envr);
-	tree_cleaner(tree);
-	ft_putendl_fd("exit", cmd->fd_out);
 	if (cmd)
-		free(cmd);
+		ft_putendl_fd("exit", cmd->fd_out);
+	else
+		ft_putendl_fd("exit", cmd->fd_out);
+	if (tree)
+		tree_cleaner(tree);
 	exit(signal);
 }

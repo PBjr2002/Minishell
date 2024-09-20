@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:47 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/18 18:17:40 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:05:13 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_tree	*ft_branch_new(char *str, int type, int pipeline)
 	new = (t_tree *)malloc(sizeof(t_tree));
 	if (new == NULL)
 		return (NULL);
-	new->str = str;
+	new->str = ft_strdup(str);
 	new->pipeline = pipeline;
 	new->type = type;
 	new->fd_in = STDIN_FILENO;
