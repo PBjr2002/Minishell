@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/20 13:47:59 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/20 17:11:24 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	prompt(t_environment *info)
 		if (!lexer->input)
 		{
 			free(lexer);
-			exec_exit(0, NULL, tree, info);
+			exec_exit(0, NULL, NULL, info);
 		}
 		else if (lexer->invalid_lexer == true || input_checker(lexer) == 0)
 		{
@@ -39,7 +39,7 @@ void	prompt(t_environment *info)
 		free(lexer->input);
 		free(lexer);
 		tree = parsing(token_list, info);
-		//token_cleaner(token_list);
+		token_cleaner(token_list);
 		info = tree_cleanup_function(tree, info);
 		if (info->status == 2)
 		{
