@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:59:47 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/17 15:40:08 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/20 12:49:47 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,53 @@ char	**build_av(t_tree *tree, t_tree *cmd)
 		while (tree)
 		{
 			av[av_len] = ft_strdup(tree->str);
+			av_len++;
 			tree = tree->right;
 		}
+		av[av_len] = NULL;
+		tree = tmp;
 	}
 	return (av);
+}
+
+void	tree_cleaner(t_tree *tree)
+{
+	t_tree	*tmpl;
+	t_tree	*tmpr;
+
+	while (tree && tree->left)
+		tree = tree->left;
+	while (tree)
+	{
+		if (tree->right)
+		{
+			tmpl = tree;
+			while (tree->right)
+				tree = tree->right;
+			while (tree != tmpl)
+			{
+				free(tree->str);
+				tmpr = tree->parent;
+				free(tree);
+				tree = tmpr;
+			}
+		}
+		free(tree->str);
+		tmpl = tree->parent;
+		free(tree);
+		tree = tmpl;
+	}
+}
+
+void	token_cleaner(t_token *token_list)
+{
+	t_token	*tmp;
+
+	while (token_list)
+	{
+		free(token_list->str);
+		tmp = token_list->next;
+		free(token_list);
+		token_list = tmp;
+	}
 }

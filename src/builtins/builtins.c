@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:30:34 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/19 18:18:42 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:08:00 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	search_tree(t_tree *tree, t_environment *envr)
 	{
 		tmp = tree;
 		if (tree->right)
-		tree = tree->right;
+			tree = tree->right;
 		decider(tree, tmp, envr);
 	}
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_cleanup_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:06:39 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/19 18:22:20 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/20 12:01:38 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_environment	*tree_cleanup_function(t_tree *treetop, t_environment *info)
 	//temp = treetop;
 	if (check_valid_pipes(treetop) == -1)
 		info->status = 2;
+	else
+		info->status = 0;
 	return (info);
 }
 
