@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/20 16:10:00 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/20 17:15:56 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	prompt(t_environment *info)
 		info = tree_cleanup_function(tree, info);
 		if (info->status == 2)
 		{
+			tree_cleaner(tree);
 			printf("Syntax error\n");
 			continue;
 		}
