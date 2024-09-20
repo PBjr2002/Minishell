@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/20 15:05:46 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/20 16:10:00 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	prompt(t_environment *info)
 		if (!lexer->input)
 		{
 			free(lexer);
-			exec_exit(0, NULL, tree, info);
+			exec_exit(0, NULL, NULL, info);
 		}
 		else if (lexer->invalid_lexer == true || input_checker(lexer) == 0)
 		{
