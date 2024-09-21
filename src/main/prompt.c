@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/20 17:20:10 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/21 13:47:18 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	prompt(t_environment *info)
 		free(lexer->input);
 		free(lexer);
 		tree = parsing(token_list, info);
-		token_cleaner(token_list);
+		//token_cleaner(token_list);
 		info = tree_cleanup_function(tree, info);
 		if (info->status == 2)
 		{
@@ -47,7 +47,7 @@ void	prompt(t_environment *info)
 			printf("Syntax error\n");
 			continue;
 		}
-		search_tree(tree, info);
+		search_tree(tree, info, 0);
 		tree_cleaner(tree);
 	}
 }

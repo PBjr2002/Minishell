@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/20 12:49:56 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/21 13:46:19 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ void	prompt(t_environment *info);
 
 //builtins.c
 void	decider(t_tree *tree, t_tree *cmd, t_environment *envr);
-void	search_tree(t_tree *tree, t_environment *envr);
+void	search_tree(t_tree *tree, t_environment *envr, int mode);
 void	redirect_solver(t_tree *tree);
+void	pipe_setup(t_tree *tree);
+void	fd_setup(t_tree *tree, int mode);
 
 //builtins_helper.c
 char	**copy_env(char **envp, int mode);

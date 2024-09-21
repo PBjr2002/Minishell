@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:23:43 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/20 11:36:22 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/21 15:57:47 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,16 @@ void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr)
 	envr->pid = fork();
 	if (envr->pid == 0)
 	{
+		if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
+			printf("There was an error duplicating the FD\n");
+		if (dup2(cmd->fd_out, STDOUT_FILENO) == -1)
+			printf("There was an error duplicating the FD\n");
+		if (cmd->fd_in != STDIN_FILENO && cmd->fd_in != STDOUT_FILENO
+			&& cmd->fd_in != STDERR_FILENO)
+			close(cmd->fd_in);
+		if (cmd->fd_out != STDIN_FILENO && cmd->fd_out != STDOUT_FILENO
+			&& cmd->fd_out != STDERR_FILENO)
+			close(cmd->fd_out);
 		signal_decider(CHILD);
 		if (access(path, X_OK) == 0)
 			if (execve(path, av, envr->env) == -1)
@@ -78,6 +88,12 @@ void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr)
 	else
 	{
 		waitpid(envr->pid, &envr->status, 0);
+		if (cmd->fd_in != STDIN_FILENO && cmd->fd_in != STDOUT_FILENO
+			&& cmd->fd_in != STDERR_FILENO)
+			close(cmd->fd_in);
+		if (cmd->fd_out != STDIN_FILENO && cmd->fd_out != STDOUT_FILENO
+			&& cmd->fd_out != STDERR_FILENO)
+			close(cmd->fd_out);
 		envr->status = envr->status / 256;
 		free_env(av);
 		free(path);

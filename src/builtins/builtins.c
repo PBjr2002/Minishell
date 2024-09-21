@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:30:34 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/20 13:08:00 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/21 16:44:57 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,49 +36,44 @@ void	decider(t_tree *tree, t_tree *cmd, t_environment *envr)
 		cmd->solved = true;
 }
 
-void	search_tree(t_tree *tree, t_environment *envr)
+void	search_tree(t_tree *tree, t_environment *envr, int mode)
 {
 	t_tree	*tmp;
 
-	if (tree->left && tree->left->solved == false)
+	if (tree->left && (tree->type == 1 || tree->type == 2 || tree->type == 3 || tree->type == 4))
 	{
-		search_tree(tree->left, envr);
+		search_tree(tree->left, envr, 0);
 		redirect_solver(tree);
+	}
+	else if (tree->type == 1 || tree->type == 2 || tree->type == 3 || tree->type == 4)
+		redirect_solver(tree);
+	else if (tree->type == TYPE_PIPE)
+	{
+		pipe_setup(tree);
+		if (tree->parent && tree->parent->type == TYPE_PIPE)
+		{
+			search_tree(tree->left, envr, 1);
+			search_tree(tree->right, envr, 3);
+		}
+		if (tree->left && tree->left->solved == false)
+			search_tree(tree->left, envr, 1);
+		if (tree->right && tree->right->solved == false)
+			search_tree(tree->right, envr, 2);
 	}
 	else if (tree->right && tree->type == TYPE_COMMAND)
 	{
+		fd_setup(tree, mode);
 		tmp = tree;
 		if (tree->right)
 			tree = tree->right;
 		decider(tree, tmp, envr);
 	}
 	else
-		decider(NULL, tree, envr);
-	tree->solved = true;
-	/* while (tree)
 	{
-		//recursividade
-		while (tree && tree->type != 8 && tree->type != 10)
-			tree = tree->left;
-		if (tree)
-		{
-			tmp = tree;
-			if (tree->left)
-			{
-				while (tree->left)
-					tree = tree->left;
-				while (tree != tmp)
-				{
-					redirect_solver(tree);
-					tree->solved = true;
-					tree = tree->parent;
-				}
-			}
-			decider(tree, envr);
-			tree->solved = true;
-		}
-		tree = tree->parent;
-	} */
+		fd_setup(tree, mode);
+		decider(NULL, tree, envr);
+	}
+	tree->solved = true;
 }
 
 void	redirect_solver(t_tree *tree)
@@ -98,4 +93,39 @@ void	redirect_solver(t_tree *tree)
 	if (dup2(tree->fd_out, STDOUT_FILENO) == -1)
 		printf("There was an error redirecting\n");
 	tree->solved = true;
+}
+
+void	pipe_setup(t_tree *tree)
+{
+	int	fd[2];
+	
+	if (pipe(fd) == -1)
+		return ;
+	tree->fd_in = fd[0];
+	tree->fd_out = fd[1];
+}
+
+void	fd_setup(t_tree *tree, int mode)
+{
+	if (tree->left && (tree->left->type == 1
+		|| tree->left->type == 2 || tree->left->type == 3
+		|| tree->left->type == 4))
+	{
+		if (mode == 1)
+			tree->fd_out = tree->left->fd_out;
+		else if (mode == 2)
+			tree->fd_in = tree->left->fd_in;
+	}
+	else if (tree->parent && tree->parent->type == TYPE_PIPE)
+	{
+		if (mode == 1)	
+			tree->fd_out = tree->parent->fd_out;
+		else if (mode == 2)
+			tree->fd_in = tree->parent->fd_in;
+		else if (mode == 3)
+		{
+			tree->fd_in = tree->parent->fd_in;
+			tree->fd_out = tree->parent->parent->fd_out;
+		}
+	}
 }

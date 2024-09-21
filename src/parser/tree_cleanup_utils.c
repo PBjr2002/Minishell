@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:06:39 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/20 12:01:38 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/20 17:26:46 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ int check_valid_pipes(t_tree *treetop)
 	}
 	while (treetop->type == TYPE_PIPE)
 	{
-		ft_printf("Current str %s Current type %d Current pipeline %d\n", treetop->str, treetop->type, treetop->pipeline);
-		if (treetop->left)
-			ft_printf("Left str %s Left type %d Current pipeline %d\n", treetop->left->str, treetop->left->type, treetop->pipeline);
-		if (treetop->right)
-			ft_printf("Right str %s Right type %d Current pipeline %d\n", treetop->right->str, treetop->right->type, treetop->pipeline);
+		//ft_printf("Current str %s Current type %d Current pipeline %d\n", treetop->str, treetop->type, treetop->pipeline);
+		//if (treetop->left)
+		//	ft_printf("Left str %s Left type %d Current pipeline %d\n", treetop->left->str, treetop->left->type, treetop->pipeline);
+		//if (treetop->right)
+		//	ft_printf("Right str %s Right type %d Current pipeline %d\n", treetop->right->str, treetop->right->type, treetop->pipeline);
 		if (!treetop->right || treetop->right->type != TYPE_COMMAND)
 			return (-1);
 		if (treetop->left && treetop->left->type == TYPE_PIPE)
