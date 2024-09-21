@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:06:39 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/20 17:26:46 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/21 16:59:02 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ int check_valid_pipes(t_tree *treetop)
 	if (treetop->type != TYPE_PIPE)
 	{
 		if (treetop->type != TYPE_COMMAND)
+		{
+			ft_printf("bingo bango bongo\n");
 			return (-1);
+		}
 	}
 	while (treetop->type == TYPE_PIPE)
 	{
