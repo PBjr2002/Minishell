@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:30:34 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/21 16:44:57 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/22 19:16:20 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,13 @@ void	search_tree(t_tree *tree, t_environment *envr, int mode)
 			search_tree(tree->left, envr, 1);
 			search_tree(tree->right, envr, 3);
 		}
-		if (tree->left && tree->left->solved == false)
-			search_tree(tree->left, envr, 1);
-		if (tree->right && tree->right->solved == false)
-			search_tree(tree->right, envr, 2);
+		else
+		{
+			if (tree->left && tree->left->solved == false)
+				search_tree(tree->left, envr, 1);
+			if (tree->right && tree->right->solved == false)
+				search_tree(tree->right, envr, 2);
+		}
 	}
 	else if (tree->right && tree->type == TYPE_COMMAND)
 	{

@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/21 13:46:19 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/22 18:53:12 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ char	*cut_strhelper(t_expand *ex, t_environment *envr, char *str, char *var);
 char	**build_av(t_tree *tree, t_tree *cmd);
 void	tree_cleaner(t_tree *tree);
 void	token_cleaner(t_token *token_list);
+void	fd_closer(t_tree *tree, int mode);
 
 //echo.c
 int		exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr);

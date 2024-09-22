@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:59:47 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/20 16:06:12 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/22 18:52:46 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,29 @@ void	token_cleaner(t_token *token_list)
 		free(token_list);
 		token_list = tmp;
 	}
+}
+
+void	fd_closer(t_tree *tree, int mode)
+{
+	if (!tree)
+		return ;
+	if (mode == 0)
+	{
+		while (tree->parent)
+			tree = tree->parent;
+		if (tree->right)
+			fd_closer(tree->right, 1);
+		if (tree->left)
+			fd_closer(tree->left, 1);
+	}
+	if (tree->right)
+		fd_closer(tree->right, 1);
+	if (tree->left)
+		fd_closer(tree->left, 1);
+	if (tree->fd_in != STDIN_FILENO && tree->fd_in != STDOUT_FILENO
+		&& tree->fd_in != STDERR_FILENO)
+		close(tree->fd_in);
+	if (tree->fd_out != STDIN_FILENO && tree->fd_out != STDOUT_FILENO
+		&& tree->fd_out != STDERR_FILENO)
+		close(tree->fd_out);
 }
