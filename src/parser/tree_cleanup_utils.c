@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:06:39 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/23 17:32:53 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/23 18:11:24 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int check_valid_pipes(t_tree *treetop)
 	temp = treetop;
 	if (treetop->type != TYPE_PIPE)
 	{
-		if (treetop->type != TYPE_COMMAND)
+		if (treetop->type != TYPE_COMMAND && (treetop->type != SINGLE_IN && treetop->type != SINGLE_OUT
+			&& treetop->type != DOUBLE_IN && treetop->type != DOUBLE_OUT))
 		{
 			ft_printf("bingo bango bongo\n");
 			return (-1);
@@ -62,12 +63,12 @@ int check_valid_redirects(t_tree *treetop)
 {
 	while (treetop)
 	{
-		if (treetop->right && treetop->right == TYPE_COMMAND)
+		if (treetop->right && treetop->right->type == TYPE_COMMAND)
 		{
 			if (check_valid_redirects_2(treetop->right) == -1)
 				return (-1);
 		}
-		if (treetop->left && treetop->left == TYPE_COMMAND)
+		if (treetop->left && treetop->left->type == TYPE_COMMAND)
 		{
 			if (check_valid_redirects_2(treetop->left) == -1)
 				return (-1);
@@ -77,13 +78,14 @@ int check_valid_redirects(t_tree *treetop)
 			if (check_valid_redirects_2(treetop) == -1)
 				return (-1);
 		}
-		if (treetop->left && treetop->left == TYPE_PIPE)
+		if (treetop->left && treetop->left->type == TYPE_PIPE)
 		{
 			treetop = treetop->left;
 			continue ;
 		}
 		return (0);
 	}
+	return (0);
 }
 // checks the current command for valid redirections
 int check_valid_redirects_2(t_tree *treetop)

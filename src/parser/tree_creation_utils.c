@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 13:15:38 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/23 16:08:32 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/23 17:52:06 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ t_tree *tree_creation_function(t_token *token_list)
 		current = current->left;
 		printf("--------------------GOING DOWN-------------------\n");
 	}
-	ft_printf("doof\n");
 	printf("%s\n", current->str);
 	while (current->left != NULL)
 	{
 		ft_printf("current->left = %s\n", current->left->str);
+		ft_printf("current->left->type = %d\n", current->left->type);
 		current = current->left;
 	}
 	return (top);

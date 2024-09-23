@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/23 12:04:14 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/23 17:38:30 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,8 @@ char 			*env_search(char *expand, t_environment *env);
 
 int 			com_token_define(t_lexer *lexer, t_token *token_list, int n);
 int				check_valid_pipes(t_tree *treetop);
+int 			check_valid_redirects(t_tree *treetop);
+int				check_valid_redirects_2(t_tree *treetop);
 int				dollar_token_define(t_lexer *lexer, t_token *token_list, int n);
 int 			input_checker(t_lexer *lexer);
 int 			pipe_scanner(t_token *token_list);

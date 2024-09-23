@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_other.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 15:51:38 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/23 16:32:46 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/23 17:36:29 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ char	*path_creator(t_tree *cmd, t_environment *envr)
 	char	*path;
 	int		i;
 
+	paths = NULL;
 	if (ft_strncmp("./", cmd->str, 2) == 0)
 		path = ft_substr(cmd->str, 2, ft_strlen(cmd->str) - 2);
 	else if (ft_strncmp("/", cmd->str, 1) == 0)
