@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:06:39 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/23 17:28:50 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/23 17:32:53 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int check_valid_redirects(t_tree *treetop)
 // checks the current command for valid redirections
 int check_valid_redirects_2(t_tree *treetop)
 {
-	while (treetop)
+	while (treetop && treetop->left)
 	{
 		if (treetop->left->type == SINGLE_IN || treetop->left->type == SINGLE_OUT
 			|| treetop->left->type == DOUBLE_IN || treetop->left->type == DOUBLE_OUT)
