@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/23 13:41:30 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/23 17:16:18 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,16 @@ char	**replace_line(char **envp, char *info_to_add);
 char	**replace_value(char **envp, int index, int value);
 int		replace_value_helper(char **envp, char **tmp_env, char *nb, int index);
 
+//builtins_helper6.c
+char	**env_to_print(char **envp);
+void	sort_env(char **new_env, int limit);
+void	print_export(int fd, char **sorted);
+void	print_export_helper(char **sorted, int fd, int n, int i);
+void	print_export_helper2(char **sorted, int fd, int n, int i);
+
+//builtins_helper7.c
+int		check_line(char *line);
+
 //echo.c
 int		exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr);
 void	echo_helper(t_tree *tree, t_tree *cmd, t_environment *envr);
@@ -99,19 +109,22 @@ int		exec_cd(t_tree *tree, t_tree *cmd, t_environment *envr);
 int		exec_pwd(t_tree *cmd);
 
 //export.c
-char	**env_to_print(char **envp);
 int		exec_export(t_tree *tree, t_tree *cmd, t_environment *envr);
-void	sort_env(char **new_env, int limit);
-void	print_export(int fd, char **sorted);
-int		check_line(char *line);
+void	export_helper(t_tree *tree, t_tree *cmd, t_environment *envr);
+void	export_helper2(t_tree *tree, t_environment *envr);
+void	export_helper3(t_tree *cmd, t_tree *tree, t_environment *envr);
 int		check_argument(char *str);
 
 //env.c
-char	*check_path(char **paths, char *cmd);
 int		exec_env(t_tree *cmd, t_environment *env);
-char	*path_creator(t_tree *cmd, t_environment *envr);
 int		exec_unset(t_tree *tree, t_environment *envr);
+
+//exec_other.c
+char	*check_path(char **paths, char *cmd);
+void	free_paths(char **paths);
+char	*path_creator(t_tree *cmd, t_environment *envr);
 void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr);
+void	executer(t_tree *cmd, t_tree *tree, t_environment *envr, char *path);
 
 //signal.c
 void	signal_decider(t_signal type);
