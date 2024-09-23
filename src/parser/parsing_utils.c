@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:44:40 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/19 15:30:44 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:29:12 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	quote_token_remover(t_token *token, int export, int n)
 {
 	char *temp;
 	
-	while (token->str[n])
+	while (token->str && token->str[n])
 	{
 	if (token->str[n] == '\'')
 	{
@@ -118,19 +118,22 @@ void	redirection_handler(t_token *list, int n, int export)
 {
 	char	*temp;
 
-	if (list->type == SINGLE_IN || list->type == SINGLE_OUT
-		|| list->type == DOUBLE_IN || list->type == DOUBLE_OUT)
-	{
-		n++;
-		if (list->type == DOUBLE_IN || list->type == DOUBLE_OUT)
+	if (list->str)
+	{	
+		if (list->type == SINGLE_IN || list->type == SINGLE_OUT
+			|| list->type == DOUBLE_IN || list->type == DOUBLE_OUT)
+		{
 			n++;
-		while ((list->str[n] > 9 && list->str[n] < 13) || list->str[n] == ' ')
-			n++;
-		export = n;
-		while (list->str[n])
-			n++;
-		temp = list->str;
-		list->str = ft_substr(list->str, export, (n - export));
-		free(temp);
+			if (list->type == DOUBLE_IN || list->type == DOUBLE_OUT)
+				n++;
+			while ((list->str[n] > 9 && list->str[n] < 13) || list->str[n] == ' ')
+				n++;
+			export = n;
+			while (list->str[n])
+				n++;
+			temp = list->str;
+			list->str = ft_substr(list->str, export, (n - export));
+			free(temp);
+		}
 	}
 }

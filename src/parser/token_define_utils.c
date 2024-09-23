@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_define_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:56:14 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/23 12:09:28 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:21:37 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,13 @@ int redirect_token_define(t_lexer *lexer, t_token *token_list, int n)
 	n++;
 	while ((lexer->input[n] > 9 && lexer->input[n] < 13) || lexer->input[n] == ' ')
 		n++;
-	while ((lexer->input[n] > 32 && lexer->input[n] < 127))
+	while ((lexer->input[n] > 32 && lexer->input[n] < 127
+		&& lexer->input[n] != 60 && lexer->input[n] != 62))
 		n++;
-	new_token = ft_token_new(ft_substr(lexer->input, export, (n - export)));
+	if ((n - export) < 3)
+		new_token = ft_token_new(NULL);
+	else
+		new_token = ft_token_new(ft_substr(lexer->input, export, (n - export)));
 	new_token->type = redirect_token_type_solver(lexer, export);
 	ft_token_append(token_list, new_token, new_token->str);
 	return (n);

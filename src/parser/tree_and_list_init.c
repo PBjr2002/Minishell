@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_and_list_init.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:47 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/23 12:09:10 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:35:11 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ t_tree	*ft_branch_new(char *str, int type, int pipeline)
 	new = (t_tree *)malloc(sizeof(t_tree));
 	if (new == NULL)
 		return (NULL);
-	new->str = ft_strdup(str);
+	if (!str)
+		new->str = NULL;
+	else
+		new->str = ft_strdup(str);
 	new->pipeline = pipeline;
 	new->type = type;
 	new->fd_in = STDIN_FILENO;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:38:16 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/23 13:50:54 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/23 14:49:37 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr)
 	int	i;
 
 	nl = 0;
+	i = 0;
 	//echo "ola tudo bem"'$USER$$'$$$USER
 	//mete espaço entre os argumentos e n expande o $$$USER(esta a vir com o tipo 7) no fim
 	while (tree)
