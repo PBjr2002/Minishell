@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_and_list_append.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:52:11 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/20 17:07:10 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/23 11:51:41 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ void	ft_token_append(t_token *token_list, t_token *new, char *str)
 	int index_num;
 
 	index_num = -1;
+	(void) str;
 	while (token_list->next != NULL)
 	{
 		index_num++;
@@ -139,5 +140,5 @@ void	ft_token_append(t_token *token_list, t_token *new, char *str)
 	token_list->next = new;
 	new->previous = token_list;
 	new->index = index_num + 1;
-	new->str = str;
+	//new->str = str;
 }

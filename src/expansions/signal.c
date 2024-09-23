@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:18:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/20 16:15:35 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/23 10:40:38 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,3 +107,6 @@ void	exec_exit(int signal, t_tree *tree, t_tree *cmd, t_environment *envr)
 	}
 	exit(signal);
 }
+
+//ls | cat | wc | echo
+//ls | grep s | wc | cat

@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/22 18:53:12 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/23 13:41:30 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_expand
 
 //prompt.c
 void	prompt(t_environment *info);
+int		parser_and_exec(t_lexer *lexer, t_environment *info);
 
 //builtins.c
 void	decider(t_tree *tree, t_tree *cmd, t_environment *envr);
@@ -55,10 +56,10 @@ void	fd_setup(t_tree *tree, int mode);
 
 //builtins_helper.c
 char	**copy_env(char **envp, int mode);
+int		copy_env_helper(char **new_env, char **envp, char *lvl, int mode);
 char	**remove_env_line(char **envp, int index);
+int		remove_env_helper(char **envp, char **tmp_env, int index);
 char	**add_env_line(char **envp, char *info_to_add);
-char	**replace_line(char **envp, char *info_to_add);
-char	**replace_value(char **envp, int index, int value);
 
 //builtins_helper2.c
 int		ft_strlen2(char *str, int sep);
@@ -75,12 +76,21 @@ char	*cut_strhelper(t_expand *ex, t_environment *envr, char *str, char *var);
 
 //builtins_helper4.c
 char	**build_av(t_tree *tree, t_tree *cmd);
+int		build_av_helper(t_tree *cmd, t_tree *tree, t_tree *tmp, char **av);
 void	tree_cleaner(t_tree *tree);
 void	token_cleaner(t_token *token_list);
 void	fd_closer(t_tree *tree, int mode);
 
+//builtins_helper5.c
+void	search_pipe(t_tree *tree, t_environment *envr);
+void	search_redirect(t_tree *tree, t_environment *envr);
+char	**replace_line(char **envp, char *info_to_add);
+char	**replace_value(char **envp, int index, int value);
+int		replace_value_helper(char **envp, char **tmp_env, char *nb, int index);
+
 //echo.c
 int		exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr);
+void	echo_helper(t_tree *tree, t_tree *cmd, t_environment *envr);
 
 //cd.c
 int		exec_cd(t_tree *tree, t_tree *cmd, t_environment *envr);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_define_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:56:14 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/19 14:58:34 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:09:28 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	pipe_token_define(t_token *token_list, int n)
 {
 	t_token *new_token;
 	
-	new_token = ft_token_new("|\0");
+	new_token = ft_token_new(ft_strdup("|\0"));
 	ft_token_append(token_list, new_token, new_token->str);
 	new_token->type = TYPE_PIPE;
 	n++;

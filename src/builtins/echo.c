@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:38:16 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/19 17:51:11 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/23 13:50:54 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 int	exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr)
 {
-	int	i;
 	int	nl;
-	char *str;
+	int	i;
 
-	i = 1;
 	nl = 0;
-	//echo esta a printar com espaços quando n devia
+	//echo "ola tudo bem"'$USER$$'$$$USER
+	//mete espaço entre os argumentos e n expande o $$$USER(esta a vir com o tipo 7) no fim
 	while (tree)
 	{
 		if (tree->parent != cmd && ft_strncmp(tree->str, "-n", 2) != 0
@@ -33,17 +32,24 @@ int	exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr)
 			if (tree->str[i] == ' ' || tree->str[i] == '\0')
 				nl = 1;
 			tree = tree->right;
-			continue ;
+			continue;
 		}
-		if (tree->type == 9 || tree->type == 5)
-			str = exec_expansion(tree->str, envr);
-		else
-			str = ft_strdup(tree->str);
-		ft_putstr_fd(str, cmd->fd_out);
-		free(str);
+		echo_helper(tree, cmd, envr);
 		tree = tree->right;
 	}
 	if (nl == 0)
 		ft_putchar_fd('\n', cmd->fd_out);
 	return (0);
+}
+
+void	echo_helper(t_tree *tree, t_tree *cmd, t_environment *envr)
+{
+	char	*str;
+
+	if (tree->type == 9 || tree->type == 5)
+		str = exec_expansion(tree->str, envr);
+	else
+		str = ft_strdup(tree->str);
+	ft_putstr_fd(str, cmd->fd_out);
+	free(str);
 }

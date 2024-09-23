@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:59:47 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/22 18:52:46 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/23 13:25:00 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,40 @@ char	**build_av(t_tree *tree, t_tree *cmd)
 		}
 		tree = tmp;
 	}
-	av = ft_calloc(sizeof(char*), av_len + 1);
+	av = ft_calloc(sizeof(char *), av_len + 1);
 	if (!av)
 		return (NULL);
+	if (build_av_helper(cmd, tree, tmp, av) == 1)
+		return (free_env(av), NULL);
+	return (av);
+}
+
+int	build_av_helper(t_tree *cmd, t_tree *tree, t_tree *tmp, char **av)
+{
+	int	len;
+
+	len = 0;
 	if (cmd)
+	{
 		av[0] = ft_strdup(cmd->str);
+		if (!av[0])
+			return (1);
+	}
 	if (tree)
 	{
-		av_len = 1;
+		len = 1;
 		while (tree)
 		{
-			av[av_len] = ft_strdup(tree->str);
-			av_len++;
+			av[len] = ft_strdup(tree->str);
+			if (!av[len])
+				return (1);
+			len++;
 			tree = tree->right;
 		}
-		av[av_len] = NULL;
+		av[len] = NULL;
 		tree = tmp;
 	}
-	return (av);
+	return (0);
 }
 
 void	tree_cleaner(t_tree *tree)
@@ -71,14 +87,16 @@ void	tree_cleaner(t_tree *tree)
 
 void	token_cleaner(t_token *token_list)
 {
-	t_token	*tmp;
-
-	while (token_list)
+	if (token_list && token_list->next)
+		token_cleaner(token_list->next);
+	if (token_list)
 	{
-		free(token_list->str);
-		tmp = token_list->next;
+		if (token_list->str)
+		{
+			free(token_list->str);
+			token_list->str = NULL;
+		}
 		free(token_list);
-		token_list = tmp;
 	}
 }
 

@@ -5,8 +5,8 @@ NAME = minishell
 SRC = $(addprefix src/, $(SOURCES))
 SOURCES =	main/main.c main/prompt.c \
 			builtins/builtins.c builtins/builtins_helper.c builtins/builtins_helper2.c \
-			builtins/builtins_helper3.c builtins/builtins_helper4.c builtins/echo.c \
-			builtins/cd.c builtins/pwd.c builtins/export.c builtins/env.c \
+			builtins/builtins_helper3.c builtins/builtins_helper4.c builtins/builtins_helper5.c\
+			builtins/echo.c builtins/cd.c builtins/pwd.c builtins/export.c builtins/env.c \
 			expansions/expansions.c expansions/expander_utils.c expansions/signal.c \
 			parser/lexer_test.c parser/token_define_utils.c parser/token_solvers.c \
 			parser/tree_and_list_append.c parser/tree_and_list_init.c \

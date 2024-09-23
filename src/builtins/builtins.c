@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:30:34 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/22 19:16:20 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:53:47 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,9 @@ void	search_tree(t_tree *tree, t_environment *envr, int mode)
 {
 	t_tree	*tmp;
 
-	if (tree->left && (tree->type == 1 || tree->type == 2 || tree->type == 3 || tree->type == 4))
-	{
-		search_tree(tree->left, envr, 0);
-		redirect_solver(tree);
-	}
-	else if (tree->type == 1 || tree->type == 2 || tree->type == 3 || tree->type == 4)
-		redirect_solver(tree);
-	else if (tree->type == TYPE_PIPE)
-	{
-		pipe_setup(tree);
-		if (tree->parent && tree->parent->type == TYPE_PIPE)
-		{
-			search_tree(tree->left, envr, 1);
-			search_tree(tree->right, envr, 3);
-		}
-		else
-		{
-			if (tree->left && tree->left->solved == false)
-				search_tree(tree->left, envr, 1);
-			if (tree->right && tree->right->solved == false)
-				search_tree(tree->right, envr, 2);
-		}
-	}
-	else if (tree->right && tree->type == TYPE_COMMAND)
+	search_redirect(tree, envr);
+	search_pipe(tree, envr);
+	if (tree->right && tree->type == TYPE_COMMAND)
 	{
 		fd_setup(tree, mode);
 		tmp = tree;
@@ -101,7 +80,7 @@ void	redirect_solver(t_tree *tree)
 void	pipe_setup(t_tree *tree)
 {
 	int	fd[2];
-	
+
 	if (pipe(fd) == -1)
 		return ;
 	tree->fd_in = fd[0];
@@ -111,8 +90,8 @@ void	pipe_setup(t_tree *tree)
 void	fd_setup(t_tree *tree, int mode)
 {
 	if (tree->left && (tree->left->type == 1
-		|| tree->left->type == 2 || tree->left->type == 3
-		|| tree->left->type == 4))
+			|| tree->left->type == 2 || tree->left->type == 3
+			|| tree->left->type == 4))
 	{
 		if (mode == 1)
 			tree->fd_out = tree->left->fd_out;
@@ -121,7 +100,7 @@ void	fd_setup(t_tree *tree, int mode)
 	}
 	else if (tree->parent && tree->parent->type == TYPE_PIPE)
 	{
-		if (mode == 1)	
+		if (mode == 1)
 			tree->fd_out = tree->parent->fd_out;
 		else if (mode == 2)
 			tree->fd_in = tree->parent->fd_in;

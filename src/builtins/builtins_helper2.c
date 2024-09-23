@@ -6,13 +6,13 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:18:00 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/17 15:40:03 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/23 13:18:59 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int		ft_strlen2(char *str, int sep)
+int	ft_strlen2(char *str, int sep)
 {
 	int	n;
 
@@ -26,7 +26,7 @@ int		ft_strlen2(char *str, int sep)
 	return (n);
 }
 
-int		return_value(char **envp, int index)
+int	return_value(char **envp, int index)
 {
 	char	*nb;
 	int		value;
@@ -38,7 +38,7 @@ int		return_value(char **envp, int index)
 	return (value);
 }
 
-int		search_env_line(char **envp, char *line_to_search)
+int	search_env_line(char **envp, char *line_to_search)
 {
 	int	n;
 
@@ -54,7 +54,7 @@ int		search_env_line(char **envp, char *line_to_search)
 	return (n);
 }
 
-int		search_part_line(char **envp, char *line_to_search, size_t len)
+int	search_part_line(char **envp, char *line_to_search, size_t len)
 {
 	int	n;
 
@@ -63,7 +63,8 @@ int		search_part_line(char **envp, char *line_to_search, size_t len)
 		return (-1);
 	while (envp && envp[n])
 	{
-		if (ft_strncmp(envp[n], line_to_search, len) == 0 && ft_strlen2(envp[n], '=') == ft_strlen2(line_to_search, '='))
+		if (ft_strncmp(envp[n], line_to_search, len) == 0
+			&& ft_strlen2(envp[n], '=') == ft_strlen2(line_to_search, '='))
 			break ;
 		n++;
 	}

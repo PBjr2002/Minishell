@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:06:10 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/17 15:39:59 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/23 13:26:25 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,27 @@ char	**copy_env(char **envp, int mode)
 {
 	char	**new_env;
 	char	*lvl;
-	char	*new_lvl;
 	int		len;
-	int		l;
-	
+
 	len = 0;
 	lvl = return_part_line(envp, search_part_line(envp, "SHLVL=", 6), 0);
 	while (envp && envp[len])
 		len++;
 	new_env = malloc(sizeof(char *) * (len + 1));
+	if (!new_env)
+		return (NULL);
+	if (copy_env_helper(new_env, envp, lvl, mode) == 1)
+		return (free(lvl), free_env(new_env), NULL);
+	free(lvl);
+	return (new_env);
+}
+
+int	copy_env_helper(char **new_env, char **envp, char *lvl, int mode)
+{
+	char	*new_lvl;
+	int		l;
+	int		len;
+
 	len = 0;
 	while (envp && envp[len])
 	{
@@ -40,20 +52,19 @@ char	**copy_env(char **envp, int mode)
 		}
 		else
 			new_env[len] = ft_strdup(envp[len]);
+		if (!new_env[len])
+			return (1);
 		len++;
 	}
 	new_env[len] = NULL;
-	free(lvl);
-	return (new_env);
+	return (0);
 }
 
 char	**remove_env_line(char **envp, int index)
 {
 	char	**tmp_env;
 	int		len;
-	int		n;
 
-	n = 0;
 	len = 0;
 	if (index < 0)
 		return (NULL);
@@ -62,7 +73,18 @@ char	**remove_env_line(char **envp, int index)
 	tmp_env = malloc(sizeof(char *) * len);
 	if (!tmp_env)
 		return (NULL);
+	if (remove_env_helper(envp, tmp_env, index) == 1)
+		return (free_env(tmp_env), NULL);
+	return (tmp_env);
+}
+
+int	remove_env_helper(char **envp, char **tmp_env, int index)
+{
+	int	n;
+	int	len;
+
 	len = 0;
+	n = 0;
 	while (envp && envp[len])
 	{
 		if (n == index)
@@ -71,7 +93,7 @@ char	**remove_env_line(char **envp, int index)
 		{
 			tmp_env[n] = ft_strdup(envp[len]);
 			if (!tmp_env[n])
-				return (NULL);
+				return (1);
 		}
 		else
 			break ;
@@ -79,7 +101,7 @@ char	**remove_env_line(char **envp, int index)
 		len++;
 	}
 	tmp_env[n] = NULL;
-	return (tmp_env);
+	return (0);
 }
 
 char	**add_env_line(char **envp, char *info_to_add)
@@ -106,68 +128,5 @@ char	**add_env_line(char **envp, char *info_to_add)
 	if (!tmp_env[n])
 		return (NULL);
 	tmp_env[n + 1] = NULL;
-	return (tmp_env);
-}
-
-char	**replace_line(char **envp, char *info_to_add)
-{
-	char	**tmp_env;
-	int		len;
-	int		n;
-
-	n = 0;
-	len = 0;
-	while (envp && envp[len])
-		len++;
-	tmp_env = malloc(sizeof(char *) * (len + 1));
-	if (!tmp_env)
-		return (NULL);
-	while (envp && envp[n])
-	{
-		if (ft_strncmp(envp[n], info_to_add, ft_strlen2(envp[n], '=')) == 0 &&
-			ft_strlen2(envp[n], '=') == ft_strlen2(info_to_add, '='))
-			tmp_env[n] = ft_strdup(info_to_add);
-		else
-			tmp_env[n] = ft_strdup(envp[n]);
-		if (!tmp_env[n])
-			return (NULL);
-		n++;
-	}
-	tmp_env[n] = NULL;
-	return (tmp_env);
-}
-
-char	**replace_value(char **envp, int index, int value)
-{
-	char	**tmp_env;
-	char	*nb;
-	char	*tmp;
-	int		n;
-
-	n = 0;
-	while (envp && envp[n])
-		n++;
-	tmp_env = malloc(sizeof(char *) * (n + 1));
-	if (!tmp_env)
-		return (NULL);
-	nb = ft_itoa(value);
-	if (!nb)
-		return (NULL);
-	n = 0;
-	while (envp && envp[n])
-	{
-		if (n == index)
-		{
-			tmp = return_part_line(envp, search_env_line(envp, tmp_env[n]), 1);
-			tmp_env[n] = ft_strjoin(tmp, nb);
-			free(tmp);
-		}
-		else
-			tmp_env[n] = ft_strdup(envp[n]);
-		if (!tmp_env[n])
-			return (NULL);
-		n++;
-	}
-	tmp_env[n] = NULL;
 	return (tmp_env);
 }
