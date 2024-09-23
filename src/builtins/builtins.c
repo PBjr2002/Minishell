@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:30:34 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/23 12:53:47 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:34:50 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,11 @@ void	search_tree(t_tree *tree, t_environment *envr, int mode)
 	}
 	else
 	{
-		fd_setup(tree, mode);
-		decider(NULL, tree, envr);
+		if (tree->type != TYPE_PIPE)
+		{
+			fd_setup(tree, mode);
+			decider(NULL, tree, envr);
+		}
 	}
 	tree->solved = true;
 }
