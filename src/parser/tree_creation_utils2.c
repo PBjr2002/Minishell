@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:02:58 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/20 17:53:22 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:25:04 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_scan_for_redirects3(t_token *token_list, t_tree *current, int pipeline)
 	current_pipeline = 0;
 	while (current->left != NULL && current->pipeline != (pipeline - 1))
 		current = current->left;
-	while (token_list && current_pipeline < pipeline)
+	while (token_list && current_pipeline < pipeline - 1)
 	{
 		if (token_list->type == TYPE_PIPE)
 			current_pipeline++;
