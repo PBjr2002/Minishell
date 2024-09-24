@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:18:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/23 10:40:38 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:07:01 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,14 @@ void	ignore(struct sigaction *sa, int signal)
 	sa->sa_flags = original_flags;
 }
 
+void	here_doc(int signal, siginfo_t *info, void *context)
+{
+	(void) info;
+	(void) context;
+	if (signal == SIGINT)
+		exec_exit(130);
+}
+
 void	signal_decider(t_signal type)
 {
 	static struct sigaction	sa;
@@ -66,6 +74,16 @@ void	signal_decider(t_signal type)
 		ignore(&sa, SIGINT);
 		ignore(&sa, SIGQUIT);
 	}
+	else if (type == HERE_DOC)
+	{
+		sa.sa_sigaction = here_doc;
+		sa.sa_flags = SA_SIGINFO;
+		if (sigemptyset(&sa.sa_mask) != 0)
+			return ;
+		sigaction(SIGINT, &sa, NULL);
+		ignore(&sa, SIGQUIT);
+	}
+	
 }
 
 void	prepare_exit(t_tree *tree, t_tree *cmd, t_environment *envr)
@@ -73,7 +91,7 @@ void	prepare_exit(t_tree *tree, t_tree *cmd, t_environment *envr)
 	int	signal;
 
 	if (!tree)
-		exec_exit(envr->status, tree, cmd, envr);
+		exec_exit(envr->status);
 	else
 	{
 		if (tree->right)
@@ -83,28 +101,23 @@ void	prepare_exit(t_tree *tree, t_tree *cmd, t_environment *envr)
 			return ;
 		}
 		signal = ft_atoi(tree->str);
-		exec_exit(signal, tree, cmd, envr);
+		exec_exit(signal);
 	}
 }
 
-void	exec_exit(int signal, t_tree *tree, t_tree *cmd, t_environment *envr)
+void	exec_exit(int signal)
 {
-	if (envr->env)
-		free_env(envr->env);
-	if (envr->export_env)
-		free_env(envr->export_env);
-	free(envr);
-	if (cmd)
-		ft_putendl_fd("exit", cmd->fd_out);
-	else
-		ft_putendl_fd("exit", 1);
-	if (tree)
-		tree_cleaner(tree);
-	else if (!tree && cmd)
-	{
-		free(cmd->str);
-		free(cmd);
-	}
+	t_global	info;
+
+	info = global_info(NULL, NULL);
+	if (info.envr->env)
+		free_env(info.envr->env);
+	if (info.envr->export_env)
+		free_env(info.envr->export_env);
+	if (info.envr)
+		free(info.envr);
+	ft_putendl_fd("exit", 1);
+	tree_cleaner(info.tree);
 	exit(signal);
 }
 

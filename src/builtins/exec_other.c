@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_other.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 15:51:38 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/23 17:36:29 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/24 13:32:14 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	executer(t_tree *cmd, t_tree *tree, t_environment *envr, char *path)
 		if (execve(path, av, envr->env) == -1)
 			perror("");
 	free_env(av);
-	exec_exit(0, tree, cmd, envr);
+	exec_exit(0);
 }
 
 char	*path_creator(t_tree *cmd, t_environment *envr)

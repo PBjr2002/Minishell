@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/23 17:16:18 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/24 13:27:56 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ typedef struct s_expand
 	int		a;
 }				t_expand;
 
+typedef struct s_global
+{
+	t_tree 			*tree;
+	t_environment	*envr;
+}				t_global;
+
 //main.c
 
 //prompt.c
@@ -50,7 +56,7 @@ int		parser_and_exec(t_lexer *lexer, t_environment *info);
 //builtins.c
 void	decider(t_tree *tree, t_tree *cmd, t_environment *envr);
 void	search_tree(t_tree *tree, t_environment *envr, int mode);
-void	redirect_solver(t_tree *tree);
+int		redirect_solver(t_tree *tree, t_environment *envr);
 void	pipe_setup(t_tree *tree);
 void	fd_setup(t_tree *tree, int mode);
 
@@ -83,7 +89,7 @@ void	fd_closer(t_tree *tree, int mode);
 
 //builtins_helper5.c
 void	search_pipe(t_tree *tree, t_environment *envr);
-void	search_redirect(t_tree *tree, t_environment *envr);
+int		search_redirect(t_tree *tree, t_environment *envr);
 char	**replace_line(char **envp, char *info_to_add);
 char	**replace_value(char **envp, int index, int value);
 int		replace_value_helper(char **envp, char **tmp_env, char *nb, int index);
@@ -96,7 +102,10 @@ void	print_export_helper(char **sorted, int fd, int n, int i);
 void	print_export_helper2(char **sorted, int fd, int n, int i);
 
 //builtins_helper7.c
-int		check_line(char *line);
+int			check_line(char *line);
+int			exec_here_doc(t_tree *tree, t_environment *envr);
+void		here_doc_cleaner(t_tree *tree, t_environment *envr, char *input, int *fd);
+t_global	global_info(t_tree *tree, t_environment *envr);
 
 //echo.c
 int		exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr);
@@ -130,7 +139,7 @@ void	executer(t_tree *cmd, t_tree *tree, t_environment *envr, char *path);
 void	signal_decider(t_signal type);
 void	prepare_exit(t_tree *tree, t_tree *cmd, t_environment *envr);
 void	ignore(struct sigaction *sa, int signal);
-void	exec_exit(int signal, t_tree *tree, t_tree *cmd, t_environment *envr);
+void	exec_exit(int signal);
 void	ctrl_c(int signal, siginfo_t *info, void *context);
 
 //expansions.c

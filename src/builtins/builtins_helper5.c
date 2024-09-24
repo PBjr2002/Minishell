@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_helper5.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:43:49 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/23 18:02:05 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/24 12:15:54 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,26 @@ void	search_pipe(t_tree *tree, t_environment *envr)
 	}
 }
 
-void	search_redirect(t_tree *tree, t_environment *envr)
+int	search_redirect(t_tree *tree, t_environment *envr)
 {
+	int	mode;
+
+	mode = 0;
+	if (tree->type == TYPE_COMMAND)
+	{
+		mode = search_redirect(tree->left, envr);
+		return (mode);
+	}
 	if (tree->left && (tree->type == 1 || tree->type == 2
 			|| tree->type == 3 || tree->type == 4))
 	{
 		search_tree(tree->left, envr, 0);
-		redirect_solver(tree);
+		mode = redirect_solver(tree, envr);
 	}
 	else if (tree->type == 1 || tree->type == 2
 		|| tree->type == 3 || tree->type == 4)
-		redirect_solver(tree);
+		mode = redirect_solver(tree, envr);
+	return (mode);
 }
 
 char	**replace_line(char **envp, char *info_to_add)

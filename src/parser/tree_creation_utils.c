@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_creation_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 13:15:38 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/23 17:52:06 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/24 10:14:45 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 t_tree *tree_creation_function(t_token *token_list)
 {
 	t_tree 	*top;
-	t_tree	*current;
+	//t_tree	*current;
 	//t_token	*temp_token;
 	int 	pipenum;
 	int		pipeline;
@@ -35,7 +35,7 @@ t_tree *tree_creation_function(t_token *token_list)
 		top = ft_construct_pipelines(token_list, top, pipenum, pipeline);
 		pipeline++;
 	}
-	current = top;
+	/* current = top;
 	while (current->left != NULL && current->type == TYPE_PIPE)
 	{
 		ft_printf("PIPE DETECTED\n");
@@ -60,7 +60,7 @@ t_tree *tree_creation_function(t_token *token_list)
 		ft_printf("current->left = %s\n", current->left->str);
 		ft_printf("current->left->type = %d\n", current->left->type);
 		current = current->left;
-	}
+	} */
 	return (top);
 }
 
@@ -227,10 +227,10 @@ void	ft_fill_tree1(t_token *token_list, t_tree *current, int pipeline)
 void	ft_fill_tree2(t_token *token_list, t_tree *current, int pipeline, int pipenum)
 {
 	int			current_pipe;
-	t_token		*temp;
+	//t_token		*temp;
 
 	current_pipe = 1;
-	temp = token_list;
+	//temp = token_list;
 	(void)pipenum;
 	while (current->left != NULL)
 	{
