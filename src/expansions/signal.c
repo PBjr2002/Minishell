@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:18:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/24 14:07:01 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:53:30 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	here_doc(int signal, siginfo_t *info, void *context)
 	(void) info;
 	(void) context;
 	if (signal == SIGINT)
-		exec_exit(130);
+		exec_exit(130, 0);
 }
 
 void	signal_decider(t_signal type)
@@ -69,7 +69,12 @@ void	signal_decider(t_signal type)
 		sigaction(SIGINT, &sa, NULL);
 		sigaction(SIGQUIT, &sa, NULL);
 	}
-	else if (type == IGNORE)
+	signal_decider_part2(type, sa);
+}
+
+void	signal_decider_part2(t_signal type, struct sigaction sa)
+{
+	if (type == IGNORE)
 	{
 		ignore(&sa, SIGINT);
 		ignore(&sa, SIGQUIT);
@@ -83,29 +88,9 @@ void	signal_decider(t_signal type)
 		sigaction(SIGINT, &sa, NULL);
 		ignore(&sa, SIGQUIT);
 	}
-	
 }
 
-void	prepare_exit(t_tree *tree, t_tree *cmd, t_environment *envr)
-{
-	int	signal;
-
-	if (!tree)
-		exec_exit(envr->status);
-	else
-	{
-		if (tree->right)
-		{
-			ft_putendl_fd("exit", cmd->fd_out);
-			ft_putendl_fd("minishell: exit: too many arguments", cmd->fd_out);
-			return ;
-		}
-		signal = ft_atoi(tree->str);
-		exec_exit(signal);
-	}
-}
-
-void	exec_exit(int signal)
+void	exec_exit(int signal, int mode)
 {
 	t_global	info;
 
@@ -117,7 +102,8 @@ void	exec_exit(int signal)
 	if (info.envr)
 		free(info.envr);
 	ft_putendl_fd("exit", 1);
-	tree_cleaner(info.tree);
+	if (mode == 0)
+		tree_cleaner(info.tree);
 	exit(signal);
 }
 

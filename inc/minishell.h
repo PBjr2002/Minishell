@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/24 13:27:56 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:53:33 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int			check_line(char *line);
 int			exec_here_doc(t_tree *tree, t_environment *envr);
 void		here_doc_cleaner(t_tree *tree, t_environment *envr, char *input, int *fd);
 t_global	global_info(t_tree *tree, t_environment *envr);
+void	prepare_exit(t_tree *tree, t_tree *cmd, t_environment *envr);
 
 //echo.c
 int		exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr);
@@ -137,9 +138,9 @@ void	executer(t_tree *cmd, t_tree *tree, t_environment *envr, char *path);
 
 //signal.c
 void	signal_decider(t_signal type);
-void	prepare_exit(t_tree *tree, t_tree *cmd, t_environment *envr);
+void	signal_decider_part2(t_signal type, struct sigaction sa);
 void	ignore(struct sigaction *sa, int signal);
-void	exec_exit(int signal);
+void	exec_exit(int signal, int mode);
 void	ctrl_c(int signal, siginfo_t *info, void *context);
 
 //expansions.c

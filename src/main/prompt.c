@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/24 14:13:52 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:34:51 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,19 @@
 void	prompt(t_environment *info)
 {
 	t_lexer	*lexer;
-	t_tree	*tree;
 
 	while (1)
 	{
 		lexer = ft_calloc(sizeof(t_lexer), 1);
-		tree = NULL;
 		signal_decider(PARENT);
-		global_info(tree, info);
+		global_info(NULL, info);
 		lexer->invalid_lexer = false;
 		store_input(lexer);
 		add_history(lexer->input);
 		if (!lexer->input)
 		{
 			free(lexer);
-			exec_exit(0);
+			exec_exit(0, 1);
 		}
 		else if (lexer->invalid_lexer == true || input_checker(lexer) == 0)
 		{

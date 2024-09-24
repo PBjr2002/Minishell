@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:11:51 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/24 13:17:25 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:45:49 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,23 @@ t_global	global_info(t_tree *tree, t_environment *envr)
 	if (envr)
 		info.envr = envr;
 	return (info);
+}
+
+void	prepare_exit(t_tree *tree, t_tree *cmd, t_environment *envr)
+{
+	int	signal;
+
+	if (!tree)
+		exec_exit(envr->status, 0);
+	else
+	{
+		if (tree->right)
+		{
+			ft_putendl_fd("exit", cmd->fd_out);
+			ft_putendl_fd("minishell: exit: too many arguments", cmd->fd_out);
+			return ;
+		}
+		signal = ft_atoi(tree->str);
+		exec_exit(signal, 0);
+	}
 }

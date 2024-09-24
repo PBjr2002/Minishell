@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:59:47 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/24 14:04:00 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:21:19 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	tree_cleaner(t_tree *tree)
 	if (tree->str)
 	{
 		free(tree->str);
-		tree->str = NULL;
+		//tree->str = NULL;
 	}
 	free(tree);
 }

@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 15:51:38 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/24 13:32:14 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:41:32 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	executer(t_tree *cmd, t_tree *tree, t_environment *envr, char *path)
 		if (execve(path, av, envr->env) == -1)
 			perror("");
 	free_env(av);
-	exec_exit(0);
+	exec_exit(0, 0);
 }
 
 char	*path_creator(t_tree *cmd, t_environment *envr)
@@ -64,7 +64,6 @@ char	*path_creator(t_tree *cmd, t_environment *envr)
 	char	*path;
 	int		i;
 
-	paths = NULL;
 	if (ft_strncmp("./", cmd->str, 2) == 0)
 		path = ft_substr(cmd->str, 2, ft_strlen(cmd->str) - 2);
 	else if (ft_strncmp("/", cmd->str, 1) == 0)
