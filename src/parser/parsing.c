@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:30:15 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/20 17:25:58 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/24 17:27:22 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ t_tree	*parsing(t_token *token_list, t_environment *env)
 	while (token_list)
 	{
 		quote_token_remover(token_list, 0, 0);
-		//ft_printf("Token index: %d, Token type: %d, Token contains: %s\n", 
-		//token_list->index, token_list->type, token_list->str);
+/* 		ft_printf("Token index: %d, Token type: %d, Token contains: %s\n", 
+		token_list->index, token_list->type, token_list->str); */
 		token_list = token_list->next;
 	}
 	token_list = temp;
@@ -81,8 +81,8 @@ t_tree	*parsing(t_token *token_list, t_environment *env)
 	while (token_list)
 	{
 		redirection_handler(token_list, 0, 0);
-		//ft_printf("Token index: %d, Token type: %d, Token contains: %s\n", 
-		//token_list->index, token_list->type, token_list->str);
+/* 		ft_printf("Token index: %d, Token type: %d, Token contains: %s\n", 
+		token_list->index, token_list->type, token_list->str); */
 		token_list = token_list->next;
 	}
 	token_list = temp;

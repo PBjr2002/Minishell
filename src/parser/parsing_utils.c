@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:44:40 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/23 16:29:12 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/24 17:11:17 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,27 @@ void	quote_token_remover(t_token *token, int export, int n)
 	{
 	if (token->str[n] == '\'')
 	{
+		if (n == export)
+			export++;
 		n++;
-		export++;
 		while (token->str[n] != '\'')
 			n++;
 		if (n == export)
-			token->str = "\0";
+			token->str = NULL;
 		else
 		{
 			temp = token->str;
 			token->str = ft_substr(token->str, export, (n - export));
+			token->expand = false;
 			free(temp);
+			continue ;
 		}
 	}
 	else if (token->str[n] == '"')
 	{
+		if (n == export)
+			export++;
 		n++;
-		export++;
 		while (token->str[n] != '"')
 		{
 			if (token->str[n] == '$')
@@ -101,12 +105,13 @@ void	quote_token_remover(t_token *token, int export, int n)
 			n++;
 		}
 		if (n == export)
-			token->str = "\0";
+			token->str = NULL;
 		else
 		{
 			temp = token->str;
 			token->str = ft_substr(token->str, export, (n - export));
-			free(temp);	
+			free(temp);
+			continue ;
 		}
 	}
 	n++;

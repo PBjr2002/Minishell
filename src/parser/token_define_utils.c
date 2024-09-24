@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:56:14 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/23 16:21:37 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/24 16:44:07 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int quote_token_define(t_lexer *lexer, t_token *token_list, int n)
 	{
 		n++;
 		while (lexer->input[n] != '"')
-				n++;
+			n++;
 		new_token = ft_token_new(ft_substr(lexer->input, export, ((n - export) + 1)));
 		new_token->type = TYPE_COMMAND;
 		ft_token_append(token_list, new_token, new_token->str);
@@ -70,8 +70,8 @@ int redirect_token_define(t_lexer *lexer, t_token *token_list, int n)
 //numbers, uppercase, lowercase or underscore only, everything else ends the dollar definer and exports the result under the DOLLAR type
 int	dollar_token_define(t_lexer *lexer, t_token *token_list, int n)
 {
-	int export;
-	t_token	*new_token;
+	int 		export;
+	t_token		*new_token;
 
 	export = n++;
 	while ((lexer->input[n] > 47 && lexer->input[n] < 58) 
@@ -112,15 +112,15 @@ int	pipe_token_define(t_token *token_list, int n)
 //transcribes everything that isn't checked by the tokenization function as a command
 int com_token_define(t_lexer *lexer, t_token *token_list, int n)
 {
-	int 	export;
-	t_token	*new_token;
+	int 		export;
+	t_token		*new_token;
 	
 	export = n;
 	n++;
 	while ((lexer->input[n] != '|') && (lexer->input[n] != ' ')
 			&& (lexer->input[n] != '\'') && (lexer->input[n] != '"') 
 			&& (lexer->input[n] != '<') && (lexer->input[n] != '>') 
-			&& lexer->input[n])
+			&& lexer->input[n] )
 		n++;
 	new_token = ft_token_new(ft_substr(lexer->input, export, (n - export)));
 	new_token->type = TYPE_COMMAND;

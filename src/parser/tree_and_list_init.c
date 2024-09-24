@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:47 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/23 16:35:11 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/24 16:43:31 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_token	*ft_token_new(char *str)
 		return (NULL);
 	new->str = str;
 	new->index = index;
+	new->expand = true;
 	new->next = NULL;
 	new->previous = NULL;
 	return (new);
