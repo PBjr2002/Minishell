@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/24 14:53:33 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:36:28 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,11 @@ int			check_line(char *line);
 int			exec_here_doc(t_tree *tree, t_environment *envr);
 void		here_doc_cleaner(t_tree *tree, t_environment *envr, char *input, int *fd);
 t_global	global_info(t_tree *tree, t_environment *envr);
-void	prepare_exit(t_tree *tree, t_tree *cmd, t_environment *envr);
+void		prepare_exit(t_tree *tree, t_tree *cmd, t_environment *envr);
+
+//builtins_helper8.c
+int		check_expansion(char *str);
+void	expand_everything(t_tree *tree, t_environment *envr);
 
 //echo.c
 int		exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr);
