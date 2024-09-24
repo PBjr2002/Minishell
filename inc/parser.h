@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/24 15:06:53 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:50:42 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ t_tree			*ft_construct_pipelines_zero(t_token *token_list, t_tree *top, int pipe
 t_tree 			*ft_construct_pipelines(t_token *token_list, t_tree *top, int pipenum, int pipeline);
 t_tree			*ft_pipe_branch_attach(t_tree *tree, t_tree *new);
 t_tree			*ft_fill_tree_zero(t_token *token_list, t_tree *current, int pipeline);
-t_tree			*ft_command_branch_attach_zero(t_tree *tree, t_tree *new);
+t_tree			*ft_command_branch_attach_zero(t_tree *tree, t_tree *new, t_token *token_list);
 t_tree 			*tree_creation_function(t_token *token_list);
 t_token			*ft_token_new(char *str);
 //t_token			*temp_token_remove(t_token *temp);

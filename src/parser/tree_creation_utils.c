@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_creation_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 13:15:38 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/24 10:14:45 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:54:12 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,15 +184,16 @@ t_tree	*ft_fill_tree_zero(t_token *token_list, t_tree *current, int pipeline)
 		|| current->type == DOUBLE_IN || current->type == DOUBLE_OUT)
 	{
 		current = ft_command_branch_attach_zero(current, 
-			ft_branch_new(token_list->str, token_list->type, pipeline));
+			ft_branch_new(token_list->str, token_list->type, pipeline), token_list);
 		token_list = token_list->next;
 	}
 	else if (current->type == TYPE_COMMAND || current->type == TYPE_DOLLAR_COMMAND)
 		token_list = token_list->next;
 	while (token_list)
 	{
-		ft_argument_branch_attach(current, 
-			ft_branch_new(token_list->str, token_list->type, pipeline));
+		if (token_list->type == 5 || token_list->type == 7 || token_list->type == 9)
+			ft_argument_branch_attach(current, 
+				ft_branch_new(token_list->str, token_list->type, pipeline));
 		token_list = token_list->next;
 	}
 	return (current);

@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:52:11 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/23 15:08:33 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:30:04 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,17 @@ void	ft_redirect_branch_attach2(t_tree *tree, t_tree *new)
 }
 
 // this attaches command branches atop a redirection, only called when no pipes exist
-t_tree	*ft_command_branch_attach_zero(t_tree *tree, t_tree *new)
+t_tree	*ft_command_branch_attach_zero(t_tree *tree, t_tree *new, t_token *token_list)
 {
-	tree->parent = new;
-	new->left = tree;
+	while (token_list)
+	{
+		if (token_list->type == TYPE_COMMAND)
+		{
+			tree->parent = new;
+			new->left = tree;
+		}	
+		token_list = token_list->next;
+	}
 	return (new);
 }
 
@@ -90,10 +97,21 @@ void	ft_command_branch_attach2(t_tree *tree, t_tree *new)
 	}
 	else
 	{
-		tree->right->parent = new;
-		new->right = tree->right;
-		tree->right = new;
-		new->parent = tree;
+		if (tree->right->type == SINGLE_IN || tree->right->type == SINGLE_OUT 
+		|| tree->right->type == DOUBLE_IN || tree->right->type == DOUBLE_OUT)
+		{
+			tree->right->parent = new;
+			new->left = tree->right;
+			tree->right = new;
+			new->parent = tree;
+		}
+		else
+		{
+			tree->right->parent = new;
+			new->right = tree->right;
+			tree->right = new;
+			new->parent = tree;
+		}
 	}
 }
 
