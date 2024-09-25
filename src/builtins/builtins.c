@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:30:34 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/24 16:07:31 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/25 20:07:43 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	search_tree(t_tree *tree, t_environment *envr, int mode)
 {
 	t_tree	*tmp;
 
+	//se o fd input do redirect n existir ele dá merda
 	expand_everything(tree, envr);
 	if (tree->type == TYPE_COMMAND && tree->left)
 		mode = search_redirect(tree, envr);
@@ -67,29 +68,50 @@ int	redirect_solver(t_tree *tree, t_environment *envr)
 {
 	if (tree->type == SINGLE_IN)
 	{
-		tree->fd_in = open(tree->str, O_RDONLY | O_TRUNC, 0644);
+		tree->fd_in = open(tree->str, O_RDONLY | O_APPEND, 0644);
 		if (tree->left && (tree->left->type == SINGLE_OUT
 				|| tree->left->type == DOUBLE_OUT))
+		{
 			tree->fd_out = tree->left->fd_out;
+			return (3);
+		}
+		return (2);
 	}
 	else if (tree->type == SINGLE_OUT)
 	{
 		tree->fd_out = open(tree->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if (tree->left && tree->left->type == SINGLE_IN)
+		{
 			tree->fd_in = tree->left->fd_in;
+			return (3);
+		}
+		return (1);
 	}
 	else if (tree->type == DOUBLE_IN)
+	{
 		tree->fd_in = exec_here_doc(tree, envr);
+		if (tree->left && (tree->left->type == SINGLE_OUT
+				|| tree->left->type == DOUBLE_OUT))
+		{
+			tree->fd_out = tree->left->fd_out;
+			return (3);
+		}
+		return (2);
+	}
 	else if (tree->type == DOUBLE_OUT)
 	{
 		tree->fd_out = open(tree->str, O_CREAT | O_RDWR | O_APPEND, 0644);
 		if (tree->left && tree->left->type == SINGLE_IN)
+		{
 			tree->fd_in = tree->left->fd_in;
+			return (3);
+		}
+		return (1);
 	}
 	if (tree->fd_in == -1 || tree->fd_out == -1)
 		printf("There was an error opening\n");
 	tree->solved = true;
-	return (3);
+	return (-1);
 }
 
 void	pipe_setup(t_tree *tree)
@@ -107,8 +129,24 @@ void	fd_setup(t_tree *tree, int mode)
 	if (tree->left && (tree->left->type == 1 || tree->left->type == 2
 			|| tree->left->type == 3 || tree->left->type == 4))
 	{
-		tree->fd_in = tree->left->fd_in;
-		tree->fd_out = tree->left->fd_out;
+		if (mode == 1)
+		{
+			tree->fd_out = tree->left->fd_out;
+			if (tree->parent && tree->parent->type == TYPE_PIPE)
+				tree->fd_in = tree->parent->fd_in;
+		}
+		else if (mode == 2)
+		{
+			tree->fd_in = tree->left->fd_in;
+			if (tree->parent && tree->parent->type == TYPE_PIPE
+				&& tree->parent->fd_out != tree->left->fd_in)
+				tree->fd_out = tree->parent->fd_out;
+		}
+		else if (mode == 3)
+		{
+			tree->fd_in = tree->left->fd_in;
+			tree->fd_out = tree->left->fd_out;
+		}
 	}
 	else if (tree->parent && tree->parent->type == TYPE_PIPE)
 	{

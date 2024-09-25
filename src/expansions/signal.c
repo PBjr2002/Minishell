@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:18:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/24 14:53:30 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/25 19:27:54 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	exec_exit(int signal, int mode)
 	t_global	info;
 
 	info = global_info(NULL, NULL);
+	fd_closer(info.tree, 0);
 	if (info.envr->env)
 		free_env(info.envr->env);
 	if (info.envr->export_env)
