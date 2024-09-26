@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/24 17:53:16 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:35:25 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_token
 	int						index;
 	int						type;
 	bool					expand;
+	bool					append_before;
 	struct s_token			*previous;
 	struct s_token			*next;
 }	t_token;
@@ -91,6 +92,7 @@ typedef struct s_tree
 	int						fd_out;
 	int						*heredoc_input_fd; //default value is 0
 	bool					solved;
+	bool					append_before;
 	struct s_tree			*parent;
 	struct s_tree			*left;
 	struct s_tree			*right;
@@ -159,11 +161,14 @@ int 			quote_token_define(t_lexer *lexer, t_token *token_list, int n);
 int 			quote_dollar_solver(t_lexer *lexer, char *str, int n);
 int 			redirect_token_define(t_lexer *lexer, t_token *token_list, int n);
 int 			redirect_token_type_solver(t_lexer *lexer, int n);
+int				single_quote_token_remover(t_token *token, int export, int n);
 
 //void
 
 void 			command_expand (t_token *token_list, t_environment *env);
 void 			command_id(t_token *token_list);
+void			double_quote_dissection(t_token *token, int export, int n);
+void			double_quote_token_remover(t_token *token, int export, int n);
 void			ft_argument_branch_attach(t_tree *tree, t_tree *new);
 void			ft_branch_attach(t_tree *tree, t_tree *new, int branch_type, int pipeline);
 void			ft_command_branch_attach1(t_tree *tree, t_tree *new);
@@ -178,12 +183,13 @@ void			ft_scan_for_redirects2(t_token *token_list, t_tree *current, int pipeline
 void			ft_scan_for_redirects3(t_token *token_list, t_tree *current, int pipeline);
 void			quote_token_remover(t_token *token, int export, int n);
 void			redirection_handler(t_token *list, int n, int export);
+void			single_quote_dissection(t_token *token, int export, int n);
 void			store_input(t_lexer *lexer);
 
 //lists and trees
 
 t_tree			*find_pipes(t_token *token_list, t_tree *top, int pipenum);
-t_tree			*ft_branch_new(char *str, int type, int pipeline);
+t_tree			*ft_branch_new(t_token *token, char *str, int type, int pipeline);
 t_tree			*ft_tree_spawn(t_token *token_list);
 t_tree			*ft_construct_pipelines_zero(t_token *token_list, t_tree *top, int pipeline);
 t_tree 			*ft_construct_pipelines(t_token *token_list, t_tree *top, int pipenum, int pipeline);

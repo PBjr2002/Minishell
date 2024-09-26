@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:52:11 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/24 15:30:04 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:32:36 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ t_tree	*ft_command_branch_attach_zero(t_tree *tree, t_tree *new, t_token *token_
 		{
 			tree->parent = new;
 			new->left = tree;
+			new->append_before = token_list->append_before;
 		}	
 		token_list = token_list->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 13:15:38 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/24 14:54:12 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:36:47 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ t_tree	*ft_tree_spawn(t_token *token_list)
 	{
 		if (token_list->type == TYPE_PIPE)
 		{
-			top = ft_branch_new(token_list->str, token_list->type, 1);
+			top = ft_branch_new(token_list, token_list->str, token_list->type, 1);
 			top->pipeline = 1;
 			return (top);
 		}
@@ -102,11 +102,11 @@ t_tree	*ft_tree_spawn(t_token *token_list)
 	{
 		if (token_list->type == SINGLE_IN || token_list->type == SINGLE_OUT 
 			|| token_list->type == DOUBLE_IN || token_list->type == DOUBLE_OUT)
-			return (ft_branch_new(token_list->str, token_list->type, 0));
+			return (ft_branch_new(token_list, token_list->str, token_list->type, 0));
 		token_list = token_list->next;
 	}
 	token_list = temp;
-	return(ft_branch_new(token_list->str, token_list->type, 0));
+	return(ft_branch_new(token_list, token_list->str, token_list->type, 0));
 }
 
 // this creates the remaining pipe nodes on our tree, does nothing if there is only one pipe
@@ -132,7 +132,7 @@ t_tree	*find_pipes(t_token *token_list, t_tree *top, int pipenum)
 				continue;
 			}
 			top = ft_pipe_branch_attach(top, 
-				ft_branch_new(token_list->str, token_list->type, pipeline));
+				ft_branch_new(token_list, token_list->str, token_list->type, pipeline));
 			if (pipeline < pipenum)
 				pipeline++;
 		}
@@ -184,7 +184,7 @@ t_tree	*ft_fill_tree_zero(t_token *token_list, t_tree *current, int pipeline)
 		|| current->type == DOUBLE_IN || current->type == DOUBLE_OUT)
 	{
 		current = ft_command_branch_attach_zero(current, 
-			ft_branch_new(token_list->str, token_list->type, pipeline), token_list);
+			ft_branch_new(token_list, token_list->str, token_list->type, pipeline), token_list);
 		token_list = token_list->next;
 	}
 	else if (current->type == TYPE_COMMAND || current->type == TYPE_DOLLAR_COMMAND)
@@ -193,7 +193,7 @@ t_tree	*ft_fill_tree_zero(t_token *token_list, t_tree *current, int pipeline)
 	{
 		if (token_list->type == 5 || token_list->type == 7 || token_list->type == 9)
 			ft_argument_branch_attach(current, 
-				ft_branch_new(token_list->str, token_list->type, pipeline));
+				ft_branch_new(token_list, token_list->str, token_list->type, pipeline));
 		token_list = token_list->next;
 	}
 	return (current);
@@ -209,13 +209,13 @@ void	ft_fill_tree1(t_token *token_list, t_tree *current, int pipeline)
 	{
 		if (token_list->type == TYPE_COMMAND || token_list->type == TYPE_DOLLAR_COMMAND)
 		{
-			ft_command_branch_attach1(current, ft_branch_new(token_list->str, 
+			ft_command_branch_attach1(current, ft_branch_new(token_list, token_list->str, 
 				token_list->type, pipeline));
 			current = current->left;
 		}
 		if (token_list->type == 5 || token_list->type == 7 || token_list->type == 9)
 		{
-			ft_argument_branch_attach(current, ft_branch_new(token_list->str, 
+			ft_argument_branch_attach(current, ft_branch_new(token_list, token_list->str, 
 				token_list->type, pipeline));
 		}
 		token_list = token_list->next;
@@ -256,13 +256,13 @@ void	ft_fill_tree2(t_token *token_list, t_tree *current, int pipeline, int pipen
 	{
 		if (token_list->type == TYPE_COMMAND || token_list->type == TYPE_DOLLAR_COMMAND)
 		{
-			ft_command_branch_attach2(current, ft_branch_new(token_list->str, 
+			ft_command_branch_attach2(current, ft_branch_new(token_list, token_list->str, 
 				token_list->type, pipeline));
 			current = current->right;
 		}
 		if (token_list->type == 5 || token_list->type == 7 || token_list->type == 9)
 		{
-			ft_argument_branch_attach(current, ft_branch_new(token_list->str, 
+			ft_argument_branch_attach(current, ft_branch_new(token_list, token_list->str, 
 				token_list->type, pipeline));
 		}
 		if (token_list->type == TYPE_PIPE)

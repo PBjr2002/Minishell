@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:44:40 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/26 15:41:18 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:45:12 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,57 +67,6 @@ void command_expand (t_token *token_list, t_environment *env)
 	}
 }
 
-//everything inside the single quotes are treated as a word, no matter what they are.
-//everything except dollar signs are treated as words inside double quotes
-void	quote_token_remover(t_token *token, int export, int n)
-{
-	char *temp;
-	
-	while (token->str && token->str[n])
-	{
-	if (token->str[n] == '\'')
-	{
-		if (n == export)
-			export++;
-		n++;
-		while (token->str[n] != '\'')
-			n++;
-		if (n == export)
-			token->str = NULL;
-		else
-		{
-			temp = token->str;
-			token->str = ft_substr(token->str, export, (n - export));
-			token->expand = false;
-			free(temp);
-			continue ;
-		}
-	}
-	else if (token->str[n] == '"')
-	{
-		if (n == export)
-			export++;
-		n++;
-		while (token->str[n] != '"')
-		{
-			if (token->str[n] == '$')
-				token->type = TYPE_DOUBLE_QUOTE_EXPAND;
-			n++;
-		}
-		if (n == export)
-			token->str = NULL;
-		else
-		{
-			temp = token->str;
-			token->str = ft_substr(token->str, export, (n - export));
-			free(temp);
-			continue ;
-		}
-	}
-	n++;
-	}
-}
-
 //cleans the redirection token, removing "< > << >>" as well as any spaces
 void	redirection_handler(t_token *list, int n, int export)
 {
@@ -140,5 +89,61 @@ void	redirection_handler(t_token *list, int n, int export)
 			list->str = ft_substr(list->str, export, (n - export));
 			free(temp);
 		}
+	}
+}
+
+//everything inside the single quotes are treated as a word, no matter what they are.
+int		single_quote_token_remover(t_token *token, int export, int n)
+{
+	int single;
+	
+	single = 0;
+	while (token->str && token->str[n])
+	{
+	if (token->str[n] == '\'')
+	{
+		single = 1;
+		if (n == export)
+			export++;
+		n++;
+		while (token->str[n] != '\'')
+			n++;
+		if (n == export)
+			token->str = NULL;
+		else
+		{
+			single_quote_dissection(token, export, n);
+			continue ;
+		}
+	}
+	n++;
+	}
+	return (single);
+}
+//everything except dollar signs are treated as words inside double quotes
+void	double_quote_token_remover(t_token *token, int export, int n)
+{
+	while (token->str && token->str[n])
+	{
+	if (token->str[n] == '"')
+	{
+		if (n == export)
+			export++;
+		n++;
+		while (token->str[n] != '"')
+		{
+			if (token->str[n] == '$')
+				token->type = TYPE_DOUBLE_QUOTE_EXPAND;
+			n++;
+		}
+		if (n == export)
+			token->str = NULL;
+		else
+		{
+			double_quote_dissection(token, export, n);
+			continue ;
+		}
+	}
+	n++;
 	}
 }
