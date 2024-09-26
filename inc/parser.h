@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/26 15:35:25 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:46:51 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_tree
 	int						fd_in;
 	int						fd_out;
 	int						*heredoc_input_fd; //default value is 0
+	int						expand;
 	bool					solved;
 	bool					append_before;
 	struct s_tree			*parent;

@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:47 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/26 15:34:28 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:46:42 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_tree	*ft_branch_new(t_token *token, char *str, int type, int pipeline)
 	new->fd_in = STDIN_FILENO;
 	new->fd_out = STDOUT_FILENO;
 	new->heredoc_input_fd = 0;
+	new->expand = token->expand;
 	new->solved = false;
 	new->append_before = token->append_before;
 	new->parent = NULL;
