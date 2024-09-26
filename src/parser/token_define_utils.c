@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:56:14 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/26 15:16:15 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:11:51 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int quote_token_define(t_lexer *lexer, t_token *token_list, int n)
 			n++;
 		new_token = ft_token_new(ft_substr(lexer->input, export, ((n - export) + 1)));
 		new_token->type = TYPE_COMMAND;
-		if ((lexer->input[export - 1] < 10 || lexer->input[export - 1] > 12) || lexer->input[export - 1] != ' ')
+		if ((lexer->input[export - 1] < 10 || lexer->input[export - 1] > 12) && lexer->input[export - 1] != ' ')
 			new_token->append_before = true;
 		ft_token_append(token_list, new_token, new_token->str);
 	}
@@ -67,6 +67,8 @@ int redirect_token_define(t_lexer *lexer, t_token *token_list, int n)
 	else
 		new_token = ft_token_new(ft_substr(lexer->input, export, (n - export)));
 	new_token->type = redirect_token_type_solver(lexer, export);
+	if ((lexer->input[export - 1] < 10 || lexer->input[export - 1] > 12) || lexer->input[export - 1] != ' ')
+		new_token->append_before = true;
 	ft_token_append(token_list, new_token, new_token->str);
 	return (n);
 }
@@ -97,6 +99,8 @@ int	dollar_token_define(t_lexer *lexer, t_token *token_list, int n)
 	else
 		new_token = ft_token_new(ft_substr(lexer->input, export, (n - export)));
 	new_token->type = TYPE_DOLLAR;
+	if ((lexer->input[export - 1] < 10 || lexer->input[export - 1] > 12) || lexer->input[export - 1] != ' ')
+		new_token->append_before = true;
 	ft_token_append(token_list, new_token, new_token->str);
 	return (n);
 }
@@ -128,6 +132,8 @@ int com_token_define(t_lexer *lexer, t_token *token_list, int n)
 		n++;
 	new_token = ft_token_new(ft_substr(lexer->input, export, (n - export)));
 	new_token->type = TYPE_COMMAND;
+	if ((lexer->input[export - 1] < 10 || lexer->input[export - 1] > 12) && lexer->input[export - 1] != ' ')
+		new_token->append_before = true;
 	ft_token_append(token_list, new_token, new_token->str);
 	return (n);
 }
