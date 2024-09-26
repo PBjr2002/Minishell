@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:30:15 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/24 17:27:22 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:08:38 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,45 +48,29 @@ t_tree	*parsing(t_token *token_list, t_environment *env)
 {
 	t_token	*temp;
 	t_tree	*tree;
+	int 	single;
 
 	(void)env;
 	temp = token_list;
 	command_id(token_list);
-	//while (token_list)
-	//{
-	//	ft_printf("Token index: %d, Token type: %d, Token contains: %s\n", 
-	//	token_list->index, token_list->type, token_list->str);
-	//	token_list = token_list->next;
-	//}
 	token_list = temp;
 	command_expand(token_list, env);
-	//ft_printf("-------------INITIATING COMMAND EXPANDER-------------\n");
-	//while (token_list)
-	//{
-	//	ft_printf("Token index: %d, Token type: %d, Token contains: %s\n", 
-	//	token_list->index, token_list->type, token_list->str);
-	//	token_list = token_list->next;
-	//}
 	token_list = temp;
-	//ft_printf("-------------INITIATING QUOTE REMOVER----------------\n");
 	while (token_list)
 	{
-		quote_token_remover(token_list, 0, 0);
-/* 		ft_printf("Token index: %d, Token type: %d, Token contains: %s\n", 
-		token_list->index, token_list->type, token_list->str); */
+		single = 0;
+		single = single_quote_token_remover(token_list, 0, 0);
+		if (single == 0)
+			double_quote_token_remover(token_list, 0, 0);
 		token_list = token_list->next;
 	}
 	token_list = temp;
-	//ft_printf("-------------INITIATING REDIRECT HANDLER-------------\n");
 	while (token_list)
 	{
 		redirection_handler(token_list, 0, 0);
-/* 		ft_printf("Token index: %d, Token type: %d, Token contains: %s\n", 
-		token_list->index, token_list->type, token_list->str); */
 		token_list = token_list->next;
 	}
 	token_list = temp;
-	//add function that searches and destroys (marks?) empty tokens (or exclude them from tree)
 	tree = tree_creation_function(token_list);
 	return (tree);
 }

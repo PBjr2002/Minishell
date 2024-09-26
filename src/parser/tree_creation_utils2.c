@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:02:58 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/24 15:25:04 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:36:03 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_scan_for_redirects1(t_token *token_list, t_tree *current, int pipeline)
 				first_redirect_detected = false;
 			else	
 				ft_redirect_branch_attach1(current, 
-					ft_branch_new(token_list->str, token_list->type, pipeline));
+					ft_branch_new(token_list, token_list->str, token_list->type, pipeline));
 		}
 		token_list = token_list->next;
 	}
@@ -43,7 +43,7 @@ void	ft_scan_for_redirects2(t_token *token_list, t_tree *current, int pipeline)
 		if (token_list->type == SINGLE_IN || token_list->type == SINGLE_OUT
 			|| token_list->type == DOUBLE_IN || token_list->type == DOUBLE_OUT)
 		ft_redirect_branch_attach1(current, 
-					ft_branch_new(token_list->str, token_list->type, pipeline));
+					ft_branch_new(token_list, token_list->str, token_list->type, pipeline));
 		token_list = token_list->next;
 	}
 }
@@ -67,7 +67,7 @@ void	ft_scan_for_redirects3(t_token *token_list, t_tree *current, int pipeline)
 		if (token_list->type == SINGLE_IN || token_list->type == SINGLE_OUT
 			|| token_list->type == DOUBLE_IN || token_list->type == DOUBLE_OUT)
 			ft_redirect_branch_attach2(current, 
-					ft_branch_new(token_list->str, token_list->type, pipeline));
+					ft_branch_new(token_list, token_list->str, token_list->type, pipeline));
 		token_list = token_list->next;
 	}
 }
