@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:44:40 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/26 15:45:12 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:47:40 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,10 @@ int		single_quote_token_remover(t_token *token, int export, int n)
 		while (token->str[n] != '\'')
 			n++;
 		if (n == export)
+		{
+			free(token->str);	
 			token->str = NULL;
+		}
 		else
 		{
 			single_quote_dissection(token, export, n);
@@ -137,7 +140,10 @@ void	double_quote_token_remover(t_token *token, int export, int n)
 			n++;
 		}
 		if (n == export)
+		{
+			free(token->str);
 			token->str = NULL;
+		}
 		else
 		{
 			double_quote_dissection(token, export, n);
