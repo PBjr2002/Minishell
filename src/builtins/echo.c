@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:38:16 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/26 15:11:20 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:59:20 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr)
 	while (tree && tree->str)
 	{
 		if (tree->parent != cmd && ft_strncmp(tree->str, "-n", 2) != 0
-			&& ft_strncmp(tree->parent->str, "-n", 2) != 0)
+			&& ft_strncmp(tree->parent->str, "-n", 2) != 0 && tree->append_before == false)
 			ft_putchar_fd(' ', cmd->fd_out);
 		if (ft_strncmp(tree->str, "-n", 2) == 0)
 		{

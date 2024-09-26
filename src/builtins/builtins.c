@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:30:34 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/25 20:07:43 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:27:26 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	search_tree(t_tree *tree, t_environment *envr, int mode)
 	expand_everything(tree, envr);
 	if (tree->type == TYPE_COMMAND && tree->left)
 		mode = search_redirect(tree, envr);
+	if (mode == -1)
+		return ;
 	search_pipe(tree, envr);
 	if (tree->right && tree->type == TYPE_COMMAND)
 	{
@@ -66,52 +68,18 @@ void	search_tree(t_tree *tree, t_environment *envr, int mode)
 
 int	redirect_solver(t_tree *tree, t_environment *envr)
 {
+	int	mode;
+
+	mode = -1;
 	if (tree->type == SINGLE_IN)
-	{
-		tree->fd_in = open(tree->str, O_RDONLY | O_APPEND, 0644);
-		if (tree->left && (tree->left->type == SINGLE_OUT
-				|| tree->left->type == DOUBLE_OUT))
-		{
-			tree->fd_out = tree->left->fd_out;
-			return (3);
-		}
-		return (2);
-	}
+		mode = redirect_single_in(tree);
 	else if (tree->type == SINGLE_OUT)
-	{
-		tree->fd_out = open(tree->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
-		if (tree->left && tree->left->type == SINGLE_IN)
-		{
-			tree->fd_in = tree->left->fd_in;
-			return (3);
-		}
-		return (1);
-	}
+		mode = redirect_single_out(tree);
 	else if (tree->type == DOUBLE_IN)
-	{
-		tree->fd_in = exec_here_doc(tree, envr);
-		if (tree->left && (tree->left->type == SINGLE_OUT
-				|| tree->left->type == DOUBLE_OUT))
-		{
-			tree->fd_out = tree->left->fd_out;
-			return (3);
-		}
-		return (2);
-	}
+		mode = redirect_double_in(tree, envr);
 	else if (tree->type == DOUBLE_OUT)
-	{
-		tree->fd_out = open(tree->str, O_CREAT | O_RDWR | O_APPEND, 0644);
-		if (tree->left && tree->left->type == SINGLE_IN)
-		{
-			tree->fd_in = tree->left->fd_in;
-			return (3);
-		}
-		return (1);
-	}
-	if (tree->fd_in == -1 || tree->fd_out == -1)
-		printf("There was an error opening\n");
-	tree->solved = true;
-	return (-1);
+		mode = redirect_double_out(tree);
+	return (mode);
 }
 
 void	pipe_setup(t_tree *tree)
