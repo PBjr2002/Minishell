@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:44:40 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/26 15:47:40 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:50:25 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,13 +116,14 @@ int		single_quote_token_remover(t_token *token, int export, int n)
 		else
 		{
 			single_quote_dissection(token, export, n);
-			continue ;
+			break ;
 		}
 	}
 	n++;
 	}
 	return (single);
 }
+
 //everything except dollar signs are treated as words inside double quotes
 void	double_quote_token_remover(t_token *token, int export, int n)
 {
@@ -147,7 +148,7 @@ void	double_quote_token_remover(t_token *token, int export, int n)
 		else
 		{
 			double_quote_dissection(token, export, n);
-			continue ;
+			break ;
 		}
 	}
 	n++;
