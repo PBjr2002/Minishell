@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 15:51:38 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/25 19:29:59 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/27 11:56:43 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr)
 	if (!path)
 	{
 		printf("%s : No such file or directory\n", cmd->str);
+		fd_closer(cmd, 0);
 		return ;
 	}
 	signal_decider(IGNORE);

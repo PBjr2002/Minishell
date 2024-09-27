@@ -6,11 +6,27 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:38:16 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/26 15:59:20 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/27 12:20:31 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+
+//erros do echo
+/* 
+	echo "'$USER'""$user"user
+nosso -> "'$USERuser
+bash  -> 'pbjr'user
+
+	echo "'$USER""$user'"user
+nosso -> "'$USER""$user'"user (com condicional jumps á mistura)
+bash  -> 'pbjr'user
+
+	echo "'$USER$user'"user
+nosso -> "'$USER$useruser
+bash  -> 'pbjr'user
+ */
 
 int	exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr)
 {
@@ -19,8 +35,6 @@ int	exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr)
 
 	nl = 0;
 	i = 0;
-	//echo "ola tudo bem"'$USER$$'$$$USER
-	//mete espaço entre os argumentos e n expande o $$$USER(esta a vir com o tipo 7) no fim
 	while (tree && tree->str)
 	{
 		if (tree->parent != cmd && ft_strncmp(tree->str, "-n", 2) != 0
@@ -47,7 +61,7 @@ void	echo_helper(t_tree *tree, t_tree *cmd, t_environment *envr)
 {
 	char	*str;
 
-	if (tree->type == 9 || tree->type == 5)
+	if (tree->expand == true)
 		str = exec_expansion(tree->str, envr);
 	else
 		str = ft_strdup(tree->str);
