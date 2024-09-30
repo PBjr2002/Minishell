@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:18:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/26 15:36:51 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/28 11:10:18 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	here_doc(int signal, siginfo_t *info, void *context)
 	(void) info;
 	(void) context;
 	if (signal == SIGINT)
-		exec_exit(130, 0);
+		exec_exit(130, 0, 0);
 }
 
 void	signal_decider(t_signal type)
@@ -90,7 +90,7 @@ void	signal_decider_part2(t_signal type, struct sigaction sa)
 	}
 }
 
-void	exec_exit(int signal, int mode)
+void	exec_exit(int signal, int mode, int write)
 {
 	t_global	info;
 
@@ -101,7 +101,8 @@ void	exec_exit(int signal, int mode)
 		free_env(info.envr->export_env);
 	if (info.envr)
 		free(info.envr);
-	ft_putendl_fd("exit", 1);
+	if (write == 0)
+		ft_putendl_fd("exit", 1);
 	if (mode == 0)
 	{
 		fd_closer(info.tree, 0);

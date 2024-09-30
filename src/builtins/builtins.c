@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:30:34 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/26 16:27:26 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/30 14:26:23 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	search_tree(t_tree *tree, t_environment *envr, int mode)
 {
 	t_tree	*tmp;
 
-	//se o fd input do redirect n existir ele dá merda
 	expand_everything(tree, envr);
 	if (tree->type == TYPE_COMMAND && tree->left)
 		mode = search_redirect(tree, envr);
@@ -108,7 +107,12 @@ void	fd_setup(t_tree *tree, int mode)
 			tree->fd_in = tree->left->fd_in;
 			if (tree->parent && tree->parent->type == TYPE_PIPE
 				&& tree->parent->fd_out != tree->left->fd_in)
-				tree->fd_out = tree->parent->fd_out;
+			{
+				if (tree->parent->parent && tree->parent->parent->type == TYPE_PIPE)
+					tree->fd_out = tree->parent->parent->fd_out;
+				else
+					tree->fd_out = tree->parent->fd_out;
+			}
 		}
 		else if (mode == 3)
 		{

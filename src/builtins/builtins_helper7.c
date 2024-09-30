@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:11:51 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/24 14:45:49 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/28 11:12:53 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	prepare_exit(t_tree *tree, t_tree *cmd, t_environment *envr)
 	int	signal;
 
 	if (!tree)
-		exec_exit(envr->status, 0);
+		exec_exit(envr->status, 0, 0);
 	else
 	{
 		if (tree->right)
@@ -106,6 +106,6 @@ void	prepare_exit(t_tree *tree, t_tree *cmd, t_environment *envr)
 			return ;
 		}
 		signal = ft_atoi(tree->str);
-		exec_exit(signal, 0);
+		exec_exit(signal, 0, 0);
 	}
 }

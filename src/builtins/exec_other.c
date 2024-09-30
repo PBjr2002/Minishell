@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 15:51:38 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/27 11:56:43 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/30 14:25:30 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr)
 {
 	char	*path;
+	pid_t	id;
 
 	path = path_creator(cmd, envr);
 	if (!path)
@@ -24,17 +25,15 @@ void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr)
 		return ;
 	}
 	signal_decider(IGNORE);
-	envr->pid = fork();
-	if (envr->pid == 0)
+	id = fork();
+	if (id == 0)
 		executer(cmd, tree, envr, path);
 	else
 	{
-		waitpid(envr->pid, &envr->status, 0);
-		if (cmd->fd_in != STDIN_FILENO && cmd->fd_in != STDOUT_FILENO
-			&& cmd->fd_in != STDERR_FILENO)
+		waitpid(id, &envr->status, 0);
+		if (cmd->fd_in != STDIN_FILENO)
 			close(cmd->fd_in);
-		if (cmd->fd_out != STDIN_FILENO && cmd->fd_out != STDOUT_FILENO
-			&& cmd->fd_out != STDERR_FILENO)
+		if (cmd->fd_out != STDOUT_FILENO)
 			close(cmd->fd_out);
 		envr->status = envr->status / 256;
 		free(path);
@@ -46,17 +45,28 @@ void	executer(t_tree *cmd, t_tree *tree, t_environment *envr, char *path)
 	char	**av;
 
 	av = build_av(tree, cmd);
-	if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
-		printf("There was an error duplicating the FD\n");
-	if (dup2(cmd->fd_out, STDOUT_FILENO) == -1)
-		printf("There was an error duplicating the FD\n");
+	//printf("%s\n%s\n%s\n", path, av[0], av[1]);
+	if (cmd->fd_in != STDIN_FILENO)
+	{
+		if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
+			printf("There was an error duplicating the FD\n");
+		close(cmd->fd_in);
+	}
+	if (cmd->fd_out != STDOUT_FILENO)
+	{
+		if (dup2(cmd->fd_out, STDOUT_FILENO) == -1)
+			printf("There was an error duplicating the FD\n");
+		close(cmd->fd_out);
+	}
+	//close(cmd->fd_out);
 	fd_closer(cmd, 0);
 	signal_decider(CHILD);
 	if (access(path, X_OK) == 0)
 		if (execve(path, av, envr->env) == -1)
 			perror("");
+	fd_closer(cmd, 0);
 	free_env(av);
-	exec_exit(0, 0);
+	exec_exit(0, 0, 1);
 }
 
 char	*path_creator(t_tree *cmd, t_environment *envr)

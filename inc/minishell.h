@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/26 16:41:37 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/30 10:32:50 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void		prepare_exit(t_tree *tree, t_tree *cmd, t_environment *envr);
 //builtins_helper8.c
 int		check_expansion(char *str);
 void	expand_everything(t_tree *tree, t_environment *envr);
+void	exec_cmd(t_tree *tree, t_environment *envr);
 
 //redirects.c
 int		redirect_single_in(t_tree *tree);
@@ -150,7 +151,7 @@ void	executer(t_tree *cmd, t_tree *tree, t_environment *envr, char *path);
 void	signal_decider(t_signal type);
 void	signal_decider_part2(t_signal type, struct sigaction sa);
 void	ignore(struct sigaction *sa, int signal);
-void	exec_exit(int signal, int mode);
+void	exec_exit(int signal, int mode, int write);
 void	ctrl_c(int signal, siginfo_t *info, void *context);
 
 //expansions.c

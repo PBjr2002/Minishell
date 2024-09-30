@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:59:47 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/26 15:22:06 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/30 11:52:53 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	build_av_helper(t_tree *cmd, t_tree *tree, t_tree *tmp, char **av)
 {
 	int	len;
 
-	len = 0;
+	len = 1;
 	if (cmd)
 	{
 		av[0] = ft_strdup(cmd->str);
@@ -52,7 +52,6 @@ int	build_av_helper(t_tree *cmd, t_tree *tree, t_tree *tmp, char **av)
 	}
 	if (tree)
 	{
-		len = 1;
 		while (tree)
 		{
 			av[len] = ft_strdup(tree->str);
@@ -61,9 +60,9 @@ int	build_av_helper(t_tree *cmd, t_tree *tree, t_tree *tmp, char **av)
 			len++;
 			tree = tree->right;
 		}
-		av[len] = NULL;
 		tree = tmp;
 	}
+	av[len] = NULL;
 	return (0);
 }
 
@@ -110,10 +109,8 @@ void	fd_closer(t_tree *tree, int mode)
 		fd_closer(tree->right, 1);
 	if (tree->left)
 		fd_closer(tree->left, 1);
-	if (tree->fd_in != STDIN_FILENO && tree->fd_in != STDOUT_FILENO
-		&& tree->fd_in != STDERR_FILENO)
+	if (tree->fd_in != STDIN_FILENO)
 		close(tree->fd_in);
-	if (tree->fd_out != STDIN_FILENO && tree->fd_out != STDOUT_FILENO
-		&& tree->fd_out != STDERR_FILENO)
+	if (tree->fd_out != STDOUT_FILENO)
 		close(tree->fd_out);
 }
