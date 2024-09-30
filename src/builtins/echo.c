@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:38:16 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/30 14:32:55 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:59:09 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,7 @@
 
 //erros do echo
 /* 
-	echo "'$USER'""$user"user (done)
-nosso -> "'$USERuser
-bash  -> 'pbjr'user
-
-	echo "'$USER""$user'"user (done)
-nosso -> "'$USER""$user'"user (com condicional jumps á mistura)
-bash  -> 'pbjr'user
-
-	echo "'$USER$user'"user (done)
-nosso -> "'$USER$useruser
-bash  -> 'pbjr'user
+	
  */
 
 int	exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr)
@@ -42,6 +32,7 @@ int	exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr)
 			ft_putchar_fd(' ', cmd->fd_out);
 		if (ft_strncmp(tree->str, "-n", 2) == 0)
 		{
+			i++;
 			while (tree->str[i] && tree->str[i] != ' ' && tree->str[i] == 'n')
 				i++;
 			if (tree->str[i] == ' ' || tree->str[i] == '\0')

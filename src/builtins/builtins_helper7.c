@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_helper7.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:11:51 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/28 11:12:53 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:29:10 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	exec_here_doc(t_tree *tree, t_environment *envr)
 			if (ft_strcmp(input, tree->str) == 0 && ft_strlen(input) == ft_strlen(tree->str))
 				break ;
 			else
-				ft_putstr_fd(input, fd[1]);
+				ft_putendl_fd(input, fd[1]);
 			free(input);
 		}
 		here_doc_cleaner(tree, envr, input, fd);

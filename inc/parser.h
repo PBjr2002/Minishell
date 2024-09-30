@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/30 14:29:17 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:12:26 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,6 @@ int				quote_decider(t_token *token_list);
 int 			quote_dollar_solver(t_lexer *lexer, char *str, int n);
 int 			redirect_token_define(t_lexer *lexer, t_token *token_list, int n);
 int 			redirect_token_type_solver(t_lexer *lexer, int n);
-int				single_quote_token_remover(t_token *token, int export, int n);
 
 //void
 
@@ -186,6 +185,7 @@ void			ft_scan_for_redirects3(t_token *token_list, t_tree *current, int pipeline
 void			quote_token_remover(t_token *token, int export, int n);
 void			redirection_handler(t_token *list, int n, int export);
 void			single_quote_dissection(t_token *token, int export, int n);
+void			single_quote_token_remover(t_token *token, int export, int n);
 void			store_input(t_lexer *lexer);
 
 //lists and trees

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_helper8.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:21:37 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/30 14:02:37 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:38:30 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	expand_everything(t_tree *tree, t_environment *envr)
 		expand_everything(tree->right, envr);
 	if (tree->type == TYPE_PIPE || tree->type == TYPE_ARGUMENT)
 		return ;	
-	if (check_expansion(tree->str) == 0)
+	if (check_expansion(tree->str) == 0 && tree->expand == true)
 	{
 		str = exec_expansion(tree->str, envr);
 		free(tree->str);
