@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:59:47 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/30 11:52:53 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:32:33 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,23 +94,18 @@ void	token_cleaner(t_token *token_list)
 
 void	fd_closer(t_tree *tree, int mode)
 {
+	int	i;
+
 	if (!tree)
 		return ;
 	if (mode == 0)
 	{
-		while (tree->parent)
-			tree = tree->parent;
-		if (tree->right)
-			fd_closer(tree->right, 1);
-		if (tree->left)
-			fd_closer(tree->left, 1);
+		i = 3;
+		while (i < FOPEN_MAX)
+		{
+			if (i != STDIN_FILENO && i != STDOUT_FILENO)
+				close(i);
+			i++;
+		}
 	}
-	if (tree->right)
-		fd_closer(tree->right, 1);
-	if (tree->left)
-		fd_closer(tree->left, 1);
-	if (tree->fd_in != STDIN_FILENO)
-		close(tree->fd_in);
-	if (tree->fd_out != STDOUT_FILENO)
-		close(tree->fd_out);
 }

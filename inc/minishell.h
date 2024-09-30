@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/30 10:32:50 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/30 14:42:13 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int		parser_and_exec(t_lexer *lexer, t_environment *info);
 
 //builtins.c
 void	decider(t_tree *tree, t_tree *cmd, t_environment *envr);
-void	search_tree(t_tree *tree, t_environment *envr, int mode);
+int		search_tree(t_tree *tree, t_environment *envr, int mode);
 int		redirect_solver(t_tree *tree, t_environment *envr);
 void	pipe_setup(t_tree *tree);
 void	fd_setup(t_tree *tree, int mode);

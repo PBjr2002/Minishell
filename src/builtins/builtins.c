@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:30:34 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/30 14:26:23 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/30 14:47:24 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,33 +36,33 @@ void	decider(t_tree *tree, t_tree *cmd, t_environment *envr)
 		cmd->solved = true;
 }
 
-void	search_tree(t_tree *tree, t_environment *envr, int mode)
+int	search_tree(t_tree *tree, t_environment *envr, int mode)
 {
-	t_tree	*tmp;
+	//t_tree	*tmp;
 
 	expand_everything(tree, envr);
 	if (tree->type == TYPE_COMMAND && tree->left)
 		mode = search_redirect(tree, envr);
 	if (mode == -1)
-		return ;
+		return (1);
 	search_pipe(tree, envr);
 	if (tree->right && tree->type == TYPE_COMMAND)
 	{
 		fd_setup(tree, mode);
-		tmp = tree;
-		if (tree->right)
-			tree = tree->right;
-		decider(tree, tmp, envr);
+		//tmp = tree;
+		//if (tree->right)
+		//	tree = tree->right;
+		//decider(tree, tmp, envr);
 	}
 	else
 	{
 		if (tree->type != TYPE_PIPE)
 		{
 			fd_setup(tree, mode);
-			decider(NULL, tree, envr);
+			//decider(NULL, tree, envr);
 		}
 	}
-	tree->solved = true;
+	return (0);
 }
 
 int	redirect_solver(t_tree *tree, t_environment *envr)

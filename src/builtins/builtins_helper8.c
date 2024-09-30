@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:21:37 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/30 14:02:37 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:34:12 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	expand_everything(t_tree *tree, t_environment *envr)
 		expand_everything(tree->right, envr);
 	if (tree->type == TYPE_PIPE || tree->type == TYPE_ARGUMENT)
 		return ;	
-	if (check_expansion(tree->str) == 0)
+	if (check_expansion(tree->str) == 0 && tree->expand == true)
 	{
 		str = exec_expansion(tree->str, envr);
 		free(tree->str);
@@ -64,23 +64,20 @@ void	exec_cmd(t_tree *tree, t_environment *envr)
 			exec_cmd(tree->left, envr);
 			exec_exit(0, 0, 1);
 		}
-		else
+		if (tree->parent && tree->parent->type == TYPE_PIPE)
+			close(tree->parent->fd_out);
+		close(tree->fd_out);
+		signal_decider(IGNORE);
+		id2 = fork();
+		if (id2 == 0)
 		{
-			signal_decider(IGNORE);
-			id2 = fork();
-			if (id2 == 0)
-			{
-				signal_decider(CHILD);
-				exec_cmd(tree->right, envr);
-				exec_exit(0, 0, 1);
-			}
-			else
-			{
-				waitpid(id, &envr->status, 0);
-				waitpid(id2, &envr->status, 0);
-				fd_closer(tree, 0);
-			}
+			signal_decider(CHILD);
+			exec_cmd(tree->right, envr);
+			exec_exit(0, 0, 1);
 		}
+		fd_closer(tree, 0);
+		waitpid(id, &envr->status, 0);
+		waitpid(id2, &envr->status, 0);
 	}
 	else
 	{

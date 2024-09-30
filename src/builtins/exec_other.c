@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 15:51:38 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/30 14:25:30 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:36:17 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr)
 	else
 	{
 		waitpid(id, &envr->status, 0);
-		if (cmd->fd_in != STDIN_FILENO)
-			close(cmd->fd_in);
-		if (cmd->fd_out != STDOUT_FILENO)
-			close(cmd->fd_out);
+		fd_closer(cmd, 0);
 		envr->status = envr->status / 256;
 		free(path);
 	}
@@ -45,20 +42,24 @@ void	executer(t_tree *cmd, t_tree *tree, t_environment *envr, char *path)
 	char	**av;
 
 	av = build_av(tree, cmd);
-	//printf("%s\n%s\n%s\n", path, av[0], av[1]);
 	if (cmd->fd_in != STDIN_FILENO)
 	{
 		if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
+		{
 			printf("There was an error duplicating the FD\n");
+			exec_exit(envr->status, 0, 1);
+		}
 		close(cmd->fd_in);
 	}
 	if (cmd->fd_out != STDOUT_FILENO)
 	{
 		if (dup2(cmd->fd_out, STDOUT_FILENO) == -1)
+		{
 			printf("There was an error duplicating the FD\n");
+			exec_exit(envr->status, 0, 1);
+		}
 		close(cmd->fd_out);
 	}
-	//close(cmd->fd_out);
 	fd_closer(cmd, 0);
 	signal_decider(CHILD);
 	if (access(path, X_OK) == 0)
