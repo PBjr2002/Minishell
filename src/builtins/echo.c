@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:38:16 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/30 15:58:14 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:38:43 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,7 @@
 
 //erros do echo
 /* 
-	echo "'$USER'""$user"user (done)
-nosso -> "'$USERuser
-bash  -> 'pbjr'user
-
-	echo "'$USER""$user'"user (done)
-nosso -> "'$USER""$user'"user (com condicional jumps á mistura)
-bash  -> 'pbjr'user
-
-	echo "'$USER$user'"user (done)
-nosso -> "'$USER$useruser
-bash  -> 'pbjr'user
+	
  */
 
 int	exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr)

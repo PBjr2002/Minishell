@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:44:40 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/26 16:50:25 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:24:24 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,16 +93,12 @@ void	redirection_handler(t_token *list, int n, int export)
 }
 
 //everything inside the single quotes are treated as a word, no matter what they are.
-int		single_quote_token_remover(t_token *token, int export, int n)
+void	single_quote_token_remover(t_token *token, int export, int n)
 {
-	int single;
-	
-	single = 0;
 	while (token->str && token->str[n])
 	{
 	if (token->str[n] == '\'')
 	{
-		single = 1;
 		if (n == export)
 			export++;
 		n++;
@@ -121,7 +117,6 @@ int		single_quote_token_remover(t_token *token, int export, int n)
 	}
 	n++;
 	}
-	return (single);
 }
 
 //everything except dollar signs are treated as words inside double quotes
@@ -135,11 +130,7 @@ void	double_quote_token_remover(t_token *token, int export, int n)
 			export++;
 		n++;
 		while (token->str[n] != '"')
-		{
-			if (token->str[n] == '$')
-				token->type = TYPE_DOUBLE_QUOTE_EXPAND;
 			n++;
-		}
 		if (n == export)
 		{
 			free(token->str);
