@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:30:15 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/26 15:08:38 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/09/30 14:28:52 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ t_tree	*parsing(t_token *token_list, t_environment *env)
 {
 	t_token	*temp;
 	t_tree	*tree;
-	int 	single;
 
 	(void)env;
 	temp = token_list;
@@ -58,9 +57,9 @@ t_tree	*parsing(t_token *token_list, t_environment *env)
 	token_list = temp;
 	while (token_list)
 	{
-		single = 0;
-		single = single_quote_token_remover(token_list, 0, 0);
-		if (single == 0)
+		if (quote_decider(token_list) == 0)
+			single_quote_token_remover(token_list, 0, 0);
+		else if (quote_decider(token_list) == 1)
 			double_quote_token_remover(token_list, 0, 0);
 		token_list = token_list->next;
 	}
@@ -73,4 +72,20 @@ t_tree	*parsing(t_token *token_list, t_environment *env)
 	token_list = temp;
 	tree = tree_creation_function(token_list);
 	return (tree);
+}
+
+int		quote_decider(t_token *token_list)
+{
+	int n;
+
+	n = 0;
+	while (token_list && token_list->str[n])
+	{
+		if (token_list->str[n] == '\'')
+			return (0);
+		else if (token_list->str[n] == '"')
+			return (1);
+		n++;
+	}
+	return (2);
 }

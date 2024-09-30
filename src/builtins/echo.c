@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:38:16 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/27 12:20:31 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/09/30 14:32:55 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 
 //erros do echo
 /* 
-	echo "'$USER'""$user"user
+	echo "'$USER'""$user"user (done)
 nosso -> "'$USERuser
 bash  -> 'pbjr'user
 
-	echo "'$USER""$user'"user
+	echo "'$USER""$user'"user (done)
 nosso -> "'$USER""$user'"user (com condicional jumps á mistura)
 bash  -> 'pbjr'user
 
-	echo "'$USER$user'"user
+	echo "'$USER$user'"user (done)
 nosso -> "'$USER$useruser
 bash  -> 'pbjr'user
  */
