@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:56:14 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/26 16:36:50 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/01 17:35:55 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int redirect_token_define(t_lexer *lexer, t_token *token_list, int n)
 	while ((lexer->input[n] > 32 && lexer->input[n] < 127
 		&& lexer->input[n] != 60 && lexer->input[n] != 62))
 		n++;
-	if ((n - export) < 3)
+	if ((n - export) < 2)
 		new_token = ft_token_new(NULL);
 	else
 		new_token = ft_token_new(ft_substr(lexer->input, export, (n - export)));

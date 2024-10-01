@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:30:15 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/30 14:28:52 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/01 17:31:39 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int		quote_decider(t_token *token_list)
 	int n;
 
 	n = 0;
-	while (token_list && token_list->str[n])
+	while (token_list && token_list->str && token_list->str[n])
 	{
 		if (token_list->str[n] == '\'')
 			return (0);

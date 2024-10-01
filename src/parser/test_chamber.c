@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/01 16:08:14 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/01 17:40:48 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,44 @@
 	
 	------------------------------------------------------------------
 
+	duplo heredoc esta a dar um erro
+	cat <<out1 | cat <<out2
+	>123
+	>out1
+	>321
+	>out2
 	
+	nosso = There was an error duplicating the FD
+	bash = 321
 	
 	------------------------------------------------------------------
 
-	
+	ao enviar apenas uma redirecao, o programa nao a executa
+	<<here
+
+	nosso = here: no such file or directory
+	bash = (abre heredoc)
+
+	>out
+	nosso = out: no such file or directory
+	bash = (abre ficheiro chamado out)
 	
 	------------------------------------------------------------------
 
-	
+	o comando echo nao imprime as flags se estas forem invalidas
+
+	echo -nnn -nnnnnngnnnnnn -nnnnnnnnnn kljh
+
+	nosso = kljh
+	bash = -nnnnnngnnnnnn -nnnnnnnnnn kljh
 	
 	------------------------------------------------------------------
 
-	
+	ao enviar varias redirecoes num so comando, apenas a primeira e aberta (?)
+	ls >1>2
+
+	nosso = apenas o "1" e aberto, e contem a informacao
+	bash = abre o 1 e o 2, com a informacao presente apenas no 2
 	
 	------------------------------------------------------------------
 
