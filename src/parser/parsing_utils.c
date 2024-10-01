@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:44:40 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/01 14:35:47 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:45:30 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void command_expand (t_token *token_list, t_environment *env)
 					if (token_list->str[n] == '$')
 					{
 						token_list->str = ft_command_expander(token_list->str, env);
-						post_command_expand_check(token_list);
+						//post_command_expand_check(token_list);
 						break ;
 					}
 					n++;

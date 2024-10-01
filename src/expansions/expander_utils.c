@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:27:43 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/01 16:21:49 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:58:03 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char *ft_command_expander(char *str, t_environment *env)
 	
 	n = 0;
 	dollar_detected = false;
-	while (str[n])
+	while (str && str[n])
 	{
 		if (str[n] != '$')
 			n++;
@@ -37,7 +37,7 @@ char *ft_command_expander(char *str, t_environment *env)
 			n++;
 		if (dollar_detected == false)
 		{
-			if (!str[n])
+			if (!str && !str[n])
 				return (str);
 			continue ;
 		}
@@ -93,7 +93,7 @@ char *env_search(char *expand, t_environment *env)
 
 	n = 0;
 	expand_start = ft_strlen(expand) + 1;
-	while (env->env[n] != NULL)
+	while (env->env[n] != NULL && expand_start > 1)
 	{
 		if (ft_strncmp(expand, env->env[n], ft_strlen(expand)) == 0)
 			{
