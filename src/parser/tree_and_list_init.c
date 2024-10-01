@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:47 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/26 15:46:42 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/01 15:03:23 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,54 +93,5 @@ t_environment *env_setup(char **envp)
 	return(environment);
 }
 
-/* t_redirect	*ft_redirect_new(char *str)
-{
-	t_redirect	*new;
-	int index;
-
-	index = 0;
-	new = (t_redirect *)malloc(sizeof(t_redirect));
-	if (new == NULL)
-		return (NULL);
-	new->str = str;
-	new->index = index;
-	new->next = NULL;
-	return (new);
-}
-
-t_lexer	*ft_lexer_new(void)
-{
-	t_lexer	*new;
-
-	new = (t_lexer *)malloc((sizeof(t_lexer)));
-	if (new == NULL)
-		return (NULL);
-	return (new);
-}
-
-t_pipe	*ft_pipe_new(char *str, int index)
-{
-	t_pipe	*new;
-
-	new = (t_pipe *)malloc(sizeof(t_pipe));
-	if (new == NULL)
-		return (NULL);
-	new->index = index;
-	new->next = NULL;
-	return (new);
-}
-
-t_simple_cmd	*ft_simple_cmd_new(char *str)
-{
-	t_simple_cmd	*new;
-
-	new = (t_simple_cmd *)malloc(sizeof(t_simple_cmd));
-	if (new == NULL)
-		return (NULL);
-	new->str = str;
-	new->next = NULL;
-	return (new);
-}
-*/
 
 

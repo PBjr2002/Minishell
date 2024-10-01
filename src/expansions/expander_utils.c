@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:27:43 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/17 15:39:44 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:21:49 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 // '?' to the mix, to solve them later
 char *ft_command_expander(char *str, t_environment *env)
 {
-	//char 	*temp;
 	int		n;
 	int 	expand_begin;
 	int 	expand_end;
@@ -47,7 +46,8 @@ char *ft_command_expander(char *str, t_environment *env)
 		while ((str[n] > 47 && str[n] < 58)
 		|| (str[n] > 64 && str[n] < 91)
 		|| (str[n] > 96 && str[n] < 123)
-		|| (str[n] == 95 || str[n] == 63))
+		|| (str[n] == 95 || str[n] == 63)
+		|| (str[n] == 34 || str[n] == 39))
 			n++;
 		expand_end = n;
 		str = dollar_removal(str, expand_begin, expand_end, env);
@@ -84,6 +84,7 @@ char *dollar_removal(char *str, int expand_start, int expand_end, t_environment 
 	return (expanded_str);
 }
 
+// does what the name says, searches the env list for the correct environment text to expand to the variable
 char *env_search(char *expand, t_environment *env)
 {
 	int		n;
@@ -107,5 +108,32 @@ char *env_search(char *expand, t_environment *env)
 	expand = NULL;
 	free(temp);
 	return (expand);
-	//figure out what to return in case the expansion fails.
+}
+
+//this checks the expanded command for spaces and sets them appart in the token_list
+void	post_command_expand_check(t_token *token_list)
+{
+	t_token	*temp_token;
+	int		n;
+	char	*temp;
+	char	**str;
+	int		current_index;
+	
+	n = 0;
+	current_index = token_list->index;
+	temp = token_list->str;
+	str = ft_split(token_list->str, ' ');
+	if (str && str[n])
+		token_list->str = ft_strdup(str[n++]);
+	free(temp);
+	while (str[n] && str[n][0] != '\0')
+	{
+		temp_token = ft_token_new(str[n++]);
+		midlist_token_append(token_list, temp_token);
+		current_index++;
+	}
+	n = -1;
+	while (str[++n])
+		free(str[n]);
+	free(str);
 }

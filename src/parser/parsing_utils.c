@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:44:40 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/30 16:24:24 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:35:47 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void command_expand (t_token *token_list, t_environment *env)
 					if (token_list->str[n] == '$')
 					{
 						token_list->str = ft_command_expander(token_list->str, env);
+						post_command_expand_check(token_list);
 						break ;
 					}
 					n++;
@@ -66,6 +67,7 @@ void command_expand (t_token *token_list, t_environment *env)
 			token_list = token_list->next;
 	}
 }
+
 
 //cleans the redirection token, removing "< > << >>" as well as any spaces
 void	redirection_handler(t_token *list, int n, int export)
@@ -80,6 +82,8 @@ void	redirection_handler(t_token *list, int n, int export)
 			n++;
 			if (list->type == DOUBLE_IN || list->type == DOUBLE_OUT)
 				n++;
+			if (list->type == DOUBLE_IN)
+				list->expand = false;
 			while ((list->str[n] > 9 && list->str[n] < 13) || list->str[n] == ' ')
 				n++;
 			export = n;
