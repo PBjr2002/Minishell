@@ -6,14 +6,14 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:44:40 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/01 16:45:30 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/03 18:14:55 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parser.h"
 
 //this function identifies commands and arguments
-void command_id(t_token *token_list)
+void	command_id(t_token *token_list)
 {
 	bool	first_word;
 	
@@ -37,20 +37,20 @@ void command_id(t_token *token_list)
 }
 
 //this function will scan all commands and expand them if necessary
-void command_expand (t_token *token_list, t_environment *env)
+void	command_expand (t_token *token_list, t_environment *env)
 {
 	int n;
 
-	while (token_list)
+	while (token_list && token_list->str && token_list->str[n])
 	{
 		n = 0;
 		if (token_list->type == TYPE_COMMAND || token_list->type == TYPE_DOLLAR_COMMAND)
 		{
-			if (token_list->str[0] == '\'')
+			if (token_list->str && token_list->str[0] == '\'')
 				token_list = token_list->next;
 			else
 			{
-				while (token_list->str[n])
+				while (token_list->str && token_list->str[n])
 				{
 					if (token_list->str[n] == '$')
 					{
@@ -67,7 +67,6 @@ void command_expand (t_token *token_list, t_environment *env)
 			token_list = token_list->next;
 	}
 }
-
 
 //cleans the redirection token, removing "< > << >>" as well as any spaces
 void	redirection_handler(t_token *list, int n, int export)

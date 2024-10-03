@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/01 15:40:21 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/03 17:38:16 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ int				check_valid_pipes(t_tree *treetop);
 int 			check_valid_redirects(t_tree *treetop);
 int				check_valid_redirects_2(t_tree *treetop);
 int				dollar_token_define(t_lexer *lexer, t_token *token_list, int n);
+int 			double_quote_token_define(t_lexer *lexer, t_token *token_list, int n);
 int 			input_checker(t_lexer *lexer);
 int 			pipe_scanner(t_token *token_list);
 int				pipe_token_define(t_token *token_list, int n);
@@ -163,6 +164,7 @@ int				quote_decider(t_token *token_list);
 int 			quote_dollar_solver(t_lexer *lexer, char *str, int n);
 int 			redirect_token_define(t_lexer *lexer, t_token *token_list, int n);
 int 			redirect_token_type_solver(t_lexer *lexer, int n);
+int				single_quote_token_define(t_lexer *lexer, t_token *token_list, int n);
 
 //void
 

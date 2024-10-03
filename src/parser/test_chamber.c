@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/01 17:40:48 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/03 16:32:31 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,30 @@
 
 	nosso = cat << $USER
 	>$HOME
+	>"$USER"
+	>'$USER'
 	>$USER
 	$HOME
+	"$USER"
+	'$USER'
 	
 	bash = cat << $USER
 	>$HOME
+	>"$USER"
+	>'$USER'
 	>$USER
 	/home/lmiguel-
+	"lmiguel-"
+	'lmiguel-'
+
+	bash = cat << ""$USER ou "$USER" ou "$"USER etc...
+	>$HOME
+	>"$USER"
+	>'$USER'
+	>$USER
+	$HOME
+	"$USER"
+	'$USER'
 	
 	------------------------------------------------------------------
 
@@ -76,7 +93,18 @@
 	
 	------------------------------------------------------------------
 
+	
+	ao executar um numero elevado de pipes ao mesmo tempo, o programa 
+	nao os fecha corretamente
+
+	echo 123 | cat | cat
+
+	pipes abertos excede os 3 STD e apresenta o erro:
+	There was an error duplicating the FD
+	|
+	
 	duplo heredoc esta a dar um erro
+
 	cat <<out1 | cat <<out2
 	>123
 	>out1
@@ -106,10 +134,14 @@
 
 	nosso = kljh
 	bash = -nnnnnngnnnnnn -nnnnnnnnnn kljh
+
+
+	se varias flags forem fornecidas ao echo, o valgrind alerta para varios
+	invalid reads no exec_echo (size 1)
 	
 	------------------------------------------------------------------
 
-	ao enviar varias redirecoes num so comando, apenas a primeira e aberta (?)
+	ao enviar varias redirecoes num so comando, apenas a primeira e aberta
 	ls >1>2
 
 	nosso = apenas o "1" e aberto, e contem a informacao
@@ -117,8 +149,53 @@
 	
 	------------------------------------------------------------------
 
+	bug condicional de export:
+	se o comando inicial de um export for apenas uma variavel sem igual,
+	em usos sucessivos de export, a variavel nao levara update ao executar env
+
+	export a
+	a
+	export a=b
+	env
 	
+	nosso = (a nao existe)
+	bash = a=b
 	
 	------------------------------------------------------------------
 	
+	bug no export:
+	se uma environment variable comecar por underscore, esta nao e adicionada
+	ao env caso o export for executado. a variavel
+
+	export _gofas=z
+	env
+
+	nosso = (_gofas nao existe)
+	bash = _gofas=z
+	
+	------------------------------------------------------------------
+	
+	heredoc nao aceita ctrl + d e executa o ctrl + c incorretamente
+	
+	cat << eof
+	>ewewe
+	ctrl + c
+
+	nosso = exitshell> ^C
+			ewewe
+			Hellshell>
+		
+	
+	------------------------------------------------------------------
+
+	se mandarmos o input ./././././././. ou /////////////// para o minishell,
+	este apresenta um erro "Permission denied"
+
+	./././././././././
+	
+	nosso = Permission denied
+	bash = ./././././././././ : is a directory.
+	
+	
+	------------------------------------------------------------------
 */

@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:56:14 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/01 17:35:55 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/03 18:09:59 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,13 @@
 //simply copies the quotes and everything inside them (could give them a type...)
 int quote_token_define(t_lexer *lexer, t_token *token_list, int n)
 {
-	int 	export;
-	t_token	*new_token;
-
-	export = n;
 	if (lexer->input[n] == '\'')
 	{
-		n++;
-		while (lexer->input[n] != '\'')
-			n++;
-		new_token = ft_token_new(ft_substr(lexer->input, export, ((n - export) + 1)));
-		new_token->type = TYPE_COMMAND;
-		if ((lexer->input[export - 1] < 10 || lexer->input[export - 1] > 12) && lexer->input[export - 1] != ' ')
-			new_token->append_before = true;
-		ft_token_append(token_list, new_token, new_token->str);
+		single_quote_token_define(lexer, token_list, n);
 	}
 	else if (lexer->input[n] == '"')
 	{
-		n++;
-		while (lexer->input[n] != '"')
-			n++;
-		new_token = ft_token_new(ft_substr(lexer->input, export, ((n - export) + 1)));
-		new_token->type = TYPE_COMMAND;
-		if ((lexer->input[export - 1] < 10 || lexer->input[export - 1] > 12) || lexer->input[export - 1] != ' ')
-			new_token->append_before = true;
-		ft_token_append(token_list, new_token, new_token->str);
+		double_quote_token_define(lexer, token_list, n);
 	}
 	n++;
 	return (n);
@@ -128,7 +110,7 @@ int com_token_define(t_lexer *lexer, t_token *token_list, int n)
 	while ((lexer->input[n] != '|') && (lexer->input[n] != ' ')
 			&& (lexer->input[n] != '\'') && (lexer->input[n] != '"') 
 			&& (lexer->input[n] != '<') && (lexer->input[n] != '>') 
-			&& lexer->input[n] )
+			&& lexer->input[n])
 		n++;
 	new_token = ft_token_new(ft_substr(lexer->input, export, (n - export)));
 	new_token->type = TYPE_COMMAND;

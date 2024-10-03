@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_test.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 18:10:52 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/24 15:07:31 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/03 16:38:07 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,16 +97,16 @@ void	store_input(t_lexer *lexer)
 	{
 		if (lexer->input[n] == 39)
 		{
-			if (open_single_quote == true)
+			if (open_single_quote == true && open_double_quote == false)
 				open_single_quote = false;
-			else
+			else if (open_double_quote == false)
 				open_single_quote = true;
 		}
 		else if (lexer->input[n] == 34)
 		{
-			if (open_double_quote == true)
+			if (open_double_quote == true && open_single_quote == false)
 				open_double_quote = false;
-			else
+			else if (open_single_quote == false)
 				open_double_quote = true;
 		}
 		n++;
