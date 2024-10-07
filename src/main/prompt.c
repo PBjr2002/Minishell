@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/30 14:47:30 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:30:55 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	parser_and_exec(t_lexer *lexer, t_environment *info)
 	{
 		tree_cleaner(tree);
 		printf("Syntax error\n");
+		info->status = 0;
 		return (1);
 	}
 	global_info(tree, info);

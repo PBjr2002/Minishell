@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:44:40 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/03 18:14:55 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:02:13 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	command_expand (t_token *token_list, t_environment *env)
 {
 	int n;
 
-	while (token_list && token_list->str && token_list->str[n])
+	while (token_list && token_list->str)
 	{
 		n = 0;
 		if (token_list->type == TYPE_COMMAND || token_list->type == TYPE_DOLLAR_COMMAND)
@@ -127,24 +127,24 @@ void	double_quote_token_remover(t_token *token, int export, int n)
 {
 	while (token->str && token->str[n])
 	{
-	if (token->str[n] == '"')
-	{
-		if (n == export)
-			export++;
-		n++;
-		while (token->str[n] != '"')
+		if (token->str[n] == '"')
+		{
+			if (n == export)
+				export++;
 			n++;
-		if (n == export)
-		{
-			free(token->str);
-			token->str = NULL;
+			while (token->str[n] && token->str[n] != '"')
+				n++;
+			if (n == export)
+			{
+				free(token->str);
+				token->str = NULL;
+			}
+			else
+			{
+				double_quote_dissection(token, export);
+				break ;
+			}
 		}
-		else
-		{
-			double_quote_dissection(token, export, n);
-			break ;
-		}
-	}
 	n++;
 	}
 }

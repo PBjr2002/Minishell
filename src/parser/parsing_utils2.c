@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 16:46:49 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/30 15:34:28 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:58:53 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,31 +42,46 @@ void	single_quote_dissection(t_token *token, int export, int n)
 	free(temp);
 }
 
-// removes double quotes
-void	double_quote_dissection(t_token *token, int export, int n)
+// removes double quotes, if export > 1, it means the z = 0 is a double quote
+void	double_quote_dissection(t_token *token, int export)
 {
-	char	*temp;
-	char	*temp1;
-	char	*temp2;
 	int		z;
+	int		double_quote;
+	char	*temp;
 	
 	temp = token->str;
 	z = 0;
-	if (export == 0)
+	double_quote = 0;
+	while (token->str[z])
 	{
-		while (token->str[z] != '"')
-			z++;
-		temp1 = ft_substr(token->str, export, z);
+		if (token->str[z] == '"')
+			double_quote++;
 		z++;
-		export = z;
-		while (token->str[export] != '"')
-			export++;
-		temp2 = ft_substr(token->str, z, (export - z));
-		token->str = ft_strjoin(temp1, temp2);
-		free(temp1);
-		free(temp2);
 	}
-	else
-		token->str = ft_substr(token->str, export, (n - export));
+	z = 0;
+/* 	while (double_quote != 0)
+		double_quote = double_surgery(token, export, z); */
 	free(temp);
 }
+
+//assists in removing double quotes
+/* int double_surgery(t_token *token, int export, int z, int double_quote)
+{
+	char	*previous;
+	char	*in_quotes;
+	char	*remaining;
+
+	z = export;
+	while (token->str[z] != '"')
+		z++;
+	previous = ft_substr(token->str, export, z);
+	while (token->str[export] && token->str[export] != '"' && (token->str[export + 1] &&
+		token->str[export + 1] == ' '))
+		export++;
+	temp2 = ft_substr(token->str, z, (export - z));
+	token->str = ft_strjoin(temp1, temp2);
+	free(temp1);
+	free(temp2);
+	return (double_quote - 2);
+} */
+

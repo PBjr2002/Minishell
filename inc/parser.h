@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/03 17:38:16 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:13:36 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ int 			check_valid_redirects(t_tree *treetop);
 int				check_valid_redirects_2(t_tree *treetop);
 int				dollar_token_define(t_lexer *lexer, t_token *token_list, int n);
 int 			double_quote_token_define(t_lexer *lexer, t_token *token_list, int n);
+int				double_surgery(t_token *token, int export, int z);
 int 			input_checker(t_lexer *lexer);
 int 			pipe_scanner(t_token *token_list);
 int				pipe_token_define(t_token *token_list, int n);
@@ -170,7 +171,7 @@ int				single_quote_token_define(t_lexer *lexer, t_token *token_list, int n);
 
 void 			command_expand (t_token *token_list, t_environment *env);
 void 			command_id(t_token *token_list);
-void			double_quote_dissection(t_token *token, int export, int n);
+void			double_quote_dissection(t_token *token, int export);
 void			double_quote_token_remover(t_token *token, int export, int n);
 void			ft_argument_branch_attach(t_tree *tree, t_tree *new);
 void			ft_branch_attach(t_tree *tree, t_tree *new, int branch_type, int pipeline);
