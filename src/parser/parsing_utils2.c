@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 16:46:49 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/07 16:58:53 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/07 17:00:18 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	double_quote_dissection(t_token *token, int export)
 	char	*temp;
 	
 	temp = token->str;
+	z = export; //<- temporary, norminette only
 	z = 0;
 	double_quote = 0;
 	while (token->str[z])
