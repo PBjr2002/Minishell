@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_chamber.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/08 16:13:01 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/08 16:57:54 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,56 +21,34 @@
 
 /*
 ------------------------------------------------------------------
-	
-	
+
+	ao enviarmos um input de apenas uma redirecao, o hellshell nao da syntax error
+
+	<
+
+	nosso : (nothing happens)
+	bash : syntax error
 	
 	------------------------------------------------------------------
 	
-	ao executar /bin/ls (invalid file), seguido de echo $?
+	ao enviarmos um input de apenas uma redirecao com ficheiro, 
+	o hellshell tenta executar a redirecao como um comando
 
-	nosso = 0
-	bash = 2
-	(done)
-	
-	------------------------------------------------------------------
-	
-	ao executar iiiii, seguido de echo $?
+	<sup_readline.supp
 
-	nosso = 0
-	bash = 127
-	(done)
+	nosso : sup_readline.supp : No such file or directory
+	bash : (nothing happens, le sup_readline.supp mas nao faz nada porque nao existe comando
+	dado para o fd)
 	
-	------------------------------------------------------------------
-	
-	ao executar heredocs, os inputs do heredoc nao sao expandidos
+	>1
 
-	nosso = cat << $USER
-	>$HOME
-	>"$USER"
-	>'$USER'
-	>$USER
-	$HOME
-	"$USER"
-	'$USER'
-	
-	bash = cat << $USER
-	>$HOME
-	>"$USER"
-	>'$USER'
-	>$USER
-	/home/lmiguel-
-	"lmiguel-"
-	'lmiguel-'
+	nosso : 1 : No such file or directory
+	bash : (cria o ficheiro 1, com a regra de TRUNCATE)
 
-	bash = cat << ""$USER ou "$USER" ou "$"USER etc...
-	>$HOME
-	>"$USER"
-	>'$USER'
-	>$USER
-	$HOME
-	"$USER"
-	'$USER'
-	(done)
+	>>1
+	
+	nosso : 1 : No such file or directory
+	bash : (cria o ficheiro 1, com a regra de APPEND)
 	
 	------------------------------------------------------------------
 
@@ -306,21 +284,6 @@ Hellshell> >out
 ==8169== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
 Segmentation fault (core dumped)
 
-	
-	------------------------------------------------------------------
-
-	o comando echo nao imprime as flags se estas forem invalidas
-
-	echo -nnn -nnnnnngnnnnnn -nnnnnnnnnn kljh
-
-	nosso = kljh
-	bash = -nnnnnngnnnnnn -nnnnnnnnnn kljh
-
-
-	se varias flags forem fornecidas ao echo, o valgrind alerta para varios
-	invalid reads no exec_echo (size 1)
-	(done)
-	
 	------------------------------------------------------------------
 
 	ao enviar varias redirecoes num so comando, apenas a primeira e aberta
@@ -338,49 +301,7 @@ $2 = 0x55555557f1f0 "1"
 $3 = 0x55555557f190 "2"
 	
 	ou seja, o 2 deveria ser o que ficava mais acima porque é o ultimo
-	
-	------------------------------------------------------------------
 
-	bug condicional de export:
-	se o comando inicial de um export for apenas uma variavel sem igual,
-	em usos sucessivos de export, a variavel nao levara update ao executar env
-
-	export a
-	a
-	export a=b
-	env
-	
-	nosso = (a nao existe)
-	bash = a=b
-	(done)
-	
-	------------------------------------------------------------------
-	
-	bug no export:
-	se uma environment variable comecar por underscore, esta nao e adicionada
-	ao env caso o export for executado. a variavel
-
-	export _gofas=z
-	env
-
-	nosso = (_gofas nao existe)
-	bash = _gofas=z
-
-	(done)
-	
-	------------------------------------------------------------------
-	
-	heredoc nao aceita ctrl + d e executa o ctrl + c incorretamente
-	
-	cat << eof
-	>ewewe
-	ctrl + c
-
-	nosso = exitshell> ^C
-			ewewe
-			Hellshell>
-		
-	(n tenho esse problema)
 	------------------------------------------------------------------
 
 	se mandarmos o input ./././././././. ou /////////////// para o minishell,
