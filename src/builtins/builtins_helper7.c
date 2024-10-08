@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:11:51 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/30 17:38:47 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:28:51 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	check_line(char *line)
 int	exec_here_doc(t_tree *tree, t_environment *envr)
 {
 	char	*input;
+	char	*tmp;
 	int		fd[2];
 
 	if (pipe(fd) == -1)
@@ -53,7 +54,12 @@ int	exec_here_doc(t_tree *tree, t_environment *envr)
 			if (ft_strcmp(input, tree->str) == 0 && ft_strlen(input) == ft_strlen(tree->str))
 				break ;
 			else
+			{
+				tmp = exec_expansion(input, envr);
+				free(input);
+				input = tmp;
 				ft_putendl_fd(input, fd[1]);
+			}
 			free(input);
 		}
 		here_doc_cleaner(tree, envr, input, fd);
@@ -68,7 +74,7 @@ void	here_doc_cleaner(t_tree *tree, t_environment *envr, char *input, int *fd)
 	close(fd[0]);
 	close(fd[1]);
 	free(input);
-	fd_closer(tree, 0);
+	fd_closer(tree, NULL, 0);
 	while (tree->parent)
 		tree = tree->parent;
 	tree_cleaner(tree);

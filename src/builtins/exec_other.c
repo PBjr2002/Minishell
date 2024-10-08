@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 15:51:38 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/30 17:36:17 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:24:52 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr)
 	if (!path)
 	{
 		printf("%s : No such file or directory\n", cmd->str);
-		fd_closer(cmd, 0);
+		fd_closer(cmd, NULL, 0);
+		envr->status = 127;
 		return ;
 	}
 	signal_decider(IGNORE);
@@ -31,7 +32,7 @@ void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr)
 	else
 	{
 		waitpid(id, &envr->status, 0);
-		fd_closer(cmd, 0);
+		fd_closer(cmd, NULL, 0);
 		envr->status = envr->status / 256;
 		free(path);
 	}
@@ -60,14 +61,14 @@ void	executer(t_tree *cmd, t_tree *tree, t_environment *envr, char *path)
 		}
 		close(cmd->fd_out);
 	}
-	fd_closer(cmd, 0);
+	fd_closer(cmd, NULL, 0);
 	signal_decider(CHILD);
 	if (access(path, X_OK) == 0)
 		if (execve(path, av, envr->env) == -1)
 			perror("");
-	fd_closer(cmd, 0);
+	fd_closer(cmd, NULL, 0);
 	free_env(av);
-	exec_exit(0, 0, 1);
+	exec_exit(1, 0, 1);
 }
 
 char	*path_creator(t_tree *cmd, t_environment *envr)

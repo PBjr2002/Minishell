@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/30 14:42:13 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/01 10:55:58 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	**build_av(t_tree *tree, t_tree *cmd);
 int		build_av_helper(t_tree *cmd, t_tree *tree, t_tree *tmp, char **av);
 void	tree_cleaner(t_tree *tree);
 void	token_cleaner(t_token *token_list);
-void	fd_closer(t_tree *tree, int mode);
+void	fd_closer(t_tree *tree, t_tree *og, int mode);
 
 //builtins_helper5.c
 void	search_pipe(t_tree *tree, t_environment *envr);

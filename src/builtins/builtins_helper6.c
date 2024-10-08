@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:04:15 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/23 17:20:22 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/08 16:07:02 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	print_export(int fd, char **sorted)
 	{
 		i = 0;
 		if ((sorted[n][i] >= 'A' && sorted[n][i] <= 'Z') ||
-			(sorted[n][i] >= 'a' && sorted[n][i] <= 'z'))
+			(sorted[n][i] >= 'a' && sorted[n][i] <= 'z') || sorted[n][i] == '_')
 		{
 			ft_putstr_fd("declare -x ", fd);
 			if (check_line(sorted[n]) == 0)

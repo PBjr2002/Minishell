@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:26:47 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/23 17:19:28 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/08 16:03:03 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	export_helper2(t_tree *tree, t_environment *envr)
 	new_export = replace_line(envr->export_env, tree->str);
 	free_env(envr->export_env);
 	envr->export_env = new_export;
-	if (search_part_line(envr->env, tree->str,
+	if (search_part_line(envr->export_env, tree->str,
 			ft_strlen2(tree->str, '=')) != -1)
 	{
 		new_env = replace_line(envr->export_env, tree->str);

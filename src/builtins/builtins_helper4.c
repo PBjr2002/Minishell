@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:59:47 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/30 17:32:33 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/01 11:28:59 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,20 +92,49 @@ void	token_cleaner(t_token *token_list)
 	}
 }
 
-void	fd_closer(t_tree *tree, int mode)
+void	fd_closer(t_tree *tree, t_tree *og, int mode)
 {
-	int	i;
+	t_tree	*tmp;
 
 	if (!tree)
 		return ;
+	tmp = NULL;
 	if (mode == 0)
 	{
-		i = 3;
-		while (i < FOPEN_MAX)
-		{
-			if (i != STDIN_FILENO && i != STDOUT_FILENO)
-				close(i);
-			i++;
-		}
+		tmp = tree;
+		while (tree->parent)
+			tree = tree->parent;
+		if (tree->right)
+			fd_closer(tree->right, tmp, 1);	
+		if (tree->left)
+			fd_closer(tree->left, tmp, 1);
+		og = tmp;
 	}
+	if (tree == og)
+	{
+		if (tree->right)
+			fd_closer(tree->right, og, 1);
+		if (tree->left)
+			fd_closer(tree->left, og, 1);
+		return ;
+	}
+	if (tree->right)
+		fd_closer(tree->right, og, 1);
+	if (tree->left)
+		fd_closer(tree->left, og, 1);
+	if (og)
+	{
+		if (tree->fd_in != STDIN_FILENO && tree->fd_in != og->fd_in)
+			close(tree->fd_in);
+		if (tree->fd_out != STDOUT_FILENO && tree->fd_out != og->fd_out)
+			close(tree->fd_out);
+	}
+	if (mode == 2)
+	{
+		if (tree->fd_in != STDIN_FILENO)
+			close(tree->fd_in);
+		if (tree->fd_out != STDOUT_FILENO)
+			close(tree->fd_out);
+	}
+	
 }
