@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:30:15 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/01 17:31:39 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/07 14:28:17 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_tree	*parsing(t_token *token_list, t_environment *env)
 	{
 		if (quote_decider(token_list) == 0)
 			single_quote_token_remover(token_list, 0, 0);
-		else if (quote_decider(token_list) == 1)
+		else if (quote_decider(token_list) == 1 && token_list->expand == true)
 			double_quote_token_remover(token_list, 0, 0);
 		token_list = token_list->next;
 	}
