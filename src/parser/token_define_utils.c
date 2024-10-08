@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:56:14 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/08 15:31:39 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/08 17:42:20 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,36 @@ int	pipe_token_define(t_token *token_list, int n)
 int com_token_define(t_lexer *lexer, t_token *token_list, int n)
 {
 	int 		export;
+	bool		single_quote;
+	bool		double_quote;
 	t_token		*new_token;
 	
 	export = n;
 	n++;
-	while ((lexer->input[n] != '|') && (lexer->input[n] != ' ')
-			&& (lexer->input[n] != '<') && (lexer->input[n] != '>') 
-			&& lexer->input[n])
+	single_quote = false;
+	double_quote = false;
+	while (lexer->input[n])
+	{
+		if (lexer->input[n] == '\'')
+		{
+			if (single_quote == false)
+				single_quote = true;
+			else
+				single_quote = false;
+		}
+		if (lexer->input[n] == '"')
+		{
+			if (double_quote == false)
+				double_quote = true;
+			else
+				double_quote = false;
+		}
+		if (((lexer->input[n] == '|') || (lexer->input[n] == ' ')
+		|| (lexer->input[n] == '<') || (lexer->input[n] == '>'))
+		&& (single_quote == false && double_quote == false))
+			break ; 
 		n++;
+	}
 	new_token = ft_token_new(ft_substr(lexer->input, export, (n - export)));
 	new_token->type = TYPE_COMMAND;
 	if (export > 0 && (lexer->input[export - 1] < 10 || lexer->input[export - 1] > 12) && lexer->input[export - 1] != ' ')
