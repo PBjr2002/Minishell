@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_cleanup_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:06:39 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/08 17:12:02 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/08 17:20:48 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int check_valid_pipes(t_tree *treetop)
 			&& treetop->type != DOUBLE_IN && treetop->type != DOUBLE_OUT))
 			return (-1);
 		if ((treetop->type == SINGLE_IN || treetop->type == SINGLE_OUT
-			| treetop->type == DOUBLE_IN || treetop->type == DOUBLE_OUT) 
+			|| treetop->type == DOUBLE_IN || treetop->type == DOUBLE_OUT) 
 			&& treetop->str == NULL)
 			return (-1);
 	}

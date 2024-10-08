@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:21:37 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/07 16:25:11 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/08 17:27:34 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,9 @@ void	exec_cmd(t_tree *tree, t_environment *envr)
 	{
 		//printf("%s->fd_in = %d\n", tree->str, tree->fd_in);
 		//printf("%s->fd_out = %d\n", tree->str, tree->fd_out);
+		if (tree->type == 1 || tree->type == 2
+		|| tree->type == 3 || tree->type == 4)
+			return ;
 		if (tree->right)
 		{
 			cmd = tree;

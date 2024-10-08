@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_chamber.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/08 16:57:54 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/08 17:29:18 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 	nosso : (nothing happens)
 	bash : syntax error
 	
+	(done)
+	
 	------------------------------------------------------------------
 	
 	ao enviarmos um input de apenas uma redirecao com ficheiro, 
@@ -49,6 +51,8 @@
 	
 	nosso : 1 : No such file or directory
 	bash : (cria o ficheiro 1, com a regra de APPEND)
+
+	(done)
 	
 	------------------------------------------------------------------
 
