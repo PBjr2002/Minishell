@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:56:14 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/07 14:21:41 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:31:39 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 int quote_token_define(t_lexer *lexer, t_token *token_list, int n)
 {
 	if (lexer->input[n] == '\'')
-		single_quote_token_define(lexer, token_list, n);
+		n = single_quote_token_define(lexer, token_list, n);
 	else if (lexer->input[n] == '"')
-		double_quote_token_define(lexer, token_list, n);
+		n = double_quote_token_define(lexer, token_list, n);
 	n++;
 	return (n);
 }
@@ -104,7 +104,6 @@ int com_token_define(t_lexer *lexer, t_token *token_list, int n)
 	export = n;
 	n++;
 	while ((lexer->input[n] != '|') && (lexer->input[n] != ' ')
-			&& (lexer->input[n] != '\'') && (lexer->input[n] != '"') 
 			&& (lexer->input[n] != '<') && (lexer->input[n] != '>') 
 			&& lexer->input[n])
 		n++;

@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:44:40 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/07 16:02:13 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/08 16:34:26 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,54 +96,52 @@ void	redirection_handler(t_token *list, int n, int export)
 }
 
 //everything inside the single quotes are treated as a word, no matter what they are.
-void	single_quote_token_remover(t_token *token, int export, int n)
+void	single_quote_token_remover(t_token *token, int quote_start, int n)
 {
+	int quote_end;
+
+	quote_end = 0;
 	while (token->str && token->str[n])
 	{
-	if (token->str[n] == '\'')
-	{
-		if (n == export)
-			export++;
-		n++;
-		while (token->str[n] != '\'')
+		if (token->str[n] == '\'')
+		{
+			quote_start = n;
 			n++;
-		if (n == export)
-		{
-			free(token->str);	
-			token->str = NULL;
+			while (token->str[n] && token->str[n] != '\'')
+				n++;
+			quote_end = n;
+			n = 0;
+			if (quote_end == quote_start + 1)
+				empty_single_quote_removal(token, quote_start, quote_end);
+			else
+				single_quote_dissection(token, quote_start, quote_end);
 		}
-		else
-		{
-			single_quote_dissection(token, export, n);
-			break ;
-		}
-	}
 	n++;
 	}
 }
 
-//everything except dollar signs are treated as words inside double quotes
-void	double_quote_token_remover(t_token *token, int export, int n)
+// everything except dollar signs are treated as words inside double quotes
+// export and n starts as 0, ALWAYS
+// example cases... "e""c""h""o" ""echo ech""o echo""
+void	double_quote_token_remover(t_token *token, int quote_start, int n)
 {
+	int quote_end;
+
+	quote_end = 0;
 	while (token->str && token->str[n])
 	{
 		if (token->str[n] == '"')
 		{
-			if (n == export)
-				export++;
+			quote_start = n;
 			n++;
 			while (token->str[n] && token->str[n] != '"')
 				n++;
-			if (n == export)
-			{
-				free(token->str);
-				token->str = NULL;
-			}
+			quote_end = n;
+			n = 0;
+			if (quote_end == quote_start + 1)
+				empty_double_quote_removal(token, quote_start, quote_end);
 			else
-			{
-				double_quote_dissection(token, export);
-				break ;
-			}
+				double_quote_dissection(token, quote_start, quote_end);
 		}
 	n++;
 	}
