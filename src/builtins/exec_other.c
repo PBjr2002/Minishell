@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 15:51:38 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/07 16:24:52 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/09 16:29:29 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr)
 	if (!path)
 	{
 		printf("%s : No such file or directory\n", cmd->str);
-		fd_closer(cmd, NULL, 0);
+		clean_all_fds();
 		envr->status = 127;
 		return ;
 	}
@@ -32,7 +32,7 @@ void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr)
 	else
 	{
 		waitpid(id, &envr->status, 0);
-		fd_closer(cmd, NULL, 0);
+		clean_all_fds();
 		envr->status = envr->status / 256;
 		free(path);
 	}
@@ -43,30 +43,13 @@ void	executer(t_tree *cmd, t_tree *tree, t_environment *envr, char *path)
 	char	**av;
 
 	av = build_av(tree, cmd);
-	if (cmd->fd_in != STDIN_FILENO)
-	{
-		if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
-		{
-			printf("There was an error duplicating the FD\n");
-			exec_exit(envr->status, 0, 1);
-		}
-		close(cmd->fd_in);
-	}
-	if (cmd->fd_out != STDOUT_FILENO)
-	{
-		if (dup2(cmd->fd_out, STDOUT_FILENO) == -1)
-		{
-			printf("There was an error duplicating the FD\n");
-			exec_exit(envr->status, 0, 1);
-		}
-		close(cmd->fd_out);
-	}
-	fd_closer(cmd, NULL, 0);
+	set_fds(cmd, envr);
+	clean_all_fds();
 	signal_decider(CHILD);
 	if (access(path, X_OK) == 0)
 		if (execve(path, av, envr->env) == -1)
 			perror("");
-	fd_closer(cmd, NULL, 0);
+	clean_all_fds();
 	free_env(av);
 	exec_exit(1, 0, 1);
 }

@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:43:49 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/08 17:25:19 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/09 10:38:39 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,11 @@ void	search_pipe(t_tree *tree, t_environment *envr)
 	}
 }
 
-int	search_redirect(t_tree *tree, t_environment *envr)
+int	search_redirect(t_tree *tree, t_environment *envr, int mode)
 {
-	int		mode;
-
-	mode = 0;
 	if (tree->left && tree->type == TYPE_COMMAND)
 	{
-		mode = search_redirect(tree->left, envr);
+		mode = search_redirect(tree->left, envr, mode);
 		return (mode);
 	}
 	if (tree->left && (tree->type == 1 || tree->type == 2

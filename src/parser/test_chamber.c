@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/09 17:25:57 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/09 18:03:29 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,43 +18,11 @@
 // $?
 // NOSSO = 0
 // BASH = 0
+// clear && make re -s && valgrind --suppressions=sup_readline.supp --trace-children=yes --track-fds=yes --leak-check=full --show-leak-kinds=all ./minishell
 
 /*
 ------------------------------------------------------------------
 
-	ao enviarmos um input de apenas uma redirecao, o hellshell nao da syntax error
-
-	<
-
-	nosso : (nothing happens)
-	bash : syntax error
-	
-	(done)
-	
-	------------------------------------------------------------------
-	
-	ao enviarmos um input de apenas uma redirecao com ficheiro, 
-	o hellshell tenta executar a redirecao como um comando
-
-	<sup_readline.supp
-
-	nosso : sup_readline.supp : No such file or directory
-	bash : (nothing happens, le sup_readline.supp mas nao faz nada porque nao existe comando
-	dado para o fd)
-	
-	>1
-
-	nosso : 1 : No such file or directory
-	bash : (cria o ficheiro 1, com a regra de TRUNCATE)
-
-	>>1
-	
-	nosso : 1 : No such file or directory
-	bash : (cria o ficheiro 1, com a regra de APPEND)
-
-	(done)
-	
-	------------------------------------------------------------------
 
 	ao fazer export de variaveis com espacos, estes sao ignorados.
 	isto leva a problemas quando a variavel exportada e usada como comando:
@@ -118,7 +86,7 @@
 ==6735== 
 
 	(solucao simples, basta efetuar uma especie de split e incrementar uma vez todos os elementos da lista de tokens, "empurrar uma vez na direcao do fim")
-
+	(FIXED)
 	------------------------------------------------------------------
 	
 	export nao esta a ser feito corretamente

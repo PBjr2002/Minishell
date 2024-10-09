@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/01 10:55:58 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:05:06 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,10 @@ char	**build_av(t_tree *tree, t_tree *cmd);
 int		build_av_helper(t_tree *cmd, t_tree *tree, t_tree *tmp, char **av);
 void	tree_cleaner(t_tree *tree);
 void	token_cleaner(t_token *token_list);
-void	fd_closer(t_tree *tree, t_tree *og, int mode);
 
 //builtins_helper5.c
 void	search_pipe(t_tree *tree, t_environment *envr);
-int		search_redirect(t_tree *tree, t_environment *envr);
+int		search_redirect(t_tree *tree, t_environment *envr, int mode);
 char	**replace_line(char **envp, char *info_to_add);
 char	**replace_value(char **envp, int index, int value);
 int		replace_value_helper(char **envp, char **tmp_env, char *nb, int index);
@@ -118,6 +117,13 @@ int		redirect_single_in(t_tree *tree);
 int		redirect_single_out(t_tree *tree);
 int		redirect_double_in(t_tree *tree, t_environment *envr);
 int		redirect_double_out(t_tree *tree);
+
+//fds.c
+void	clean_all_fds(void);
+void	close_fds(t_tree *tree);
+void	close_specific_fds(t_tree *tree, int fd_in, int fd_out);
+void	fd_closer(t_tree *tree, t_tree *og, int mode);
+void	set_fds(t_tree *tree, t_environment *envr);
 
 //echo.c
 int		exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr);
