@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_chamber.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/08 17:29:18 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:25:57 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,5 +319,29 @@ $3 = 0x55555557f190 "2"
 	(n entendi o problema, a mensagem de erro está lá)
 	
 	
+	------------------------------------------------------------------
+
+	se apos efetuarmos um comando invalido efetuarmos um comando valido,
+	o shell retorna um syntax error
+
+	ls nonexistentdirectory
+	
+	ls
+
+	nosso : syntax error
+	bash : (executa o ls normalmente)
+
+	------------------------------------------------------------------
+
+	ls nao da append a branches corretamente
+
+	ls 'hey'"hey"
+
+	nosso : ls: cannot access 'hey': No such file or directory
+			ls: cannot access 'hey': No such file or directory
+
+	bash : ls: cannot access 'heyhey': No such file or directory
+
+
 	------------------------------------------------------------------
 */

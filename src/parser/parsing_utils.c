@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:44:40 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/08 17:19:16 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:53:07 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	command_id(t_token *token_list)
 		if ((token_list->type == TYPE_COMMAND || token_list->type == TYPE_DOLLAR) && first_word == true)
 			{
 				first_word = false;
+				token_list->expand = false;
 				if (token_list->type == TYPE_DOLLAR)
 					token_list->type = TYPE_DOLLAR_COMMAND;
 			}
@@ -37,10 +38,10 @@ void	command_id(t_token *token_list)
 }
 
 //this function will scan all commands and expand them if necessary
-void	command_expand (t_token *token_list, t_environment *env)
+void	command_expand(t_token *token_list, t_environment *env)
 {
-	int n;
-
+	int 	n;
+	
 	while (token_list && token_list->str)
 	{
 		n = 0;

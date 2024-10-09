@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:27:43 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/01 16:58:03 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:45:14 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,37 +20,58 @@ char *ft_command_expander(char *str, t_environment *env)
 	int 	expand_begin;
 	int 	expand_end;
 	bool	dollar_detected;
+	bool	single_quote;
+	bool	double_quote;
+	char	*temp;
 	
 	n = 0;
 	dollar_detected = false;
+	single_quote = false;
+	double_quote = false;
 	while (str && str[n])
 	{
+		if (str[n] == '"')
+		{
+			if (double_quote == false && single_quote == false)
+				double_quote = true;
+			else
+				double_quote = false;
+		}
+		if (str[n] == '\'')
+		{
+			if (single_quote == false && double_quote == false)
+				single_quote = true;
+			else
+				single_quote = false;
+		}
 		if (str[n] != '$')
 			n++;
 		if (str[n] == '$' && ((str[n + 1] > 47 && str[n + 1] < 58) 
 			|| (str[n + 1] > 64 && str[n + 1] < 91)
 			|| (str[n + 1] > 96 && str[n + 1] < 123)
 			|| (str[n + 1] == 95 || str[n + 1] == 63 
-			|| str[n + 1] == 36)))
+			|| str[n + 1] == 36)) && single_quote == false)
 			dollar_detected = true;
-		else
-			n++;
+		//else
+			//n++;
 		if (dollar_detected == false)
 		{
+			n++;
 			if (!str && !str[n])
 				return (str);
 			continue ;
 		}
 		expand_begin = n;
 		n++;
-		while ((str[n] > 47 && str[n] < 58)
+		while (str[n] && ((str[n] > 47 && str[n] < 58)
 		|| (str[n] > 64 && str[n] < 91)
 		|| (str[n] > 96 && str[n] < 123)
-		|| (str[n] == 95 || str[n] == 63)
-		|| (str[n] == 34 || str[n] == 39))
+		|| (str[n] == 95 || str[n] == 63)))
 			n++;
 		expand_end = n;
+		temp = str;
 		str = dollar_removal(str, expand_begin, expand_end, env);
+		free(temp);
 		dollar_detected = false;
 		n = 0;
 	}
@@ -64,6 +85,7 @@ char *dollar_removal(char *str, int expand_start, int expand_end, t_environment 
 	char	*expand;
 	char	*remaining;
 	char	*expanded_str;
+	char	*temp;
 
 	previous = ft_substr(str, 0, expand_start);
 	expand_start++;
@@ -74,8 +96,9 @@ char *dollar_removal(char *str, int expand_start, int expand_end, t_environment 
 		expanded_str = ft_strjoin(previous, remaining);
 	else
 	{
-		expanded_str = ft_strjoin(previous, expand);
-		expanded_str = ft_strjoin(expanded_str, remaining);
+		temp = ft_strjoin(previous, expand);
+		expanded_str = ft_strjoin(temp, remaining);
+		free(temp);
 	}
 	free(previous);
 	free(remaining);
@@ -113,27 +136,20 @@ char *env_search(char *expand, t_environment *env)
 //this checks the expanded command for spaces and sets them appart in the token_list
 void	post_command_expand_check(t_token *token_list)
 {
-	t_token	*temp_token;
 	int		n;
 	char	*temp;
 	char	**str;
-	int		current_index;
 	
 	n = 0;
-	current_index = token_list->index;
 	temp = token_list->str;
 	str = ft_split(token_list->str, ' ');
 	if (str && str[n])
 		token_list->str = ft_strdup(str[n++]);
 	free(temp);
 	while (str[n] && str[n][0] != '\0')
-	{
-		temp_token = ft_token_new(str[n++]);
-		midlist_token_append(token_list, temp_token);
-		current_index++;
-	}
-	n = -1;
-	while (str[++n])
-		free(str[n]);
+		midlist_token_append(token_list, ft_token_new(str[n++]));
+	n = 0;
+	while (str[n])
+		free(str[n++]);
 	free(str);
 }

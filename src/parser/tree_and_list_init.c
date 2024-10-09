@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:47 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/01 15:03:23 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/09 16:01:07 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_token	*ft_token_new(char *str)
 	new = (t_token *)malloc(sizeof(t_token));
 	if (new == NULL)
 		return (NULL);
-	new->str = str;
+	new->str = ft_strdup(str);
 	new->index = index;
 	new->expand = true;
 	new->append_before = false;

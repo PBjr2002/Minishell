@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:52:11 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/08 18:03:00 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/09 14:00:21 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ void	midlist_token_append(t_token *token_list, t_token *new)
 	token_list->next = new;
 	new->index = token_list->index + 1;
 	token_list = new;
+	token_list->type = TYPE_ARGUMENT;
 	if (token_list->next)
 	{
 		while (token_list)

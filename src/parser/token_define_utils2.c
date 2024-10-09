@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 17:27:46 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/08 15:31:18 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:20:28 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,17 @@ int	single_quote_token_define(t_lexer *lexer, t_token *token_list, int n)
 	
 	export = n;
 	inside_quotes = true;
-	n++;
+	if (lexer->input[n] == '\'')
+		n++;
 	while (lexer->input[n])
 	{
 		if (lexer->input[n] == '\'')
 		{
 			if (inside_quotes == true)
+			{
 				inside_quotes = false;
-			else
-				inside_quotes = true;
+				break ;
+			}
 		}
 		if ((lexer->input[n + 1] && 
 			(lexer->input[n + 1] == ' ' || lexer->input[n + 1] == '|' ||
@@ -43,7 +45,6 @@ int	single_quote_token_define(t_lexer *lexer, t_token *token_list, int n)
 		|| lexer->input[export - 1] > 12) && lexer->input[export - 1] != ' ')
 		new_token->append_before = true;
 	ft_token_append(token_list, new_token, new_token->str);
-	n++;
 	return (n);
 }
 
@@ -55,15 +56,17 @@ int double_quote_token_define(t_lexer *lexer, t_token *token_list, int n)
 	
 	export = n;
 	inside_quotes = true;
-	n++;
+	if (lexer->input[n] == '"')
+		n++;
 	while (lexer->input[n])
 	{
 		if (lexer->input[n] == '"')
 		{
 			if (inside_quotes == true)
+			{
 				inside_quotes = false;
-			else
-				inside_quotes = true;
+				break;
+			}
 		}
 		if ((lexer->input[n + 1] && 
 			(lexer->input[n + 1] == ' ' || lexer->input[n + 1] == '|' ||
