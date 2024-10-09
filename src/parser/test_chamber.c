@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/09 18:03:29 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/09 18:06:45 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,13 @@
 // clear && make re -s && valgrind --suppressions=sup_readline.supp --trace-children=yes --track-fds=yes --leak-check=full --show-leak-kinds=all ./minishell
 
 /*
-------------------------------------------------------------------
+	------------------------------------------------------------------
 
+	an input of <> will segfault... for some reason
+
+	
+
+	------------------------------------------------------------------
 
 	ao fazer export de variaveis com espacos, estes sao ignorados.
 	isto leva a problemas quando a variavel exportada e usada como comando:
