@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/08 16:16:49 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/09 16:24:48 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	parser_and_exec(t_lexer *lexer, t_environment *info)
 	global_info(tree, info);
 	search_tree(tree, info, 0);
 	exec_cmd(tree, info);
-	fd_closer(tree, NULL, 1);
+	clean_all_fds();
 	tree_cleaner(tree);
 	return (0);
 }

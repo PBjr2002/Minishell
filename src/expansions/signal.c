@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:18:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/01 10:57:26 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/09 16:25:51 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	exec_exit(int signal, int mode, int write)
 		ft_putendl_fd("exit", 1);
 	if (mode == 0)
 	{
-		fd_closer(info.tree, NULL, 0);
+		clean_all_fds();
 		tree_cleaner(info.tree);
 	}
 	exit(signal);
