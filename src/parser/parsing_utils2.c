@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 16:46:49 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/08 16:30:40 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/10 17:42:09 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ void	empty_single_quote_removal(t_token *token, int quote_start, int quote_end)
 	{
 		previous = ft_substr(token->str, 0, quote_start);
 		remaining = ft_substr(token->str, quote_end + 1, (len - quote_end));
-		token->str = ft_strjoin(previous, remaining);
+		if (!previous && !remaining)
+			token->str = ft_strdup("\0");
+		else
+			token->str = ft_strjoin(previous, remaining);
 		free(previous);
 		free(remaining);
 	}
@@ -137,7 +140,10 @@ void	empty_double_quote_removal(t_token *token, int quote_start, int quote_end)
 	{
 		previous = ft_substr(token->str, 0, quote_start);
 		remaining = ft_substr(token->str, quote_end + 1, (len - quote_end));
-		token->str = ft_strjoin(previous, remaining);
+		if (!previous && !remaining)
+			token->str = ft_strdup(NULL);
+		else
+			token->str = ft_strjoin(previous, remaining);
 		free(previous);
 		free(remaining);
 	}
