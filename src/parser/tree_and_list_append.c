@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:52:11 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/09 14:00:21 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:05:54 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,23 @@ t_tree	*ft_pipe_branch_attach(t_tree *tree, t_tree *new)
 // this attaches redirect branches to our current tree pointer, hopefully a pipe, a command or another redirection
 void	ft_redirect_branch_attach1(t_tree *tree, t_tree *new)
 {
+	t_tree	*temp;
+	
 	if (tree->left == NULL)
 	{
-		new->parent = tree;
-		tree->left = new;
+		if (tree->type == SINGLE_IN || tree->type == DOUBLE_IN 
+		|| tree->type == SINGLE_OUT || tree->type == DOUBLE_OUT)
+		{
+			temp = tree;
+			tree = new;
+			tree->left = temp;
+			temp->parent = tree;
+		}
+		else
+		{
+			new->parent = tree;
+			tree->left = new;	
+		}
 	}
 	else
 	{
@@ -40,7 +53,6 @@ void	ft_redirect_branch_attach1(t_tree *tree, t_tree *new)
 // this attaches redirect branches to the right side of the pipe
 void	ft_redirect_branch_attach2(t_tree *tree, t_tree *new)
 {
-	//printf("whoop\n");
 	if (tree->right == NULL)
 	{
 		new->parent = tree;
@@ -49,8 +61,8 @@ void	ft_redirect_branch_attach2(t_tree *tree, t_tree *new)
 	else
 	{
 		tree->right->parent = new;
-		new->right = tree->right;
 		tree->right = new;
+		new->right = tree->right;
 		new->parent = tree;
 	}
 }
@@ -62,6 +74,8 @@ t_tree	*ft_command_branch_attach_zero(t_tree *tree, t_tree *new, t_token *token_
 	{
 		if (token_list->type == TYPE_COMMAND)
 		{
+			while(tree->parent)
+				tree = tree->parent;
 			tree->parent = new;
 			new->left = tree;
 			new->append_before = token_list->append_before;
