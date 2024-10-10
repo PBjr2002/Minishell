@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/09 18:06:45 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/09 18:16:31 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 	an input of <> will segfault... for some reason
 
-	
+	(fixed, was missing a basic safety on redirect_token_define)
 
 	------------------------------------------------------------------
 
