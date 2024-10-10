@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:43:49 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/10 11:34:43 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:55:16 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	search_redirect(t_tree *tree, t_environment *envr, int mode)
 	else if (tree->left && (tree->type == 1 || tree->type == 2
 			|| tree->type == 3 || tree->type == 4))
 	{
-		redirect_solver(tree->left, envr);
+		search_redirect(tree->left, envr, mode);
 		redirect_solver(tree, envr);
 	}
 	else if (tree->type == 1 || tree->type == 2
