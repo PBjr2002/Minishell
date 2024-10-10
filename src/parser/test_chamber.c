@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/10 15:20:45 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/10 16:21:03 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,6 @@
 // clear && make re -s && ./minishell 
 
 /*
-	------------------------------------------------------------------
-
-	duplo heredoc esta a dar um erro
-
-	cat <<out1 | cat <<out2
-	>123
-	>out1
-	>321
-	>out2
-	
-	nosso = There was an error duplicating the FD
-	bash = 321
-	
-
 	------------------------------------------------------------------
 
 	se mandarmos o input ./././././././. ou /////////////// para o minishell,

@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 13:15:38 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/09/26 15:36:47 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:35:35 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,4 +270,3 @@ void	ft_fill_tree2(t_token *token_list, t_tree *current, int pipeline, int pipen
 		token_list = token_list->next;
 	}
 }
-//oo
