@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:30:34 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/09 17:41:18 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:34:16 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,34 +36,6 @@ void	decider(t_tree *tree, t_tree *cmd, t_environment *envr)
 		cmd->solved = true;
 }
 
-int	search_tree(t_tree *tree, t_environment *envr, int mode)
-{
-	//t_tree	*tmp;
-
-	expand_everything(tree, envr);
-	mode = search_redirect(tree, envr, mode);
-	if (mode == -1)
-		return (1);
-	//search_pipe(tree, envr);
-	if (tree->right && tree->type == TYPE_COMMAND)
-	{
-		//fd_setup(tree, mode);
-		//tmp = tree;
-		//if (tree->right)
-		//	tree = tree->right;
-		//decider(tree, tmp, envr);
-	}
-	else
-	{
-		if (tree->type != TYPE_PIPE)
-		{
-			//fd_setup(tree, mode);
-			//decider(NULL, tree, envr);
-		}
-	}
-	return (0);
-}
-
 int	redirect_solver(t_tree *tree, t_environment *envr)
 {
 	int	mode;
@@ -88,47 +60,4 @@ void	pipe_setup(t_tree *tree)
 		return ;
 	tree->fd_in = fd[0];
 	tree->fd_out = fd[1];
-}
-
-void	fd_setup(t_tree *tree, int mode)
-{
-	if (tree->left && (tree->left->type == 1 || tree->left->type == 2
-			|| tree->left->type == 3 || tree->left->type == 4))
-	{
-		if (mode == 1)
-		{
-			tree->fd_out = tree->left->fd_out;
-			if (tree->parent && tree->parent->type == TYPE_PIPE)
-				tree->fd_in = tree->parent->fd_in;
-		}
-		else if (mode == 2)
-		{
-			tree->fd_in = tree->left->fd_in;
-			if (tree->parent && tree->parent->type == TYPE_PIPE
-				&& tree->parent->fd_out != tree->left->fd_in)
-			{
-				if (tree->parent->parent && tree->parent->parent->type == TYPE_PIPE)
-					tree->fd_out = tree->parent->parent->fd_out;
-				else
-					tree->fd_out = tree->parent->fd_out;
-			}
-		}
-		else if (mode == 3)
-		{
-			tree->fd_in = tree->left->fd_in;
-			tree->fd_out = tree->left->fd_out;
-		}
-	}
-	else if (tree->parent && tree->parent->type == TYPE_PIPE)
-	{
-		if (mode == 1)
-			tree->fd_out = tree->parent->fd_out;
-		else if (mode == 2)
-			tree->fd_in = tree->parent->fd_in;
-		else if (mode == 3)
-		{
-			tree->fd_in = tree->parent->fd_in;
-			tree->fd_out = tree->parent->parent->fd_out;
-		}
-	}
 }

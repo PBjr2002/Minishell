@@ -6,52 +6,34 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:43:49 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/09 10:38:39 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:34:43 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	search_pipe(t_tree *tree, t_environment *envr)
-{
-	if (tree->type == TYPE_PIPE)
-	{
-		pipe_setup(tree);
-		if (tree->parent && tree->parent->type == TYPE_PIPE)
-		{
-			if (search_tree(tree->left, envr, 1) == 1)
-				return ;
-			if (search_tree(tree->right, envr, 3) == 1)
-				return ;
-		}
-		else
-		{
-			if (tree->left && tree->left->solved == false)
-				if (search_tree(tree->left, envr, 1) == 1)
-					return ;
-			if (tree->right && tree->right->solved == false)
-				if (search_tree(tree->right, envr, 2) == 1)
-					return ;
-		}
-	}
-}
-
 int	search_redirect(t_tree *tree, t_environment *envr, int mode)
 {
-	if (tree->left && tree->type == TYPE_COMMAND)
+	if (!tree)
+		return (-1);
+	if (tree->type ==  TYPE_PIPE)
 	{
-		mode = search_redirect(tree->left, envr, mode);
-		return (mode);
+		if (tree->left)
+			search_redirect(tree->left, envr, mode);
+		if (tree->right)
+			search_redirect(tree->right, envr, mode);
 	}
-	if (tree->left && (tree->type == 1 || tree->type == 2
+	else if (tree->type == TYPE_COMMAND && tree->left)
+		search_redirect(tree->left, envr, mode);
+	else if (tree->left && (tree->type == 1 || tree->type == 2
 			|| tree->type == 3 || tree->type == 4))
 	{
 		redirect_solver(tree->left, envr);
-		mode = redirect_solver(tree, envr);
+		redirect_solver(tree, envr);
 	}
 	else if (tree->type == 1 || tree->type == 2
 		|| tree->type == 3 || tree->type == 4)
-		mode = redirect_solver(tree, envr);
+		redirect_solver(tree, envr);
 	return (mode);
 }
 

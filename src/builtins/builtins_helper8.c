@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:21:37 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/09 17:52:02 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:34:37 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ void	exec_cmd(t_tree *tree, t_environment *envr)
 	if (!tree)
 		return ;
 	id = 0;
+	search_redirect(tree, envr, 0);
 	if (tree->type == TYPE_PIPE)
 	{
 		signal_decider(IGNORE);
-		search_redirect(tree, envr, 0);
 		pipe_setup(tree);
 		id = fork();
 		if (id == 0)
@@ -79,7 +79,7 @@ void	exec_cmd(t_tree *tree, t_environment *envr)
 			exec_exit(envr->status, 0, 1);
 		}
 		clean_all_fds();
-		//waitpid(id2, &envr->status, 0);
+		waitpid(id2, &envr->status, 0);
 		envr->status = envr->status / 256;
 	}
 	else
