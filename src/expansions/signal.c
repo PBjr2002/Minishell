@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:18:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/09 16:25:51 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:49:05 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	here_doc(int signal, siginfo_t *info, void *context)
 	(void) info;
 	(void) context;
 	if (signal == SIGINT)
-		exec_exit(130, 0, 0);
+		exec_exit(130, 0, 1);
 }
 
 void	signal_decider(t_signal type)

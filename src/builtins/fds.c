@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 11:58:28 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/09 17:44:44 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:30:41 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,31 +299,63 @@ void	set_fds(t_tree *tree, t_environment *envr)
 				}
 			}
 		}
+		else
+		{
+			if (tree->left)
+			{
+				if (tree->left->fd_in != 0 && tree->left->fd_out != 1)
+				{
+					if (dup2(tree->left->fd_in, STDIN_FILENO) == -1)
+					{
+						printf("There was an error duplicating the FD\n");
+						exec_exit(envr->status, 0, 1);
+					}
+					if (dup2(tree->left->fd_out, STDOUT_FILENO) == -1)
+					{
+						printf("There was an error duplicating the FD\n");
+						exec_exit(envr->status, 0, 1);
+					}
+				}
+				else if (tree->left->fd_in != 0)
+				{
+					if (dup2(tree->left->fd_in, STDIN_FILENO) == -1)
+					{
+						printf("There was an error duplicating the FD\n");
+						exec_exit(envr->status, 0, 1);
+					}
+					if (dup2(tree->fd_out, STDOUT_FILENO) == -1)
+					{
+						printf("There was an error duplicating the FD\n");
+						exec_exit(envr->status, 0, 1);
+					}
+				}
+				else
+				{
+					if (dup2(tree->fd_in, STDIN_FILENO) == -1)
+					{
+						printf("There was an error duplicating the FD\n");
+						exec_exit(envr->status, 0, 1);
+					}
+					if (dup2(tree->left->fd_out, STDOUT_FILENO) == -1)
+					{
+						printf("There was an error duplicating the FD\n");
+						exec_exit(envr->status, 0, 1);
+					}
+				}
+			}
+			else
+			{
+				if (dup2(tree->fd_in, STDIN_FILENO) == -1)
+				{
+					printf("There was an error duplicating the FD\n");
+					exec_exit(envr->status, 0, 1);
+				}
+				if (dup2(tree->fd_out, STDOUT_FILENO) == -1)
+				{
+					printf("There was an error duplicating the FD\n");
+					exec_exit(envr->status, 0, 1);
+				}
+			}
+		}
 	}
-}
-
-void	fd_closer(t_tree *tree, t_tree *og, int mode)
-{
-	if (!tree)
-		return ;
-	if (mode == 0)
-	{
-		og = tree;
-		while (tree->parent)
-			tree = tree->parent;
-		if (tree->left)
-			fd_closer(tree->left, og, 1);
-		if (tree->right)
-			fd_closer(tree->right, og, 1);
-	}
-	if (tree != og)
-	{
-		if (tree->left)
-			fd_closer(tree->left, og, 1);
-		if (tree->right)
-			fd_closer(tree->right, og, 1);
-	}
-	else
-		return ;
-	clean_all_fds();
 }
