@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:29:58 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/03 17:11:35 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:17:25 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_token *tokenization(t_lexer *lexer)
 	t_token	*temp;
 	
 	n = 0;
-	temp = ft_token_new(ft_strdup("temp\0"));
+	temp = ft_token_new("temp\0");
 	while (lexer->input && lexer->input[n])
 	{
 		while ((lexer->input[n] > 9 && lexer->input[n] < 13) || lexer->input[n] == ' ')

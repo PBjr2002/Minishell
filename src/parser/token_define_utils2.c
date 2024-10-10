@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 17:27:46 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/09 17:20:28 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:29:04 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	single_quote_token_define(t_lexer *lexer, t_token *token_list, int n)
 	int		export;
 	bool	inside_quotes;
 	t_token	*new_token;
+	char	*str;
 	
 	export = n;
 	inside_quotes = true;
@@ -39,7 +40,9 @@ int	single_quote_token_define(t_lexer *lexer, t_token *token_list, int n)
 			break ;
 		n++;
 	}
-	new_token = ft_token_new(ft_substr(lexer->input, export, ((n - export) + 1)));
+	str = ft_substr(lexer->input, export, ((n - export) + 1));
+	new_token = ft_token_new(str);
+	free(str);
 	new_token->type = TYPE_COMMAND;
 	if (export > 0 && (lexer->input[export - 1] < 10 
 		|| lexer->input[export - 1] > 12) && lexer->input[export - 1] != ' ')
@@ -53,6 +56,7 @@ int double_quote_token_define(t_lexer *lexer, t_token *token_list, int n)
 	int		export;
 	bool	inside_quotes;
 	t_token	*new_token;
+	char	*str;
 	
 	export = n;
 	inside_quotes = true;
@@ -75,7 +79,9 @@ int double_quote_token_define(t_lexer *lexer, t_token *token_list, int n)
 			break ;
 		n++;
 	}
-	new_token = ft_token_new(ft_substr(lexer->input, export, ((n - export) + 1)));
+	str = ft_substr(lexer->input, export, ((n - export) + 1));
+	new_token = ft_token_new(str);
+	free(str);
 	new_token->type = TYPE_COMMAND;
 	if (export > 0 && ((lexer->input[export - 1] < 10 
 		|| lexer->input[export - 1] > 12) || lexer->input[export - 1] != ' '))

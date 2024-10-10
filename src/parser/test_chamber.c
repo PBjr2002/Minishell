@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/10 13:47:41 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:20:45 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,6 @@
 
 	------------------------------------------------------------------
 
-	ao enviar varias redirecoes num so comando, apenas a primeira e aberta
-	ls >1>2
-
-	nosso = apenas o "1" e aberto, e contem a informacao
-	bash = abre o 1 e o 2, com a informacao presente apenas no 2
-
-	agr já cria o 1 e o 2 mas na tree fica assim:
-	(gdb) p tree->str
-$1 = 0x55555559c1d0 "ls"
-(gdb) p tree->left->str
-$2 = 0x55555557f1f0 "1"
-(gdb) p tree->left->left->str
-$3 = 0x55555557f190 "2"
-	
-	ou seja, o 2 deveria ser o que ficava mais acima porque é o ultimo
-
-	------------------------------------------------------------------
-
 	se mandarmos o input ./././././././. ou /////////////// para o minishell,
 	este apresenta um erro "Permission denied"
 
@@ -66,7 +48,7 @@ $3 = 0x55555557f190 "2"
 
 	(n entendi o problema, a mensagem de erro está lá)
 	
-	(?)
+	(VER MAIS TARDE, MSG DE ERRO INTERESSA?)
 	
 	------------------------------------------------------------------
 
@@ -91,6 +73,8 @@ $3 = 0x55555557f190 "2"
 
 	bash : ls: cannot access 'heyhey': No such file or directory
 
-
 	------------------------------------------------------------------
+
+	//ls | grep s >>out | wc <out | cat
+	TEST THIS COMMAND FOR LEAKS
 */
