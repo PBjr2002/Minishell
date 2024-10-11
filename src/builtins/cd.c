@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:55:40 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/11 12:58:55 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:35:37 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	exec_cd(t_tree *tree, t_tree *cmd, t_environment *envr)
 {
 	char	*cwd;
-
 	char	*tmp;
 	char	*new_cwd;
 	char	*env_pwd;
@@ -32,6 +31,8 @@ int	exec_cd(t_tree *tree, t_tree *cmd, t_environment *envr)
 		free(tmp);
 		chdir(new_cwd);
 	}
+	else if (tree->null_char == true)
+		return (0);
 	else if (ft_strcmp(tree->str, "-") == 0)
 	{
 		new_cwd = return_part_line(envr->env, search_part_line(envr->env, "OLDPWD=", 7), 0);
@@ -46,7 +47,9 @@ int	exec_cd(t_tree *tree, t_tree *cmd, t_environment *envr)
 		
 		if (ft_strcmp(tree->str, "..") == 0)
 		{
-			old_pwd = ft_strjoin("OLDPWD=", cwd);
+			tmp = getcwd(NULL, 0);
+			old_pwd = ft_strjoin("OLDPWD=", tmp);
+			free(tmp);
 			if (chdir(tree->str) == -1)
 			{
 				ft_putstr_fd("minishell: cd: ", cmd->fd_out);
@@ -55,12 +58,13 @@ int	exec_cd(t_tree *tree, t_tree *cmd, t_environment *envr)
 				perror("");
 				return (1);
 			}
-			new_cwd = getcwd(NULL, 0);
+			if (cwd)
+				new_cwd = getcwd(NULL, 0);
+			else
+				new_cwd = NULL;
 		}
 		else
 		{
-			//if (ft_strcmp(tree->str, "\0") == 0)
-			//	return (0);
 			if (ft_strlen(ft_strrchr(cwd, '/')) != 1)
 			{
 				tmp = ft_strjoin(cwd, "/");
@@ -69,7 +73,14 @@ int	exec_cd(t_tree *tree, t_tree *cmd, t_environment *envr)
 			}
 			else
 				new_cwd = ft_strjoin(cwd, tree->str);
-			old_pwd = ft_strjoin("OLDPWD=", cwd);
+			if (cwd)
+				old_pwd = ft_strjoin("OLDPWD=", cwd);
+			else
+			{
+				tmp = getcwd(NULL, 0);
+				old_pwd = ft_strjoin("OLDPWD=", tmp);
+				free(tmp);
+			}
 			if (chdir(tree->str) == -1)
 			{
 				free(cwd);

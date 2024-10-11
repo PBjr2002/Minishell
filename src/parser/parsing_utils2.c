@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 16:46:49 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/11 13:09:44 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:47:59 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	empty_single_quote_removal(t_token *token, int quote_start, int quote_end)
 
 	temp = token->str;
 	len = ft_strlen(token->str);
-	if (quote_start == 0)
+	if (quote_start == 0 && ft_strlen(token->str) > 2)
 		token->str = ft_substr(token->str, quote_end + 1, len - 2);
 	else if (quote_end == len)
 		token->str = ft_substr(token->str, 0, quote_start);
@@ -71,7 +71,7 @@ void	empty_single_quote_removal(t_token *token, int quote_start, int quote_end)
 	{
 		previous = ft_substr(token->str, 0, quote_start);
 		remaining = ft_substr(token->str, quote_end + 1, (len - quote_end));
-		if (!previous && !remaining)
+		if (len == 2)
 		{
 			token->str = ft_strdup("\0");
 			token->null_char = true;
@@ -135,7 +135,7 @@ void	empty_double_quote_removal(t_token *token, int quote_start, int quote_end)
 
 	temp = token->str;
 	len = ft_strlen(token->str);
-	if (quote_start == 0)
+	if (quote_start == 0 && ft_strlen(token->str) > 2)
 		token->str = ft_substr(token->str, quote_end + 1, len - 2);
 	else if (quote_end == len)
 		token->str = ft_substr(token->str, 0, quote_start);
@@ -143,9 +143,9 @@ void	empty_double_quote_removal(t_token *token, int quote_start, int quote_end)
 	{
 		previous = ft_substr(token->str, 0, quote_start);
 		remaining = ft_substr(token->str, quote_end + 1, (len - quote_end));
-		if (!previous && !remaining)
+		if (len == 2)
 		{
-			token->str = ft_strdup(NULL);
+			token->str = ft_strdup("\0");
 			token->null_char = true;
 		}
 		else

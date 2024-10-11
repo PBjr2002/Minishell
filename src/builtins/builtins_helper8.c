@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:21:37 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/10 17:34:24 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/11 14:35:47 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	expand_everything(t_tree *tree, t_environment *envr)
 		str = exec_expansion(tree->str, envr);
 		free(tree->str);
 		tree->str = str;
+		tree->expand = false;
 	}
 }
 
@@ -51,7 +52,7 @@ void	exec_cmd(t_tree *tree, t_environment *envr)
 	t_tree	*cmd;
 	pid_t	id;
 	pid_t	id2;
-	char	*tmp;
+	//char	*tmp;
 
 	if (!tree)
 		return ;
@@ -92,14 +93,6 @@ void	exec_cmd(t_tree *tree, t_environment *envr)
 		{
 			cmd = tree;
 			tree = tree->right;
-			if (tree->right && tree->right->append_before == true)
-			{
-				tmp = ft_strdup(tree->str);
-				free(tree->str);
-				tree->str = ft_strjoin(tmp, tree->right->str);
-				free(tree->right->str);
-				//tree->right->str = NULL;
-			}
 			decider(tree, cmd, envr);
 		}
 		else

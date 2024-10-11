@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:44:40 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/09 17:53:07 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:54:10 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,10 @@ void	single_quote_token_remover(t_token *token, int quote_start, int n)
 			quote_end = n;
 			n = 0;
 			if (quote_end == quote_start + 1)
+			{
 				empty_single_quote_removal(token, quote_start, quote_end);
+				continue;
+			}
 			else
 				single_quote_dissection(token, quote_start, quote_end);
 		}
@@ -140,7 +143,10 @@ void	double_quote_token_remover(t_token *token, int quote_start, int n)
 			quote_end = n;
 			n = 0;
 			if (quote_end == quote_start + 1)
+			{
 				empty_double_quote_removal(token, quote_start, quote_end);
+				continue;
+			}
 			else
 				double_quote_dissection(token, quote_start, quote_end);
 		}

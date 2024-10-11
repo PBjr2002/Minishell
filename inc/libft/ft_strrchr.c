@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 19:37:23 by pauberna          #+#    #+#             */
-/*   Updated: 2023/10/06 11:53:52 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/11 15:23:04 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strrchr(const char *s, int c)
 	char	*ptr;
 
 	ptr = NULL;
+	if (!s)
+		return (NULL);
 	while (*s)
 	{
 		if (*s == (char)c)

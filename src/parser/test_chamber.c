@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/11 12:47:01 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:36:00 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@
 	----------------------------------------------
 
 	cd segfault quando se elimina o pwd do export e se muda de diretorio
+	(done)
 
 	--------------------------------------------------
 
@@ -102,6 +103,6 @@
 	export a
 	o "a" aparece no env quando deveria n existir
 	(done)
-
+	-------------------------------------
 
 */
