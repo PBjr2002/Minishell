@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:06:39 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/08 17:20:48 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/10 17:23:28 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ t_environment	*tree_cleanup_function(t_tree *treetop, t_environment *info)
 		info->status = 2;
 	else if (check_valid_redirects(treetop) == -1)
 		info->status = 2;
+	else
+	{
+		info->old_status = info->status;
+		info->status = 0;
+	}
 	return (info);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_chamber.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/10 16:21:03 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/11 10:20:20 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@
 
 	nosso : syntax error
 	bash : (executa o ls normalmente)
+	(done)
 
 	------------------------------------------------------------------
 
@@ -63,4 +64,6 @@
 
 	//ls | grep s >>out | wc <out | cat
 	TEST THIS COMMAND FOR LEAKS
+
+
 */
