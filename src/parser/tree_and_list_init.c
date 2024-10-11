@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_and_list_init.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:47 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/09 18:14:24 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:06:06 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_token	*ft_token_new(char *str)
 	new->index = index;
 	new->expand = true;
 	new->append_before = false;
+	new->null_char = false;
 	new->next = NULL;
 	new->previous = NULL;
 	return (new);
@@ -54,6 +55,7 @@ t_tree	*ft_branch_new(t_token *token, char *str, int type, int pipeline)
 	new->expand = token->expand;
 	new->solved = false;
 	new->append_before = token->append_before;
+	new->null_char = token->null_char;
 	new->parent = NULL;
 	new->left = NULL;
 	new->right = NULL;

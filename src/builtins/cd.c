@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:55:40 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/19 11:28:36 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/11 12:58:55 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	exec_cd(t_tree *tree, t_tree *cmd, t_environment *envr)
 		}
 		else
 		{
+			//if (ft_strcmp(tree->str, "\0") == 0)
+			//	return (0);
 			if (ft_strlen(ft_strrchr(cwd, '/')) != 1)
 			{
 				tmp = ft_strjoin(cwd, "/");

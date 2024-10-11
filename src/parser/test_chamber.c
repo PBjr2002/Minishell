@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/11 10:21:08 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/11 12:47:01 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,23 @@
 	//ls | grep s >>out | wc <out | cat
 	TEST THIS COMMAND FOR LEAKS
 
-	
+	----------------------------------------------
+
+	cd segfault quando se elimina o pwd do export e se muda de diretorio
+
+	--------------------------------------------------
+
+	rever flag do echo:
+	-varias flags iguais(juntas ou separadas)
+	-espaço depois de uma flag invalida
+	(done)
+
+	--------------------------------------------
+
+	export a=b
+	export a
+	o "a" aparece no env quando deveria n existir
+	(done)
 
 
 */
