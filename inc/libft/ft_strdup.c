@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 17:11:58 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/09 16:08:21 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/10 17:42:28 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strdup(const char *s)
 
 	len = ft_strlen(s) + 1;
 	str = malloc (len);
-	if (str == NULL)
+	if (str == NULL) str = '\0'
 		return (NULL);
 	ft_memcpy(str, s, len);
 	return (str);

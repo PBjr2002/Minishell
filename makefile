@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror #-fsanitize=address
 NAME = minishell
 
 SRC = $(addprefix src/, $(SOURCES))

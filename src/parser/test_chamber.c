@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/11 10:20:20 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/11 10:21:08 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,26 @@
 /*
 	------------------------------------------------------------------
 
+	expansao de argumentos precisa de ignorar espacos
+	
+	export A="    ls              -la"
+	cat $A
+
+	nosso : cat: '    ls              -la': No such file or directory
+	bash : cat: 'ls -la': No such file or directory
+
+	------------------------------------------------------------------
+	
+	o error code depois de fazermos ctrl + c esta incorreto
+
+	^c
+	echo $?
+
+	nosso : 0
+	bash : 130
+	
+	------------------------------------------------------------------
+	
 	se mandarmos o input ./././././././. ou /////////////// para o minishell,
 	este apresenta um erro "Permission denied"
 
@@ -64,6 +84,8 @@
 
 	//ls | grep s >>out | wc <out | cat
 	TEST THIS COMMAND FOR LEAKS
+
+	
 
 
 */
