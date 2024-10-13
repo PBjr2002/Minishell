@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:30:34 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/10 16:16:10 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/13 16:40:34 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	decider(t_tree *tree, t_tree *cmd, t_environment *envr)
 {
+	set_builtins_fds(cmd);
 	if (ft_strcmp(cmd->str, "echo") == 0 && tree)
 		envr->status = exec_echo(tree, cmd, envr);
 	else if (ft_strcmp(cmd->str, "cd") == 0)
@@ -60,4 +61,97 @@ void	pipe_setup(t_tree *tree)
 		return ;
 	tree->fd_in = fd[0];
 	tree->fd_out = fd[1];
+}
+
+void	set_builtins_fds(t_tree *tree)
+{
+	if (!tree)
+		return ;
+	if (tree->type == TYPE_COMMAND)
+	{
+		if (tree->parent && tree->parent->type == TYPE_PIPE && tree == tree->parent->left)
+		{
+			if (tree->left)
+			{
+				if (tree->left->fd_in != 0 && tree->left->fd_out != 1)
+				{
+					tree->fd_in = tree->left->fd_in;
+					tree->fd_out = tree->left->fd_out;
+				}
+				else if (tree->left->fd_in != 0)
+				{
+					tree->fd_in = tree->left->fd_in;
+					tree->fd_out = tree->parent->fd_out;
+				}
+				else
+					tree->fd_out = tree->left->fd_out;
+			}
+			else
+				tree->fd_out = tree->parent->fd_out;
+		}
+		else if (tree->parent && tree->parent->type == TYPE_PIPE && tree == tree->parent->right)
+		{
+			if (tree->parent->parent && tree->parent->parent->type == TYPE_PIPE)
+			{
+				if (tree->left)
+				{
+					if (tree->left->fd_in != 0 && tree->left->fd_out != 1)
+					{
+						tree->fd_in = tree->left->fd_in;
+						tree->fd_out = tree->left->fd_out;
+					}
+					else if (tree->left->fd_in != 0)
+					{
+						tree->fd_in = tree->left->fd_in;
+						tree->fd_out = tree->parent->parent->fd_out;
+					}
+					else
+					{
+						tree->fd_in = tree->parent->fd_in;
+						tree->fd_out = tree->left->fd_out;
+					}
+				}
+				else
+				{
+					tree->fd_in = tree->parent->fd_in;
+					tree->fd_out = tree->parent->parent->fd_out;
+				}
+			}
+			else
+			{
+				if (tree->left)
+				{
+					if (tree->left->fd_in != 0 && tree->left->fd_out != 1)
+					{
+						tree->fd_in = tree->left->fd_in;
+						tree->fd_out = tree->left->fd_out;
+					}
+					else if (tree->left->fd_in != 0)
+						tree->fd_in = tree->left->fd_in;
+					else
+					{
+						tree->fd_in = tree->parent->fd_in;
+						tree->fd_out = tree->left->fd_out;
+					}
+				}
+				else
+					tree->fd_in = tree->parent->fd_in;
+			}
+		}
+		else
+		{
+			if (tree->left)
+			{
+				if (tree->left->fd_in != 0 && tree->left->fd_out != 1)
+				{
+					tree->fd_in = tree->left->fd_in;
+					tree->fd_out = tree->left->fd_out;
+				}
+				else if (tree->left->fd_in != 0)
+					tree->fd_in = tree->left->fd_in;
+				else
+					tree->fd_out = tree->left->fd_out;
+			}
+		}
+	}
 }

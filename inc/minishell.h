@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/10 11:35:07 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/13 16:39:26 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int		parser_and_exec(t_lexer *lexer, t_environment *info);
 void	decider(t_tree *tree, t_tree *cmd, t_environment *envr);
 int		redirect_solver(t_tree *tree, t_environment *envr);
 void	pipe_setup(t_tree *tree);
+void	set_builtins_fds(t_tree *tree);
 
 //builtins_helper.c
 char	**copy_env(char **envp, int mode);

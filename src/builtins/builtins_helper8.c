@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:21:37 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/11 14:35:47 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/13 14:56:19 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	exec_cmd(t_tree *tree, t_environment *envr)
 	t_tree	*cmd;
 	pid_t	id;
 	pid_t	id2;
-	//char	*tmp;
 
 	if (!tree)
 		return ;
