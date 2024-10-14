@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/10 17:50:44 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/14 12:02:23 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	prompt(t_environment *info)
 		if (!lexer->input)
 		{
 			free(lexer);
-			exec_exit(0, 1, 0);
+			exec_exit(info->status, 1, 0);
 		}
 		else if (lexer->invalid_lexer == true || input_checker(lexer) == 0)
 		{

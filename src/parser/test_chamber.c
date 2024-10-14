@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/13 17:37:07 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/14 11:57:14 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,5 +281,13 @@ Hellshell> echo hi > "|" > lol42
 	bash  : sai do heredoc assim que se escreve LIM
 
 --------------------------------------------------------------------------
-	testar a partir da linha 79
+	testar a partir da linha 79 até a linha 85 o problema é o mesmo
+	estão a ser criados 2 redirects em vez de só um então o problema n é o heredoc mas sim o estar a ser feito 2x
+
+------------------------------------------------------------------------------
+
+	echo hi"" "" "" ""there
+
+	nosso :hithere
+	bash  :hi   there
 */
