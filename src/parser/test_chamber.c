@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/14 14:39:57 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:53:08 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,40 +124,6 @@
 
 	nem eu percebi o que era suposto acontecer aqui
 
-	---------------------------------------------------------------
-
-	echo hi >">" lol
-
-	Hellshell> echo hi >">" lol
-==10411== Invalid write of size 8
-==10411==    at 0x11067E: ft_redirect_branch_attach1 (tree_and_list_append.c:34)
-==10411==    by 0x11190D: ft_scan_for_redirects1 (tree_creation_utils2.c:29)
-==10411==    by 0x11144B: ft_construct_pipelines_zero (tree_creation_utils.c:154)
-==10411==    by 0x1111B3: tree_creation_function (tree_creation_utils.c:32)
-==10411==    by 0x112A93: parsing (parsing.c:73)
-==10411==    by 0x1096DC: parser_and_exec (prompt.c:50)
-==10411==    by 0x109682: prompt (prompt.c:37)
-==10411==    by 0x1095AF: main (main.c:37)
-==10411==  Address 0x38 is not stack'd, malloc'd or (recently) free'd
-==10411== 
-==10411== 
-==10411== Process terminating with default action of signal 11 (SIGSEGV)
-==10411==  Access not within mapped region at address 0x38
-==10411==    at 0x11067E: ft_redirect_branch_attach1 (tree_and_list_append.c:34)
-==10411==    by 0x11190D: ft_scan_for_redirects1 (tree_creation_utils2.c:29)
-==10411==    by 0x11144B: ft_construct_pipelines_zero (tree_creation_utils.c:154)
-==10411==    by 0x1111B3: tree_creation_function (tree_creation_utils.c:32)
-==10411==    by 0x112A93: parsing (parsing.c:73)
-==10411==    by 0x1096DC: parser_and_exec (prompt.c:50)
-==10411==    by 0x109682: prompt (prompt.c:37)
-==10411==    by 0x1095AF: main (main.c:37)
-==10411==  If you believe this happened as a result of a stack
-==10411==  overflow in your program's main thread (unlikely but
-==10411==  possible), you can try to increase the size of the
-==10411==  main thread stack using the --main-stacksize= flag.
-==10411==  The main thread stack size used in this run was 8388608.
-
-	(solved)
 -------------------------------------------------------------------------------
 
 	echo HI > > out
@@ -271,21 +237,7 @@ Hellshell> echo hi > "|" > lol42
 ==14194==  main thread stack using the --main-stacksize= flag.
 ==14194==  The main thread stack size used in this run was 8388608.
 
----------------------------------------------------------------------------------------
-
-	export AA=asd AAA=asd = AAAAAA 123=123 AA123_123=@@@ AA@@=asd=asd
-
-	idk why AA@@=asd=asd está a ser visto como valido quando n o devia, maybe verificaçoes de caracteres
-	(done)
-
------------------------------------------------------------------------------------
-
-	export asd@@@
-
-	again verificaçoes de caracteres, n deveria estar a ser criado mas está
-	(done)
-
--------------------------------------------------------------------------------
+-----------------------------------------------------------------
 
 	<< LIM cat
 
