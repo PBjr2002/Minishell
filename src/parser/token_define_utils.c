@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:56:14 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/10 17:23:06 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:32:16 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,39 @@ int redirect_token_define(t_lexer *lexer, t_token *token_list, int n)
 	int 	export;
 	t_token *new_token;
 	char	*str;
+	bool	single_quote;
+	bool	double_quote;
 
 	export = n;
+	single_quote = false;
+	double_quote = false;
 	if ((lexer->input[n] == '<' && lexer->input[n + 1] == '<') 
 		|| (lexer->input[n] == '>' && lexer->input[n + 1] == '>'))
 		n++;
 	n++;
 	while ((lexer->input[n] > 9 && lexer->input[n] < 13) || lexer->input[n] == ' ')
 		n++;
-	while ((lexer->input[n] > 32 && lexer->input[n] < 127
-		&& lexer->input[n] != 60 && lexer->input[n] != 62))
+	while (lexer->input[n] > 32 && lexer->input[n] < 127)
+	{
+		if (lexer->input[n] == '\'')
+		{
+			if (single_quote == false && double_quote == false)
+				single_quote = true;
+			else
+				single_quote = false;
+		}
+		if (lexer->input[n] == '"')
+		{
+			if (double_quote == false && single_quote == false)
+				double_quote = true;
+			else
+				double_quote = false;
+		}
+		if (((lexer->input[n] == 60 || lexer->input[n] == 62)
+			|| lexer->input[n] == ' ') && (single_quote == false && double_quote == false))
+			break ;
 		n++;
+	}
 	if ((n - export) < 2)
 		new_token = ft_token_new(NULL);
 	else

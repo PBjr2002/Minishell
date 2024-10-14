@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:44:40 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/11 13:54:10 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:47:28 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void	single_quote_token_remover(t_token *token, int quote_start, int n)
 				n++;
 			quote_end = n;
 			n = 0;
+			token->expand = false;
 			if (quote_end == quote_start + 1)
 			{
 				empty_single_quote_removal(token, quote_start, quote_end);
