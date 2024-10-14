@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/14 14:40:40 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:43:09 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 	nosso : cat: '    ls              -la': No such file or directory
 	bash : cat: 'ls -la': No such file or directory
 
+	n acho que seja problema porque é uma mensagem de erro e o resto do comportamento do comando está igual
+
 	------------------------------------------------------------------
 	
 	se mandarmos o input ./././././././. ou /////////////// para o minishell,
@@ -56,6 +58,7 @@
 			ls: cannot access 'hey': No such file or directory
 
 	bash : ls: cannot access 'heyhey': No such file or directory
+	(done)
 
 	------------------------------------------------------------------
 
@@ -275,18 +278,14 @@ Hellshell> echo hi > "|" > lol42
 	export AA=asd AAA=asd = AAAAAA 123=123 AA123_123=@@@ AA@@=asd=asd
 
 	idk why AA@@=asd=asd está a ser visto como valido quando n o devia, maybe verificaçoes de caracteres
-
-----------------------------------------------------------------------------------
-
-	export a = b
-
-	o output está correto mas está a adicionar a e b vazios ao export quando n deveria
+	(done)
 
 -----------------------------------------------------------------------------------
 
 	export asd@@@
 
 	again verificaçoes de caracteres, n deveria estar a ser criado mas está
+	(done)
 
 -------------------------------------------------------------------------------
 

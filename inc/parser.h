@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/11 13:03:58 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:46:07 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ typedef struct s_tree
 	int						fd_in;
 	int						fd_out;
 	int						*heredoc_input_fd; //default value is 0
-	int						expand;
+	bool					expand;
 	bool					solved;
 	bool					append_before;
 	bool					null_char;

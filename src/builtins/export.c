@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:26:47 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/11 12:46:14 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:28:30 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	check_argument(char *str)
 	{
 		if (str[n] == '=')
 			break ;
-		else if ((ft_isalnum(str[n] == 0) && str[n] != '_')
+		else if ((ft_isalnum(str[n]) == 0 && str[n] != '_')
 			|| (ft_isdigit(str[n]) == 1 && n == 0))
 			return (-1);
 		n++;
