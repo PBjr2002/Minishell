@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/13 16:39:26 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:16:25 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void		prepare_exit(t_tree *tree, t_tree *cmd, t_environment *envr);
 int		check_expansion(char *str);
 void	expand_everything(t_tree *tree, t_environment *envr);
 void	exec_cmd(t_tree *tree, t_environment *envr);
+void	ch_signal(int signal);
 
 //redirects.c
 int		redirect_single_in(t_tree *tree);

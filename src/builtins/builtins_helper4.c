@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_helper4.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:59:47 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/09 18:02:46 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/14 12:45:46 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,11 @@ char	**build_av(t_tree *tree, t_tree *cmd)
 
 int	build_av_helper(t_tree *cmd, t_tree *tree, t_tree *tmp, char **av)
 {
-	int	len;
+	char	*stmp;
+	int		len;
 
 	len = 1;
+	stmp = NULL;
 	if (cmd)
 	{
 		av[0] = ft_strdup(cmd->str);
@@ -54,11 +56,30 @@ int	build_av_helper(t_tree *cmd, t_tree *tree, t_tree *tmp, char **av)
 	{
 		while (tree)
 		{
-			av[len] = ft_strdup(tree->str);
+			if (tree->right && tree->right->append_before == true)
+			{
+				while (tree->right && tree->right->append_before == true)
+				{
+					if (av[len])
+					{
+						stmp = ft_strdup(av[len]);
+						free(av[len]);
+					}
+					else
+						stmp = ft_strdup(tree->str);
+					av[len] = ft_strjoin(stmp, tree->right->str);
+					free(stmp);
+					tree = tree->right;
+				}
+				tree = tree->right;
+			}
+			else
+				av[len] = ft_strdup(tree->str);
 			if (!av[len])
 				return (1);
 			len++;
-			tree = tree->right;
+			if (tree)
+				tree = tree->right;
 		}
 		tree = tmp;
 	}

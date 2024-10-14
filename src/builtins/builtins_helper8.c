@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:21:37 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/13 14:56:19 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/14 13:16:10 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,12 @@ void	exec_cmd(t_tree *tree, t_environment *envr)
 		else
 			decider(NULL, tree, envr);
 	}
+}
+
+void	ch_signal(int signal)
+{
+	t_global	info;
+
+	info = global_info(NULL, NULL);
+	info.envr->status = signal;
 }
