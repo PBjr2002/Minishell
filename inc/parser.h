@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/14 13:46:07 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:26:32 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_token
 	bool					expand;
 	bool					append_before;
 	bool					null_char;
+	bool					invalid_expand;
 	struct s_token			*previous;
 	struct s_token			*next;
 }	t_token;
@@ -97,6 +98,7 @@ typedef struct s_tree
 	bool					solved;
 	bool					append_before;
 	bool					null_char;
+	bool					invalid_expand;
 	struct s_tree			*parent;
 	struct s_tree			*left;
 	struct s_tree			*right;
