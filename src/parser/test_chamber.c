@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/14 14:32:19 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:39:57 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,6 @@
 
 	n acho que seja problema porque é uma mensagem de erro e o resto do comportamento do comando está igual
 
-	------------------------------------------------------------------
-	
-	o error code depois de fazermos ctrl + c esta incorreto
-
-	^c
-	echo $?
-
-	nosso : 0
-	bash : 130
-	(done)
-	
 	------------------------------------------------------------------
 	
 	se mandarmos o input ./././././././. ou /////////////// para o minishell,
@@ -92,6 +81,8 @@
 	echo "smth"'$PATH'
 
 	'$PATH' está a chegar com a flag do expand como true
+	
+	(solved, hopefully doesnt break anything)
 
 	-------------------------------------------------------------------
 
@@ -100,6 +91,9 @@
 	nosso : hi
 	bash  :hi
 
+	(o problema esta na expansao, so e suposto enviar um espaco quando esta esta
+	entre aspas)
+
 	-------------------------------------------------------------------
 
 	echo $"LOL"
@@ -107,6 +101,23 @@
 	nosso :$LOL
 	bash  :LOL
 
+	(apos verificar no gdb, a tree esta a receber isto:)
+	echo $"gofas"
+
+			echo
+				|
+					$
+					|
+						gofas
+
+	vai ser necessario fazer a expansao deste dollar, porque e do type 5 (TYPE_DOLLAR)
+	isto deveria dar uma expansao nula, que por si faria com que o resultado fosse ignorado,
+	ficando apenas o echo e o gofas, dando o resultado:
+
+	gofas
+
+	como queremos.
+	
 	----------------------------------------------------------------
 
 	ls"-l"|wc|grep|echo>>txt.txt<<EOF'A'"|">OUT
@@ -146,6 +157,7 @@
 ==10411==  main thread stack using the --main-stacksize= flag.
 ==10411==  The main thread stack size used in this run was 8388608.
 
+	(solved)
 -------------------------------------------------------------------------------
 
 	echo HI > > out
