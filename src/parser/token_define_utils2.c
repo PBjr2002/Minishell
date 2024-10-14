@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 17:27:46 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/10 17:22:54 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/14 16:38:39 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int	single_quote_token_define(t_lexer *lexer, t_token *token_list, int n)
 	new_token = ft_token_new(str);
 	free(str);
 	new_token->type = TYPE_COMMAND;
-	if (export > 0 && (lexer->input[export - 1] < 10 
-		|| lexer->input[export - 1] > 12) && lexer->input[export - 1] != ' ')
+	if (export > 0 && ((lexer->input[export - 1] < 10 
+		|| lexer->input[export - 1] > 12) && lexer->input[export - 1] != ' '))
 		new_token->append_before = true;
 	ft_token_append(token_list, new_token, new_token->str);
 	return (n);
@@ -84,7 +84,7 @@ int double_quote_token_define(t_lexer *lexer, t_token *token_list, int n)
 	free(str);
 	new_token->type = TYPE_COMMAND;
 	if (export > 0 && ((lexer->input[export - 1] < 10 
-		|| lexer->input[export - 1] > 12) || lexer->input[export - 1] != ' '))
+		|| lexer->input[export - 1] > 12) && lexer->input[export - 1] != ' '))
 		new_token->append_before = true;
 	ft_token_append(token_list, new_token, new_token->str);
 	return (n);

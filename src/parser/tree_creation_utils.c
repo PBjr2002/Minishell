@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 13:15:38 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/10 15:35:35 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/14 16:23:59 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,12 +180,20 @@ t_tree	*ft_construct_pipelines(t_token *token_list, t_tree *top, int pipenum, in
 // it goes without saying that it should be the last function called during pipeline construction.
 t_tree	*ft_fill_tree_zero(t_token *token_list, t_tree *current, int pipeline)
 {
+	t_token	*temp;
+	
+	temp = token_list;
 	if (current->type == SINGLE_IN || current->type == SINGLE_OUT 
 		|| current->type == DOUBLE_IN || current->type == DOUBLE_OUT)
 	{
-		current = ft_command_branch_attach_zero(current, 
-			ft_branch_new(token_list, token_list->str, token_list->type, pipeline), token_list);
-		token_list = token_list->next;
+		while (token_list)
+		{
+			if (token_list->type == TYPE_COMMAND || token_list->type == TYPE_DOLLAR_COMMAND)
+				current = ft_command_branch_attach_zero(current, 
+					ft_branch_new(token_list, token_list->str, token_list->type, pipeline), token_list);
+			token_list = token_list->next;
+		}
+		token_list = temp;
 	}
 	else if (current->type == TYPE_COMMAND || current->type == TYPE_DOLLAR_COMMAND)
 		token_list = token_list->next;
