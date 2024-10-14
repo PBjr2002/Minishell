@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_chamber.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/14 14:55:03 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:56:06 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,39 +50,8 @@
 
 	------------------------------------------------------------------
 
-	ls nao da append a branches corretamente
-
-	ls 'hey'"hey"
-
-	nosso : ls: cannot access 'hey': No such file or directory
-			ls: cannot access 'hey': No such file or directory
-
-	bash : ls: cannot access 'heyhey': No such file or directory
-	(done)
-
-	------------------------------------------------------------------
-
 	//ls | grep s >>out | wc <out | cat
 	TEST THIS COMMAND FOR LEAKS
-
-	----------------------------------------------
-
-	export a=hello b world
-	echo $a $b
-
-	nosso:helloworld
-	bash :hello world
-
-	hello e world estão com o append before a true quando chegam ao exec_echo
-	daí n haver espaço entre as palavras
-	
-	-------------------------------------------------------------------
-
-	echo "smth"'$PATH'
-
-	'$PATH' está a chegar com a flag do expand como true
-	
-	(solved, hopefully doesnt break anything)
 
 	-------------------------------------------------------------------
 
@@ -93,36 +62,15 @@
 
 	(o problema esta na expansao, so e suposto enviar um espaco quando esta esta
 	entre aspas)
-
-	-------------------------------------------------------------------
-
-	echo $"LOL"
-
-	nosso :$LOL
-	bash  :LOL
-
-	(apos verificar no gdb, a tree esta a receber isto:)
-	echo $"gofas"
-
-			echo
-				|
-					$
-					|
-						gofas
-
-	vai ser necessario fazer a expansao deste dollar, porque e do type 5 (TYPE_DOLLAR)
-	isto deveria dar uma expansao nula, que por si faria com que o resultado fosse ignorado,
-	ficando apenas o echo e o gofas, dando o resultado:
-
-	gofas
-
-	como queremos.
 	
 	----------------------------------------------------------------
 
 	ls"-l"|wc|grep|echo>>txt.txt<<EOF'A'"|">OUT
 
 	nem eu percebi o que era suposto acontecer aqui
+
+	supostamente, seria para testar o delimiter do heredoc...? n sei qual e porque o nosso
+	nao manda msg de erro a indicar o delimiter quando mandamos ctrl + d
 
 -------------------------------------------------------------------------------
 
