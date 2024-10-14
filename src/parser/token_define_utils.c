@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:56:14 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/14 14:50:52 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:25:13 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,11 @@ int	dollar_token_define(t_lexer *lexer, t_token *token_list, int n)
 			&& (lexer->input[n] != '<') && (lexer->input[n] != '>') && lexer->input[n])
 			n++;
 	}
+		
 	str = ft_substr(lexer->input, export, (n - export));
 	new_token = ft_token_new(str);
+	if (lexer->input[n] == '"' || lexer->input[n] == '\'')
+		new_token->invalid_expand = true;
 	free(str);
 	new_token->type = TYPE_DOLLAR;
 	if (export > 0 && ((lexer->input[export - 1] < 10 || lexer->input[export - 1] > 12) || lexer->input[export - 1] != ' '))
