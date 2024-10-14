@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:38:16 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/14 15:36:48 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/14 16:37:28 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ int	exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr)
 		else if (tree->parent == cmd)
 			nl = 3;
 		echo_helper(tree, cmd, envr);
-		space = 1;
+		if (!tree->str[0] && tree->expand == false)
+			space = 0;
+		else
+			space = 1;
 		tree = tree->right;
 	}
 	if (nl != 1)

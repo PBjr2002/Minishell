@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:21:37 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/14 15:38:21 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/14 16:27:02 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	expand_everything(t_tree *tree, t_environment *envr)
 	}
 	else if (check_expansion(tree->str) == 0 && tree->expand == true)
 	{
+		if (!tree->str[0])
+			return ;
 		str = exec_expansion(tree->str, envr);
 		free(tree->str);
 		tree->str = str;
