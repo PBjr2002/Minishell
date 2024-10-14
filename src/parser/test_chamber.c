@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/14 14:53:08 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:55:03 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,8 @@
 ==11098==  possible), you can try to increase the size of the
 ==11098==  main thread stack using the --main-stacksize= flag.
 ==11098==  The main thread stack size used in this run was 8388608.
+
+(o problema esta nas verificacoes do syntax error, im on it)
 
 -----------------------------------------------------------------------------
 
