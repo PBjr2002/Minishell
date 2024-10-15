@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:18:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/14 13:17:57 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:11:59 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,11 @@ void	exec_exit(int signal, int mode, int write)
 	t_global	info;
 
 	info = global_info(NULL, NULL);
+	if (mode == 0)
+	{
+		clean_all_fds(info.envr->fds);
+		tree_cleaner(info.tree);
+	}
 	if (info.envr->env)
 		free_env(info.envr->env);
 	if (info.envr->export_env)
@@ -104,11 +109,6 @@ void	exec_exit(int signal, int mode, int write)
 		free(info.envr);
 	if (write == 0)
 		ft_putendl_fd("exit", 1);
-	if (mode == 0)
-	{
-		clean_all_fds();
-		tree_cleaner(info.tree);
-	}
 	exit(signal);
 }
 

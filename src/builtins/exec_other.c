@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 15:51:38 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/09 16:29:29 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:10:59 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr)
 	if (!path)
 	{
 		printf("%s : No such file or directory\n", cmd->str);
-		clean_all_fds();
+		clean_all_fds(envr->fds);
 		envr->status = 127;
 		return ;
 	}
@@ -32,7 +32,7 @@ void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr)
 	else
 	{
 		waitpid(id, &envr->status, 0);
-		clean_all_fds();
+		clean_all_fds(envr->fds);
 		envr->status = envr->status / 256;
 		free(path);
 	}
@@ -44,12 +44,12 @@ void	executer(t_tree *cmd, t_tree *tree, t_environment *envr, char *path)
 
 	av = build_av(tree, cmd);
 	set_fds(cmd, envr);
-	clean_all_fds();
+	clean_all_fds(envr->fds);
 	signal_decider(CHILD);
 	if (access(path, X_OK) == 0)
 		if (execve(path, av, envr->env) == -1)
 			perror("");
-	clean_all_fds();
+	clean_all_fds(envr->fds);
 	free_env(av);
 	exec_exit(1, 0, 1);
 }

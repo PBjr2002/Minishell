@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/14 13:16:25 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:22:56 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,9 @@ int		redirect_double_in(t_tree *tree, t_environment *envr);
 int		redirect_double_out(t_tree *tree);
 
 //fds.c
-void	clean_all_fds(void);
-void	close_fds(t_tree *tree);
-void	close_specific_fds(t_tree *tree, int fd_in, int fd_out);
+void	clean_all_fds(int fds);
+void	close_fds(t_tree *tree, t_environment *envr);
+void	close_specific_fds(t_environment *envr, int fd_in, int fd_out);
 void	set_fds(t_tree *tree, t_environment *envr);
 
 //echo.c

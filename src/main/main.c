@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:56:06 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/08 16:48:04 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:04:45 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	main(int ac, char **av, char **envp)
 		info->env = copy_env(envp, 1);
 		info->export_env = copy_env(info->env, 0);
 	}
+	info->fds = 3;
 	prompt(info);
 	return (0);
 }

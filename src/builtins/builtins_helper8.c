@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:21:37 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/14 16:27:02 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:24:30 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,26 +70,27 @@ void	exec_cmd(t_tree *tree, t_environment *envr)
 	{
 		signal_decider(IGNORE);
 		pipe_setup(tree);
+		envr->fds += 2;
 		id = fork();
 		if (id == 0)
 		{
 			signal_decider(CHILD);
 			exec_cmd(tree->left, envr);
-			clean_all_fds();
+			clean_all_fds(envr->fds);
 			exec_exit(envr->status, 0, 1);
 		}
-		close_fds(tree);
-		signal_decider(IGNORE);
+		close_fds(tree, envr);
 		id2 = fork();
 		if (id2 == 0)
 		{
 			signal_decider(CHILD);
 			exec_cmd(tree->right, envr);
-			clean_all_fds();
+			clean_all_fds(envr->fds);
 			exec_exit(envr->status, 0, 1);
 		}
-		clean_all_fds();
+		clean_all_fds(envr->fds);
 		waitpid(id2, &envr->status, 0);
+		waitpid(id, &envr->status, 0);
 		envr->status = envr->status / 256;
 	}
 	else
@@ -97,6 +98,7 @@ void	exec_cmd(t_tree *tree, t_environment *envr)
 		if (tree->type == 1 || tree->type == 2
 		|| tree->type == 3 || tree->type == 4)
 			return ;
+		close_fds(tree, envr);
 		if (tree->right)
 		{
 			cmd = tree;

@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/15 11:28:26 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:20:17 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,6 @@
 	testar a partir da linha 79 até a linha 85 o problema é o mesmo
 	estão a ser criados 2 redirects em vez de só um então o problema n é o heredoc mas sim o estar a ser feito 2x
 
-----------------------------------------------------------------------
-
-	cat | cat | cat | ls
-
-	deveria esperar por input nos 3 cats
-	idk why isnt working
-
 --------------------------------------------------------------------------
 
 	linha 81
@@ -81,4 +74,16 @@
 	linha 84
 
 ------------------------------------------------------------------------------
+
+	echo $42LESS
+
+	nosso :nada
+	bash  :2LESS
+
+	echo $1LESS
+	
+	nosso :nada
+	bash  :LESS
+
+---------------------------------------------------------------------------
 */

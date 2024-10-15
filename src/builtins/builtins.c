@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:30:34 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/13 16:40:34 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:06:54 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	redirect_solver(t_tree *tree, t_environment *envr)
 		mode = redirect_double_in(tree, envr);
 	else if (tree->type == DOUBLE_OUT)
 		mode = redirect_double_out(tree);
+	envr->fds++;
 	return (mode);
 }
 

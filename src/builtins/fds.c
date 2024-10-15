@@ -6,25 +6,25 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 11:58:28 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/10 14:56:05 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:24:50 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	clean_all_fds(void)
+void	clean_all_fds(int fds)
 {
 	int	n;
 
 	n = 3;
-	while (n < FOPEN_MAX)
+	while (n < fds)
 	{
 		close(n);
 		n++;
 	}
 }
 
-void	close_fds(t_tree *tree)
+void	close_fds(t_tree *tree, t_environment *envr)
 {
 	if (!tree)
 		return ;
@@ -35,14 +35,14 @@ void	close_fds(t_tree *tree)
 			if (tree->left)
 			{
 				if (tree->left->fd_in != 0 && tree->left->fd_out != 1)
-					close_specific_fds(tree, tree->left->fd_in, tree->left->fd_out);
+					close_specific_fds(envr, tree->left->fd_in, tree->left->fd_out);
 				else if (tree->left->fd_in != 0)
-					close_specific_fds(tree, tree->left->fd_in, tree->parent->fd_out);
+					close_specific_fds(envr, tree->left->fd_in, tree->parent->fd_out);
 				else
-					close_specific_fds(tree, tree->fd_in, tree->left->fd_out);
+					close_specific_fds(envr, tree->fd_in, tree->left->fd_out);
 			}
 			else
-				close_specific_fds(tree, tree->fd_in, tree->parent->fd_out);
+				close_specific_fds(envr, tree->fd_in, tree->parent->fd_out);
 		}
 		else if (tree->parent && tree->parent->type == TYPE_PIPE && tree == tree->parent->right)
 		{
@@ -51,28 +51,28 @@ void	close_fds(t_tree *tree)
 				if (tree->left)
 				{
 					if (tree->left->fd_in != 0 && tree->left->fd_out != 1)
-						close_specific_fds(tree, tree->left->fd_in, tree->left->fd_out);
+						close_specific_fds(envr, tree->left->fd_in, tree->left->fd_out);
 					else if (tree->left->fd_in != 0)
-						close_specific_fds(tree, tree->left->fd_in, tree->parent->parent->fd_out);
+						close_specific_fds(envr, tree->left->fd_in, tree->parent->parent->fd_out);
 					else
-						close_specific_fds(tree, tree->parent->fd_in, tree->left->fd_out);
+						close_specific_fds(envr, tree->parent->fd_in, tree->left->fd_out);
 				}
 				else
-					close_specific_fds(tree, tree->parent->fd_in, tree->parent->parent->fd_out);
+					close_specific_fds(envr, tree->parent->fd_in, tree->parent->parent->fd_out);
 			}
 			else
 			{
 				if (tree->left)
 				{
 					if (tree->left->fd_in != 0 && tree->left->fd_out != 1)
-						close_specific_fds(tree, tree->left->fd_in, tree->left->fd_out);
+						close_specific_fds(envr, tree->left->fd_in, tree->left->fd_out);
 					else if (tree->left->fd_in != 0)
-						close_specific_fds(tree, tree->left->fd_in, tree->fd_out);
+						close_specific_fds(envr, tree->left->fd_in, tree->fd_out);
 					else
-						close_specific_fds(tree, tree->parent->fd_in, tree->left->fd_out);
+						close_specific_fds(envr, tree->parent->fd_in, tree->left->fd_out);
 				}
 				else
-					close_specific_fds(tree, tree->parent->fd_in, tree->fd_out);
+					close_specific_fds(envr, tree->parent->fd_in, tree->fd_out);
 			}
 		}
 		else
@@ -80,35 +80,33 @@ void	close_fds(t_tree *tree)
 			if (tree->left)
 			{
 				if (tree->left->fd_in != 0 && tree->left->fd_out != 1)
-					close_specific_fds(tree, tree->left->fd_in, tree->left->fd_out);
+					close_specific_fds(envr, tree->left->fd_in, tree->left->fd_out);
 				else if (tree->left->fd_in != 0)
-					close_specific_fds(tree, tree->left->fd_in, tree->fd_out);
+					close_specific_fds(envr, tree->left->fd_in, tree->fd_out);
 				else
-					close_specific_fds(tree, tree->fd_in, tree->left->fd_out);
+					close_specific_fds(envr, tree->fd_in, tree->left->fd_out);
 			}
 			else
-				close_specific_fds(tree, tree->fd_in, tree->fd_out);
+				close_specific_fds(envr, tree->fd_in, tree->fd_out);
 		}
 	}
 	else if (tree->type == TYPE_PIPE)
 	{
 		if (tree->parent && tree->parent->type == TYPE_PIPE)
 		{
-			close_specific_fds(tree, tree->fd_in, tree->parent->fd_out);
+			close_specific_fds(envr, tree->fd_in, tree->parent->fd_out);
 		}
 		else
 			close(tree->fd_out);
 	}
 }
 
-void	close_specific_fds(t_tree *tree, int fd_in, int fd_out)
+void	close_specific_fds(t_environment *envr, int fd_in, int fd_out)
 {
 	int			n;
 
 	n = 3;
-	if (!tree)
-		return ;
-	while (n < FOPEN_MAX)
+	while (n < envr->fds)
 	{
 		if (n != fd_in && n != fd_out)
 			close(n);
