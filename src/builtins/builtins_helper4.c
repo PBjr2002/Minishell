@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:59:47 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/14 12:45:46 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:01:15 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,26 +56,7 @@ int	build_av_helper(t_tree *cmd, t_tree *tree, t_tree *tmp, char **av)
 	{
 		while (tree)
 		{
-			if (tree->right && tree->right->append_before == true)
-			{
-				while (tree->right && tree->right->append_before == true)
-				{
-					if (av[len])
-					{
-						stmp = ft_strdup(av[len]);
-						free(av[len]);
-					}
-					else
-						stmp = ft_strdup(tree->str);
-					av[len] = ft_strjoin(stmp, tree->right->str);
-					free(stmp);
-					tree = tree->right;
-				}
-				tree = tree->right;
-			}
-			else
-				av[len] = ft_strdup(tree->str);
-			if (!av[len])
+			if (build_av_helper2(tree, av, stmp, len) == 1)
 				return (1);
 			len++;
 			if (tree)
@@ -84,6 +65,32 @@ int	build_av_helper(t_tree *cmd, t_tree *tree, t_tree *tmp, char **av)
 		tree = tmp;
 	}
 	av[len] = NULL;
+	return (0);
+}
+
+int	build_av_helper2(t_tree *tree, char **av, char *stmp, int len)
+{
+	if (tree->right && tree->right->append_before == true)
+	{
+		while (tree->right && tree->right->append_before == true)
+		{
+			if (av[len])
+			{
+				stmp = ft_strdup(av[len]);
+				free(av[len]);
+			}
+			else
+				stmp = ft_strdup(tree->str);
+			av[len] = ft_strjoin(stmp, tree->right->str);
+			free(stmp);
+			tree = tree->right;
+		}
+		tree = tree->right;
+	}
+	else
+		av[len] = ft_strdup(tree->str);
+	if (!av[len])
+		return (1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 11:58:28 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/15 15:24:50 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:43:19 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,64 +31,16 @@ void	close_fds(t_tree *tree, t_environment *envr)
 	if (tree->type == TYPE_COMMAND)
 	{
 		if (tree->parent && tree->parent->type == TYPE_PIPE && tree == tree->parent->left)
-		{
-			if (tree->left)
-			{
-				if (tree->left->fd_in != 0 && tree->left->fd_out != 1)
-					close_specific_fds(envr, tree->left->fd_in, tree->left->fd_out);
-				else if (tree->left->fd_in != 0)
-					close_specific_fds(envr, tree->left->fd_in, tree->parent->fd_out);
-				else
-					close_specific_fds(envr, tree->fd_in, tree->left->fd_out);
-			}
-			else
-				close_specific_fds(envr, tree->fd_in, tree->parent->fd_out);
-		}
+			close_fds_helper(tree, envr);
 		else if (tree->parent && tree->parent->type == TYPE_PIPE && tree == tree->parent->right)
 		{
 			if (tree->parent->parent && tree->parent->parent->type == TYPE_PIPE)
-			{
-				if (tree->left)
-				{
-					if (tree->left->fd_in != 0 && tree->left->fd_out != 1)
-						close_specific_fds(envr, tree->left->fd_in, tree->left->fd_out);
-					else if (tree->left->fd_in != 0)
-						close_specific_fds(envr, tree->left->fd_in, tree->parent->parent->fd_out);
-					else
-						close_specific_fds(envr, tree->parent->fd_in, tree->left->fd_out);
-				}
-				else
-					close_specific_fds(envr, tree->parent->fd_in, tree->parent->parent->fd_out);
-			}
+				close_fds_helper2(tree, envr);
 			else
-			{
-				if (tree->left)
-				{
-					if (tree->left->fd_in != 0 && tree->left->fd_out != 1)
-						close_specific_fds(envr, tree->left->fd_in, tree->left->fd_out);
-					else if (tree->left->fd_in != 0)
-						close_specific_fds(envr, tree->left->fd_in, tree->fd_out);
-					else
-						close_specific_fds(envr, tree->parent->fd_in, tree->left->fd_out);
-				}
-				else
-					close_specific_fds(envr, tree->parent->fd_in, tree->fd_out);
-			}
+				close_fds_helper3(tree, envr);
 		}
 		else
-		{
-			if (tree->left)
-			{
-				if (tree->left->fd_in != 0 && tree->left->fd_out != 1)
-					close_specific_fds(envr, tree->left->fd_in, tree->left->fd_out);
-				else if (tree->left->fd_in != 0)
-					close_specific_fds(envr, tree->left->fd_in, tree->fd_out);
-				else
-					close_specific_fds(envr, tree->fd_in, tree->left->fd_out);
-			}
-			else
-				close_specific_fds(envr, tree->fd_in, tree->fd_out);
-		}
+			close_fds_helper4(tree, envr);
 	}
 	else if (tree->type == TYPE_PIPE)
 	{

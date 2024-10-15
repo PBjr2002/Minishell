@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 16:40:05 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/10 16:18:24 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:32:50 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ int	redirect_double_in(t_tree *tree, t_environment *envr)
 	if (tree->solved == true)
 	{
 		if (tree->left && (tree->left->type == SINGLE_OUT
-			|| tree->left->type == DOUBLE_OUT))
-		tree->fd_out = tree->left->fd_out;
+				|| tree->left->type == DOUBLE_OUT))
+			tree->fd_out = tree->left->fd_out;
 		return (2);
 	}
 	tree->fd_in = exec_here_doc(tree, envr);
@@ -75,17 +75,15 @@ int	redirect_double_in(t_tree *tree, t_environment *envr)
 		tree->fd_out = tree->left->fd_out;
 		if (tree->fd_in == -1 || tree->fd_out == -1)
 		{
-			printf("There was an error opening the file\n");
 			tree->solved = true;
-			return (-1);
+			return (printf("There was an error opening the file\n"), -1);
 		}
 		return (3);
 	}
 	if (tree->fd_in == -1 || tree->fd_out == -1)
 	{
-		printf("There was an error opening the file\n");
 		tree->solved = true;
-		return (-1);
+		return (printf("There was an error opening the file\n"), -1);
 	}
 	return (2);
 }

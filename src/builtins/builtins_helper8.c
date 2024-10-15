@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:21:37 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/15 15:24:30 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:44:19 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,11 @@ void	expand_everything(t_tree *tree, t_environment *envr)
 
 void	exec_cmd(t_tree *tree, t_environment *envr)
 {
-	t_tree	*cmd;
 	pid_t	id;
 	pid_t	id2;
 
 	if (!tree)
 		return ;
-	id = 0;
 	search_redirect(tree, envr, 0);
 	if (tree->type == TYPE_PIPE)
 	{
@@ -73,47 +71,46 @@ void	exec_cmd(t_tree *tree, t_environment *envr)
 		envr->fds += 2;
 		id = fork();
 		if (id == 0)
-		{
-			signal_decider(CHILD);
-			exec_cmd(tree->left, envr);
-			clean_all_fds(envr->fds);
-			exec_exit(envr->status, 0, 1);
-		}
+			exec_child(tree, envr, 0);
 		close_fds(tree, envr);
 		id2 = fork();
 		if (id2 == 0)
-		{
-			signal_decider(CHILD);
-			exec_cmd(tree->right, envr);
-			clean_all_fds(envr->fds);
-			exec_exit(envr->status, 0, 1);
-		}
+			exec_child(tree, envr, 1);
 		clean_all_fds(envr->fds);
 		waitpid(id2, &envr->status, 0);
 		waitpid(id, &envr->status, 0);
 		envr->status = envr->status / 256;
 	}
 	else
-	{
-		if (tree->type == 1 || tree->type == 2
-		|| tree->type == 3 || tree->type == 4)
-			return ;
-		close_fds(tree, envr);
-		if (tree->right)
-		{
-			cmd = tree;
-			tree = tree->right;
-			decider(tree, cmd, envr);
-		}
-		else
-			decider(NULL, tree, envr);
-	}
+		real_exec_cmd(tree, envr);
 }
 
-void	ch_signal(int signal)
+void	exec_child(t_tree *tree, t_environment *envr, int mode)
 {
-	t_global	info;
+	signal_decider(CHILD);
+	if (mode == 0)
+		exec_cmd(tree->left, envr);
+	else if (mode == 1)
+		exec_cmd(tree->right, envr);
+	clean_all_fds(envr->fds);
+	exec_exit(envr->status, 0, 1);
+}
 
-	info = global_info(NULL, NULL);
-	info.envr->status = signal;
+void	real_exec_cmd(t_tree *tree, t_environment *envr)
+{
+	t_tree	*cmd;
+
+	cmd = NULL;
+	if (tree->type == 1 || tree->type == 2
+		|| tree->type == 3 || tree->type == 4)
+		return ;
+	close_fds(tree, envr);
+	if (tree->right)
+	{
+		cmd = tree;
+		tree = tree->right;
+		decider(tree, cmd, envr);
+	}
+	else
+		decider(NULL, tree, envr);
 }

@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:11:51 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/15 15:09:14 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:29:21 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,38 +38,43 @@ int	check_line(char *line)
 
 int	exec_here_doc(t_tree *tree, t_environment *envr)
 {
-	char	*input;
-	char	*tmp;
 	int		fd[2];
 
 	if (pipe(fd) == -1)
 		return (printf("There was an error opening the pipe\n"), -1);
 	envr->pid = fork();
 	if (envr->pid == 0)
-	{
-		signal_decider(HERE_DOC);
-		while (1)
-		{
-			input = readline("> ");
-			if (ft_strcmp(input, tree->str) == 0 && ft_strlen(input) == ft_strlen(tree->str))
-				break ;
-			else
-			{
-				tmp = exec_expansion(input, envr);
-				free(input);
-				input = tmp;
-				ft_putendl_fd(input, fd[1]);
-			}
-			free(input);
-		}
-		here_doc_cleaner(tree, envr, input, fd);
-	}
+		here_doc_helper(tree, envr, fd);
 	waitpid(envr->pid, &envr->status, 0);
 	tree->solved = true;
 	return (close(fd[1]), fd[0]);
 }
 
-void	here_doc_cleaner(t_tree *tree, t_environment *envr, char *input, int *fd)
+void	here_doc_helper(t_tree *tree, t_environment *envr, int *fd)
+{
+	char	*input;
+	char	*tmp;
+
+	signal_decider(HERE_DOC);
+	while (1)
+	{
+		input = readline("> ");
+		if (ft_strcmp(input, tree->str) == 0
+			&& ft_strlen(input) == ft_strlen(tree->str))
+			break ;
+		else
+		{
+			tmp = exec_expansion(input, envr);
+			free(input);
+			input = tmp;
+			ft_putendl_fd(input, fd[1]);
+		}
+		free(input);
+	}
+	here_doc_clean(tree, envr, input, fd);
+}
+
+void	here_doc_clean(t_tree *tree, t_environment *envr, char *input, int *fd)
 {
 	close(fd[0]);
 	close(fd[1]);
@@ -84,17 +89,6 @@ void	here_doc_cleaner(t_tree *tree, t_environment *envr, char *input, int *fd)
 		free_env(envr->export_env);
 	free(envr);
 	exit(0);
-}
-
-t_global	global_info(t_tree *tree, t_environment *envr)
-{
-	static t_global	info;
-
-	if (tree)
-		info.tree = tree;
-	if (envr)
-		info.envr = envr;
-	return (info);
 }
 
 void	prepare_exit(t_tree *tree, t_tree *cmd, t_environment *envr)

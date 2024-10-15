@@ -6,74 +6,92 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:38:16 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/14 16:37:28 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:19:29 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-
-//erros do echo
-/* 
-	
- */
-
 int	exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr)
 {
 	int	nl;
-	int	space;
-	int	i;
 
 	nl = 0;
+	echo_helper(tree, cmd, envr, &nl);
+	if (nl != 1)
+		ft_putchar_fd('\n', cmd->fd_out);
+	return (0);
+}
+
+void	echo_helper(t_tree *tree, t_tree *cmd, t_environment *envr, int *nl)
+{
+	int	space;
+
 	space = 0;
 	while (tree && tree->str)
 	{
-		i = 0;
 		if (tree->parent != cmd && tree->append_before == false
 			&& space != 0)
 			ft_putchar_fd(' ', cmd->fd_out);
-		if (ft_strncmp(tree->str, "-n", 2) == 0 && nl == 0)
-		{
-			i++;
-			while (tree->str[i] && tree->str[i] != ' ' && tree->str[i] == 'n')
-				i++;
-			if (tree->str[i] != ' ' && tree->str[i] != '\0')
-				nl = 2;
-			else
-			{
-				nl = 1;
-				tree = tree->right;
-				continue;
-			}
-		}
-		else if (ft_strncmp(tree->str, "-n", 2) == 0 && nl == 1)
-		{
-			i++;
-			while (tree->str[i] && tree->str[i] != ' ' && tree->str[i] == 'n')
-				i++;
-			if (tree->str[i] != ' ' && tree->str[i] != '\0')
-			{
-				ft_putstr_fd(tree->str, tree->fd_out);
-				space = 1;
-			}
-			tree = tree->right;
-			continue;
-		}
+		if (echo_helper2(tree, nl) == 1)
+			continue ;
+		else if (echo_helper3(tree, *nl, &space) == 1)
+			continue ;
 		else if (tree->parent == cmd)
-			nl = 3;
-		echo_helper(tree, cmd, envr);
+			*nl = 3;
+		echo_helper4(tree, cmd, envr);
 		if (!tree->str[0] && tree->expand == false)
 			space = 0;
 		else
 			space = 1;
 		tree = tree->right;
 	}
-	if (nl != 1)
-		ft_putchar_fd('\n', cmd->fd_out);
+}
+
+int	echo_helper2(t_tree *tree, int *nl)
+{
+	int	i;
+
+	i = 0;
+	if (ft_strncmp(tree->str, "-n", 2) == 0 && nl == 0)
+	{
+		i++;
+		while (tree->str[i] && tree->str[i] != ' ' && tree->str[i] == 'n')
+			i++;
+		if (tree->str[i] != ' ' && tree->str[i] != '\0')
+			*nl = 2;
+		else
+		{
+			*nl = 1;
+			tree = tree->right;
+			return (1);
+		}
+	}
 	return (0);
 }
 
-void	echo_helper(t_tree *tree, t_tree *cmd, t_environment *envr)
+int	echo_helper3(t_tree *tree, int nl, int *space)
+{
+	int	i;
+
+	i = 0;
+	if (ft_strncmp(tree->str, "-n", 2) == 0 && nl == 1)
+	{
+		i++;
+		while (tree->str[i] && tree->str[i] != ' ' && tree->str[i] == 'n')
+			i++;
+		if (tree->str[i] != ' ' && tree->str[i] != '\0')
+		{
+			ft_putstr_fd(tree->str, tree->fd_out);
+			*space = 1;
+		}
+		tree = tree->right;
+		return (1);
+	}
+	return (0);
+}
+
+void	echo_helper4(t_tree *tree, t_tree *cmd, t_environment *envr)
 {
 	char	*str;
 
