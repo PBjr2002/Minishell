@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/14 17:00:29 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:28:26 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@
 	nao manda msg de erro a indicar o delimiter quando mandamos ctrl + d
 
 	(o delimiter seria EOFA|)
+
+	testar a partir da linha 79 até a linha 85 o problema é o mesmo
+	estão a ser criados 2 redirects em vez de só um então o problema n é o heredoc mas sim o estar a ser feito 2x
 
 ----------------------------------------------------------------------
 
