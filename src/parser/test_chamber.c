@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_chamber.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 13:50:25 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/14 16:41:07 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:00:29 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,6 @@
 
 	//ls | grep s >>out | wc <out | cat
 	TEST THIS COMMAND FOR LEAKS
-
-	-------------------------------------------------------------------
-
-	echo $LOL hi
-
-	nosso : hi
-	bash  :hi
-
-	(o problema esta na expansao, so e suposto enviar um espaco quando esta esta
-	entre aspas)
 	
 	----------------------------------------------------------------
 
@@ -81,22 +71,11 @@
 	deveria esperar por input nos 3 cats
 	idk why isnt working
 
------------------------------------------------------------------
-
-	<< LIM cat
-
-	nosso : n sai do heredoc sem ctrl-c
-	bash  : sai do heredoc assim que se escreve LIM
-
 --------------------------------------------------------------------------
 
-	testar a partir da linha 79 até a linha 85 o problema é o mesmo
-	estão a ser criados 2 redirects em vez de só um então o problema n é o heredoc mas sim o estar a ser feito 2x
+	linha 81
+	linha 83
+	linha 84
 
 ------------------------------------------------------------------------------
-
-	echo hi"" "" "" ""there
-
-	nosso :hithere
-	bash  :hi   there
 */
