@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:44:40 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/16 14:44:18 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:10:14 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	command_id(t_token *token_list)
 void	command_expand(t_token *token_list, t_environment *env)
 {
 	int 	n;
+	char	*temp;
 	
 	while (token_list && token_list->str)
 	{
@@ -55,6 +56,13 @@ void	command_expand(t_token *token_list, t_environment *env)
 				{
 					if (token_list->str[n] == '$')
 					{
+						if (ft_strlen(token_list->str) == 2 && token_list->str[n + 1] == '?')
+						{
+							temp = token_list->str;
+							token_list->str = ft_itoa(env->status);
+							free(temp);
+							continue ;
+						}
 						token_list->str = ft_command_expander(token_list->str, env);
 						post_command_expand_check(token_list);
 						break ;

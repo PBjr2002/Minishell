@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/15 15:08:04 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:19:14 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	prompt(t_environment *info)
 		else if (lexer->invalid_lexer == true || input_checker(lexer) == 0)
 		{
 			free(lexer);
+			info->status = 2;
+			printf("Syntax error\n");
 			continue;
 		}
 		if (parser_and_exec(lexer, info) == 1)
