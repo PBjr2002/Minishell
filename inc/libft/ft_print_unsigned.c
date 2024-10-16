@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_unsigned.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:23:59 by lmiguel-          #+#    #+#             */
-/*   Updated: 2023/10/25 17:00:55 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:46:05 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	*ft_untoa(unsigned int n)
 	{
 		str[len] = n % 10 + 48;
 		n = n / 10;
-		len--; 
+		len--;
 	}
 	return (str);
 }

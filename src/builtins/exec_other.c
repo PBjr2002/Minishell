@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 15:51:38 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/16 13:43:55 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:40:59 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,8 @@ char	*path_creator(t_tree *cmd, t_environment *envr)
 		}
 		path = check_path(paths, cmd->str);
 	}
-	if (path)
-		if (access(path, F_OK) == 0)
-			if (access(path, X_OK) == 0)
-				return (path);
+	if (path_creator_checker(path) == 0)
+		return (path);
 	return (NULL);
 }
 

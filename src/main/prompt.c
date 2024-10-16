@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/15 15:08:04 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:44:47 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	prompt(t_environment *info)
 		else if (lexer->invalid_lexer == true || input_checker(lexer) == 0)
 		{
 			free(lexer);
-			continue;
+			continue ;
 		}
 		if (parser_and_exec(lexer, info) == 1)
-			continue;	
+			continue ;
 	}
 }
 
@@ -66,4 +66,3 @@ int	parser_and_exec(t_lexer *lexer, t_environment *info)
 }
 
 /* input = readline("\x1b[38;5;91;1mHellshell> \x1b[0m"); */
-

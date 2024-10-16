@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:23:43 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/23 16:38:34 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:55:48 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,25 @@ int	exec_unset(t_tree *tree, t_environment *envr)
 		tree = tree->right;
 	}
 	return (0);
+}
+
+void	exec_exit(int signal, int mode, int write)
+{
+	t_global	info;
+
+	info = global_info(NULL, NULL);
+	if (mode == 0)
+	{
+		clean_all_fds(info.envr->fds);
+		tree_cleaner(info.tree);
+	}
+	if (info.envr->env)
+		free_env(info.envr->env);
+	if (info.envr->export_env)
+		free_env(info.envr->export_env);
+	if (info.envr)
+		free(info.envr);
+	if (write == 0)
+		ft_putendl_fd("exit", 1);
+	exit(signal);
 }

@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 15:08:53 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/16 16:11:11 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:43:25 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ void	get_rest(char *str, t_expand *ex)
 	ex->i = ex->n;
 	if (ex->value)
 	{
-		if (check_for_dollar(str, ex->i) == 2 || check_for_dollar(str, ex->i) == 3)
+		if (check_for_dollar(str, ex->i) == 2
+			|| check_for_dollar(str, ex->i) == 3)
 			ex->i += 2;
 		else if (check_for_dollar(str, ex->i) == 1)
 		{
@@ -91,10 +92,9 @@ void	get_rest(char *str, t_expand *ex)
 		if (ft_isdigit(str[ex->i]) == 1)
 			ex->i++;
 		else
-		{
-			while (str[ex->i] && (ft_isalnum(str[ex->i]) == 1 || str[ex->i] == '_'))
+			while (str[ex->i] && (ft_isalnum(str[ex->i]) == 1
+					|| str[ex->i] == '_'))
 				ex->i++;
-		}
 	}
 	get_rest_helper(str, ex);
 }
@@ -110,7 +110,7 @@ void	cut_str(char *str, t_expand *ex, t_environment *envr)
 	{
 		if (str[ex->n] == '$'
 			&& (ft_isalnum(str[ex->n + 1]) == 1 || str[ex->n + 1] == '$'
-			|| str[ex->n + 1] == '?'))
+				|| str[ex->n + 1] == '?'))
 			break ;
 		ex->n++;
 	}

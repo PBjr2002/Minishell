@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 18:06:30 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/18 14:37:15 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:46:17 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	**ft_split(char const *s, char c)
 
 /*int	main(void)
 {
-	char	*str = "Esta  frase com espacos vai		ser separada em varias strings";
+	char	*str = "Esta  frase com espacos vai	ser separada em varias strings";
 	char	c = ' ';
 	char	**spt = ft_split(str, c);
 	int		n;

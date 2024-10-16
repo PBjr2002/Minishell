@@ -6,12 +6,12 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/16 16:10:55 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:28:31 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_1_H
-# define MINISHELL_1_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include <string.h>
 # include <stdlib.h>
@@ -41,9 +41,20 @@ typedef struct s_expand
 	int		a;
 }				t_expand;
 
+typedef struct s_cd
+{
+	char	*cwd;
+	char	*tmp;
+	char	*new_cwd;
+	char	*env_pwd;
+	char	*old_pwd;
+	char	**new_envp;
+	char	**new_export;
+}				t_cd;
+
 typedef struct s_global
 {
-	t_tree 			*tree;
+	t_tree			*tree;
 	t_environment	*envr;
 }				t_global;
 
@@ -76,7 +87,8 @@ char		*return_env_line(char **envp, int index);
 char		*return_part_line(char **envp, int index, int mode);
 void		free_env(char **env);
 char		*ft_getpid(void);
-char		*cut_strhelper(t_expand *ex, t_environment *envr, char *str, char *var);
+char		*cut_strhelper(t_expand *ex, t_environment *envr,
+				char *str, char *var);
 
 //builtins_helper4.c
 char		**build_av(t_tree *tree, t_tree *cmd);
@@ -90,7 +102,8 @@ void		search_pipe(t_tree *tree, t_environment *envr);
 int			search_redirect(t_tree *tree, t_environment *envr, int mode);
 char		**replace_line(char **envp, char *info_to_add);
 char		**replace_value(char **envp, int index, int value);
-int			replace_value_helper(char **envp, char **tmp_env, char *nb, int index);
+int			replace_value_helper(char **envp, char **tmp_env,
+				char *nb, int index);
 
 //builtins_helper6.c
 char		**env_to_print(char **envp);
@@ -103,7 +116,8 @@ void		print_export_helper2(char **sorted, int fd, int n, int i);
 int			check_line(char *line);
 int			exec_here_doc(t_tree *tree, t_environment *envr);
 void		here_doc_helper(t_tree *tree, t_environment *envr, int *fd);
-void		here_doc_clean(t_tree *tree, t_environment *envr, char *input, int *fd);
+void		here_doc_clean(t_tree *tree, t_environment *envr,
+				char *input, int *fd);
 void		prepare_exit(t_tree *tree, t_environment *envr);
 
 //builtins_helper8.c
@@ -118,6 +132,14 @@ void		ch_signal(int signal);
 t_global	global_info(t_tree *tree, t_environment *envr);
 void		exit_checker(t_tree *tree);
 void		get_rest_helper(char *str, t_expand *ex);
+int			path_creator_checker(char *path);
+
+//builtins_helper10.c
+void		cd_helper(t_environment *envr, t_cd *cd);
+void		cd_helper2(t_tree *cmd, t_environment *envr, t_cd *cd);
+int			cd_helper3(t_tree *tree, t_tree *cmd, t_cd *cd);
+int			cd_helper4(t_tree *tree, t_tree *cmd, t_cd *cd);
+void		cd_cleaner(t_environment *envr, t_cd *cd);
 
 //set_builtins_fds.c
 void		set_builtins_fds(t_tree *tree);
@@ -152,7 +174,8 @@ void		set_fds_helper4(t_tree *tree, t_environment *envr);
 
 //echo.c
 int			exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr);
-void		echo_helper(t_tree *tree, t_tree *cmd, t_environment *envr, int *nl);
+void		echo_helper(t_tree *tree, t_tree *cmd,
+				t_environment *envr, int *nl);
 int			echo_helper2(t_tree *tree, int *nl);
 int			echo_helper3(t_tree *tree, int *nl, int *space);
 void		echo_helper4(t_tree *tree, t_tree *cmd, t_environment *envr);
@@ -173,19 +196,20 @@ int			check_argument(char *str);
 //env.c
 int			exec_env(t_tree *cmd, t_environment *env);
 int			exec_unset(t_tree *tree, t_environment *envr);
+void		exec_exit(int signal, int mode, int write);
 
 //exec_other.c
 char		*check_path(char **paths, char *cmd);
 void		free_paths(char **paths);
 char		*path_creator(t_tree *cmd, t_environment *envr);
 void		exec_other(t_tree *tree, t_tree *cmd, t_environment *envr);
-void		executer(t_tree *cmd, t_tree *tree, t_environment *envr, char *path);
+void		executer(t_tree *cmd, t_tree *tree,
+				t_environment *envr, char *path);
 
 //signal.c
 void		signal_decider(t_signal type);
 void		signal_decider_part2(t_signal type, struct sigaction sa);
 void		ignore(struct sigaction *sa, int signal);
-void		exec_exit(int signal, int mode, int write);
 void		ctrl_c(int signal, siginfo_t *info, void *context);
 
 //expansions.c
