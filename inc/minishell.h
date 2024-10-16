@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/16 13:35:23 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:10:55 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void		real_exec_cmd(t_tree *tree, t_environment *envr);
 void		ch_signal(int signal);
 t_global	global_info(t_tree *tree, t_environment *envr);
 void		exit_checker(t_tree *tree);
+void		get_rest_helper(char *str, t_expand *ex);
 
 //set_builtins_fds.c
 void		set_builtins_fds(t_tree *tree);

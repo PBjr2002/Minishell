@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 15:08:53 by pauberna          #+#    #+#             */
-/*   Updated: 2024/09/18 12:01:53 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:11:11 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,15 @@ void	get_rest(char *str, t_expand *ex)
 	else
 	{
 		ex->i++;
-		while (str[ex->i] && (ft_isalnum(str[ex->i]) == 1 || str[ex->i] == '_'))
+		if (ft_isdigit(str[ex->i]) == 1)
 			ex->i++;
+		else
+		{
+			while (str[ex->i] && (ft_isalnum(str[ex->i]) == 1 || str[ex->i] == '_'))
+				ex->i++;
+		}
 	}
-	ex->a = ex->i;
-	while (str && str[ex->a])
-		ex->a++;
-	ex->pos = ft_substr(str, ex->i, ex->a - ex->i);
-	if (str[ex->n] == '$' && str[ex->n + 1] && ft_isalnum(str[ex->n + 1]) == 0)
-		ex->n++;
+	get_rest_helper(str, ex);
 }
 
 void	cut_str(char *str, t_expand *ex, t_environment *envr)
