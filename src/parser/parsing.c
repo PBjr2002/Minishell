@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:30:15 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/16 15:46:48 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:55:36 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,12 @@ t_tree	*parsing(t_token *token_list, t_environment *env)
 void	limiter_handler(t_token *token_list)
 {
 	int 		n;
-	t_token		*temp;
-	bool		inside_quote;
+	//t_token		*temp;
+	//bool		inside_quote;
 
 	n = 0;
-	temp = token_list;
-	inside_quote = false;
+	//temp = token_list;
+	//inside_quote = false;
 	limiter_dollar_remover(token_list);
 	while (token_list->str && token_list->str[n])
 	{

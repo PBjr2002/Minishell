@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:42:24 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/16 13:12:19 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:10:32 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,14 @@ void	exit_checker(t_tree *tree)
 		}
 		n++;
 	}
+}
+
+void	get_rest_helper(char *str, t_expand *ex)
+{
+	ex->a = ex->i;
+	while (str && str[ex->a])
+		ex->a++;
+	ex->pos = ft_substr(str, ex->i, ex->a - ex->i);
+	if (str[ex->n] == '$' && str[ex->n + 1] && ft_isalnum(str[ex->n + 1]) == 0)
+		ex->n++;
 }
