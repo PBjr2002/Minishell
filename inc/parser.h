@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/15 15:04:07 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:29:14 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,8 @@ int				check_valid_redirects_2(t_tree *treetop);
 int				dollar_token_define(t_lexer *lexer, t_token *token_list, int n);
 int 			double_quote_token_define(t_lexer *lexer, t_token *token_list, int n);
 int 			input_checker(t_lexer *lexer);
+int				limiter_double_quote_remover(t_token *token_list, int quote_start, int n);
+int				limiter_single_quote_remover(t_token *token_list, int quote_start, int n);
 int 			pipe_scanner(t_token *token_list);
 int				pipe_token_define(t_token *token_list, int n);
 int 			quote_token_define(t_lexer *lexer, t_token *token_list, int n);
@@ -191,6 +193,10 @@ void			ft_token_append(t_token *token_list, t_token *new, char *str);
 void			ft_scan_for_redirects1(t_token *token_list, t_tree *current, int pipeline);
 void			ft_scan_for_redirects2(t_token *token_list, t_tree *current, int pipeline);
 void			ft_scan_for_redirects3(t_token *token_list, t_tree *current, int pipeline);
+void			limiter_dollar_remover(t_token *token_list);
+void			limiter_double_quote_dissection(t_token *token, int quote_start, int quote_end);
+void			limiter_handler(t_token *token_list);
+void			limiter_single_quote_dissection(t_token *token, int quote_start, int quote_end);
 void			midlist_token_append(t_token *token_list, t_token *new);
 void			post_command_expand_check(t_token *token_list);
 void			quote_token_remover(t_token *token, int export, int n);
