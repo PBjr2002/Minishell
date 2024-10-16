@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:30:15 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/16 16:27:59 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:57:20 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	limiter_single_quote_remover(t_token *token_list, int quote_start, int n)
 	else
 	{
 		limiter_single_quote_dissection(token_list, quote_start, quote_end);
-		return (n);	
+		return (quote_start);
 	}
 }
 
@@ -201,7 +201,7 @@ int	limiter_double_quote_remover(t_token *token_list, int quote_start, int n)
 	else
 	{
 		limiter_double_quote_dissection(token_list, quote_start, quote_end);
-		return (n);
+		return (quote_start);
 	}
 }
 
@@ -216,7 +216,7 @@ void	limiter_empty_double_quote_removal(t_token *token, int quote_start, int quo
 	len = ft_strlen(token->str);
 	if (quote_start == 0 && ft_strlen(token->str) > 2)
 		token->str = ft_substr(token->str, quote_end + 1, len - 2);
-	else if (quote_end == len)
+	else if (quote_end == quote_start + 1 && quote_end == len)
 		token->str = ft_substr(token->str, 0, quote_start);
 	else
 	{
