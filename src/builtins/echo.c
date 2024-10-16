@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:38:16 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/16 12:06:29 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:29:31 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr)
 
 	nl = 0;
 	echo_helper(tree, cmd, envr, &nl);
-	if (nl != 1)
+	if (nl != 1 && nl != 2)
 		ft_putchar_fd('\n', cmd->fd_out);
 	return (0);
 }
@@ -34,7 +34,7 @@ void	echo_helper(t_tree *tree, t_tree *cmd, t_environment *envr, int *nl)
 			&& space != 0)
 			ft_putchar_fd(' ', cmd->fd_out);
 		if (echo_helper2(tree, nl) == 1
-			|| echo_helper3(tree, *nl, &space) == 1)
+			|| echo_helper3(tree, nl, &space) == 1)
 		{
 			tree = tree->right;
 			continue ;
@@ -74,12 +74,12 @@ int	echo_helper2(t_tree *tree, int *nl)
 	return (0);
 }
 
-int	echo_helper3(t_tree *tree, int nl, int *space)
+int	echo_helper3(t_tree *tree, int *nl, int *space)
 {
 	int	i;
 
 	i = 0;
-	if (ft_strncmp(tree->str, "-n", 2) == 0 && nl == 1)
+	if (ft_strncmp(tree->str, "-n", 2) == 0 && *nl == 1)
 	{
 		i++;
 		while (tree->str[i] && tree->str[i] != ' ' && tree->str[i] == 'n')
@@ -92,6 +92,8 @@ int	echo_helper3(t_tree *tree, int nl, int *space)
 		tree = tree->right;
 		return (1);
 	}
+	else if (*nl == 1)
+		*nl = 2;
 	return (0);
 }
 

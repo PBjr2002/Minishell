@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:30:34 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/15 16:55:52 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:58:28 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	decider(t_tree *tree, t_tree *cmd, t_environment *envr)
 	else if (ft_strcmp(cmd->str, "env") == 0)
 		envr->status = exec_env(cmd, envr);
 	else if (ft_strcmp(cmd->str, "exit") == 0)
-		prepare_exit(tree, cmd, envr);
+		prepare_exit(tree, envr);
 	else if (ft_strcmp(cmd->str, "unset") == 0)
 		envr->status = exec_unset(tree, envr);
 	else

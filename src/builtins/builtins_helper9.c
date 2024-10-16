@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:42:24 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/15 17:29:25 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:12:19 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,30 @@ t_global	global_info(t_tree *tree, t_environment *envr)
 	if (envr)
 		info.envr = envr;
 	return (info);
+}
+
+void	exit_checker(t_tree *tree)
+{
+	int	n;
+
+	n = 0;
+	while (tree->str[n])
+	{
+		if (tree->str[n + 1] && tree->str[n] == '-'
+			&& ft_isdigit(tree->str[n + 1]) != 1)
+		{
+			printf("exit\n");
+			printf("minishell: exit: %s: numeric argument required\n",
+				tree->str);
+			exec_exit(2, 0, 1);
+		}
+		else if (ft_isdigit(tree->str[n]) != 1 && tree->str[n] != '-')
+		{
+			printf("exit\n");
+			printf("minishell: exit: %s: numeric argument required\n",
+				tree->str);
+			exec_exit(2, 0, 1);
+		}
+		n++;
+	}
 }

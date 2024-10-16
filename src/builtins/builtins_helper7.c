@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:11:51 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/15 17:29:21 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:13:20 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	here_doc_clean(t_tree *tree, t_environment *envr, char *input, int *fd)
 	exit(0);
 }
 
-void	prepare_exit(t_tree *tree, t_tree *cmd, t_environment *envr)
+void	prepare_exit(t_tree *tree, t_environment *envr)
 {
 	int	signal;
 
@@ -99,10 +99,11 @@ void	prepare_exit(t_tree *tree, t_tree *cmd, t_environment *envr)
 		exec_exit(envr->status, 0, 0);
 	else
 	{
+		exit_checker(tree);
 		if (tree->right)
 		{
-			ft_putendl_fd("exit", cmd->fd_out);
-			ft_putendl_fd("minishell: exit: too many arguments", cmd->fd_out);
+			printf("exit\nminishell: exit: too many arguments\n");
+			envr->status = 1;
 			return ;
 		}
 		signal = ft_atoi(tree->str);
