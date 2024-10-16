@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/16 11:28:00 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/16 11:34:37 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,8 @@ void		close_fds_helper4(t_tree *tree, t_environment *envr);
 
 //echo.c
 int			exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr);
-void		echo_helper(t_tree *tree, t_tree *cmd, t_environment *envr, int nl);
-int			echo_helper2(t_tree *tree, int nl);
+void		echo_helper(t_tree *tree, t_tree *cmd, t_environment *envr, int *nl);
+int			echo_helper2(t_tree *tree, int *nl);
 int			echo_helper3(t_tree *tree, int nl, int *space);
 void		echo_helper4(t_tree *tree, t_tree *cmd, t_environment *envr);
 
