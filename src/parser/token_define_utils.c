@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:56:14 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/14 16:38:06 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:25:29 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int redirect_token_define(t_lexer *lexer, t_token *token_list, int n)
 				double_quote = false;
 		}
 		if (((lexer->input[n] == 60 || lexer->input[n] == 62)
-			|| lexer->input[n] == ' ') && (single_quote == false && double_quote == false))
+			|| lexer->input[n] == ' ' || lexer->input[n] == '|') && (single_quote == false && double_quote == false))
 			break ;
 		n++;
 	}
