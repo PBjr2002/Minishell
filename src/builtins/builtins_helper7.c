@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:11:51 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/16 13:13:20 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:04:51 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	here_doc_helper(t_tree *tree, t_environment *envr, int *fd)
 	while (1)
 	{
 		input = readline("> ");
+		if (!input)
+			here_doc_clean(tree, envr, NULL, fd);
 		if (ft_strcmp(input, tree->str) == 0
 			&& ft_strlen(input) == ft_strlen(tree->str))
 			break ;
@@ -78,7 +80,8 @@ void	here_doc_clean(t_tree *tree, t_environment *envr, char *input, int *fd)
 {
 	close(fd[0]);
 	close(fd[1]);
-	free(input);
+	if (input)
+		free(input);
 	clean_all_fds(envr->fds);
 	while (tree->parent)
 		tree = tree->parent;
