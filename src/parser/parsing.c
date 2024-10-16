@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:30:15 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/16 15:46:48 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:25:10 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,8 @@ t_tree	*parsing(t_token *token_list, t_environment *env)
 void	limiter_handler(t_token *token_list)
 {
 	int 		n;
-	t_token		*temp;
-	bool		inside_quote;
 
 	n = 0;
-	temp = token_list;
-	inside_quote = false;
 	limiter_dollar_remover(token_list);
 	while (token_list->str && token_list->str[n])
 	{
@@ -107,10 +103,45 @@ int	limiter_single_quote_remover(t_token *token_list, int quote_start, int n)
 		n++;
 	quote_end = n;
 	if (quote_end == quote_start + 1)
-		empty_single_quote_removal(token_list, quote_start, quote_end);
+	{
+		limiter_empty_single_quote_removal(token_list, quote_start, quote_end);
+		return (n - 1);
+	}
 	else
+	{
 		limiter_single_quote_dissection(token_list, quote_start, quote_end);
-	return (n);
+		return (n);	
+	}
+}
+
+void	limiter_empty_single_quote_removal(t_token *token, int quote_start, int quote_end)
+{
+	int 	len;
+	char 	*temp;
+	char	*previous;
+	char	*remaining;
+
+	temp = token->str;
+	len = ft_strlen(token->str);
+	if (quote_start == 0 && ft_strlen(token->str) > 2)
+		token->str = ft_substr(token->str, quote_end + 1, len - 2);
+	else if (quote_end == len)
+		token->str = ft_substr(token->str, 0, quote_start);
+	else
+	{
+		previous = ft_substr(token->str, 0, quote_start);
+		remaining = ft_substr(token->str, quote_end + 1, (len - quote_end));
+		if (len == 2)
+		{
+			token->str = ft_strdup("\0");
+			token->null_char = true;
+		}
+		else
+			token->str = ft_strjoin(previous, remaining);
+		free(previous);
+		free(remaining);
+	}
+	free(temp);
 }
 
 void	limiter_single_quote_dissection(t_token *token, int quote_start, int quote_end)
@@ -163,10 +194,45 @@ int	limiter_double_quote_remover(t_token *token_list, int quote_start, int n)
 		n++;
 	quote_end = n;
 	if (quote_end == quote_start + 1)
-		empty_double_quote_removal(token_list, quote_start, quote_end);
+	{
+		limiter_empty_double_quote_removal(token_list, quote_start, quote_end);
+		return (n - 1);
+	}
 	else
+	{
 		limiter_double_quote_dissection(token_list, quote_start, quote_end);
-	return (n);
+		return (n);
+	}
+}
+
+void	limiter_empty_double_quote_removal(t_token *token, int quote_start, int quote_end)
+{
+	int 	len;
+	char 	*temp;
+	char	*previous;
+	char	*remaining;
+
+	temp = token->str;
+	len = ft_strlen(token->str);
+	if (quote_start == 0 && ft_strlen(token->str) > 2)
+		token->str = ft_substr(token->str, quote_end + 1, len - 2);
+	else if (quote_end == len)
+		token->str = ft_substr(token->str, 0, quote_start);
+	else
+	{
+		previous = ft_substr(token->str, 0, quote_start);
+		remaining = ft_substr(token->str, quote_end + 1, (len - quote_end));
+		if (len == 2)
+		{
+			token->str = ft_strdup("\0");
+			token->null_char = true;
+		}
+		else
+			token->str = ft_strjoin(previous, remaining);
+		free(previous);
+		free(remaining);
+	}
+	free(temp);
 }
 
 void	limiter_double_quote_dissection(t_token *token, int quote_start, int quote_end)
@@ -213,6 +279,8 @@ void		limiter_dollar_remover(t_token *token_list)
 {
 	int 		n;
 	char		*temp;
+	char		*temp1;
+	char		*temp2;
 	bool		inside_quote;
 	
 	n = 0;
@@ -231,8 +299,12 @@ void		limiter_dollar_remover(t_token *token_list)
 			&& (inside_quote == false))
 		{
 			temp = token_list->str;
-			token_list->str = (ft_strjoin(ft_substr(token_list->str, 0, n), ft_substr(token_list->str, (n + 1), (ft_strlen(token_list->str) - n))));
+			temp1 = ft_substr(token_list->str, 0, n);
+			temp2 = ft_substr(token_list->str, (n + 1), (ft_strlen(token_list->str) - n));
+			token_list->str = (ft_strjoin(temp1, temp2));
 			free(temp);
+			free(temp1);
+			free(temp2);
 		}
 		n++;
 	}

@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/16 15:29:14 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:11:32 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,8 @@ void			ft_scan_for_redirects1(t_token *token_list, t_tree *current, int pipeline
 void			ft_scan_for_redirects2(t_token *token_list, t_tree *current, int pipeline);
 void			ft_scan_for_redirects3(t_token *token_list, t_tree *current, int pipeline);
 void			limiter_dollar_remover(t_token *token_list);
+void			limiter_empty_double_quote_removal(t_token *token, int quote_start, int quote_end);
+void			limiter_empty_single_quote_removal(t_token *token, int quote_start, int quote_end);
 void			limiter_double_quote_dissection(t_token *token, int quote_start, int quote_end);
 void			limiter_handler(t_token *token_list);
 void			limiter_single_quote_dissection(t_token *token, int quote_start, int quote_end);
