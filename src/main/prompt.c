@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/16 17:32:10 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:34:52 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	prompt(t_environment *info)
 			free(lexer);
 			info->status = 2;
 			printf("Syntax error\n");
-			continue;
+			continue ;
 		}
 		if (parser_and_exec(lexer, info) == 1)
 			continue ;
