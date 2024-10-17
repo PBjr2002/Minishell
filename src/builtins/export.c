@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:26:47 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/15 17:33:33 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:48:47 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	exec_export(t_tree *tree, t_tree *cmd, t_environment *envr)
 
 	if (!tree)
 	{
+		signal_decider(PIPE_CLOSED);
 		sorted = env_to_print(envr->export_env);
 		if (!sorted)
 			return (1);

@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/17 17:57:48 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:58:50 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef enum s_signal
 	CHILD,
 	HERE_DOC,
 	IGNORE,
+	PIPE_CLOSED,
 }			t_signal;
 
 typedef struct s_token
