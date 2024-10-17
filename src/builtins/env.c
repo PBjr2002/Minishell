@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:23:43 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/17 17:46:27 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/17 19:44:57 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,12 @@ void	exec_exit(int signal, int mode, int write)
 	if (write == 0)
 		ft_putendl_fd("exit", 1);
 	exit(signal);
+}
+
+void	closed_pipe(int signal, siginfo_t *info, void *context)
+{
+	(void) info;
+	(void) context;
+	if (signal == SIGPIPE)
+		exec_exit(127, 0, 1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_define_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 14:56:14 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/17 18:47:13 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/17 19:59:24 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	redirect_token_define(t_lexer *lexer, t_token *token_list, int n)
 	bool		double_quote;
 
 	export = n;
+	new_token = NULL;
 	if ((lexer->input[n] == '<' && lexer->input[n + 1] == '<') \
 		|| (lexer->input[n] == '>' && lexer->input[n + 1] == '>'))
 		n++;
@@ -60,7 +61,7 @@ int	dollar_token_define(t_lexer *lexer, t_token *token_list, int n)
 	char		*str;
 
 	export = n++;
-	dollar_token_define_assist(lexer, token_list, &n);
+	dollar_token_define_assist(lexer, &n);
 	str = ft_substr(lexer->input, export, (n - export));
 	new_token = ft_token_new(str);
 	if (lexer->input[n] == '"' || lexer->input[n] == '\'')

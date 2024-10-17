@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_define_utils3.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:14:43 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/17 19:05:10 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/17 19:58:42 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ t_token	*redirect_token_define_assist2(t_lexer *lexer,
 	return (new_token);
 }
 
-void	dollar_token_define_assist(t_lexer *lexer,
-		t_token *token_list, int *n)
+void	dollar_token_define_assist(t_lexer *lexer, int *n)
 {
 	while ((lexer->input[*n] > 47 && lexer->input[*n] < 58) \
 		|| (lexer->input[*n] > 64 && lexer->input[*n] < 91) \

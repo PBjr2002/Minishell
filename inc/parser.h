@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/17 19:06:32 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/17 20:01:42 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int				quote_decider(t_token *token_list);
 int				quote_dollar_solver(t_lexer *lexer, char *str, int n);
 int				redirect_token_define(t_lexer *lexer,
 					t_token *token_list, int n);
-int				redirect_token_define_assist(t_lexer *lexer, bool *s_q,
+void			redirect_token_define_assist(t_lexer *lexer, bool *s_q,
 					bool *d_q, int *n);
 int				redirect_token_type_solver(t_lexer *lexer, int n);
 int				single_quote_token_define(t_lexer *lexer,
@@ -199,6 +199,11 @@ void			single_quote_token_assist(t_lexer *lexer,
 					bool *inside_quotes, int *n);
 void			single_quote_token_remover(t_token *token, int export, int n);
 void			store_input(t_lexer *lexer);
+void			store_input_quote_assist(t_lexer *lexer, bool *o_s_q,
+				bool *o_d_q, int *n);
+void			dollar_token_define_assist(t_lexer *lexer, int *n);
+void			command_expand_assist(t_token *token_list, t_environment *env,
+				int *n);
 
 //lists and trees
 

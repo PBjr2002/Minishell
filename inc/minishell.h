@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/17 17:47:14 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/17 19:45:24 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ int			check_argument(char *str);
 int			exec_env(t_tree *cmd, t_environment *env);
 int			exec_unset(t_tree *tree, t_environment *envr);
 void		exec_exit(int signal, int mode, int write);
+void		closed_pipe(int signal, siginfo_t *info, void *context);
 
 //exec_other.c
 char		*check_path(char **paths, char *cmd);
@@ -211,7 +212,6 @@ void		signal_decider(t_signal type);
 void		signal_decider_part2(t_signal type, struct sigaction sa);
 void		ignore(struct sigaction *sa, int signal);
 void		ctrl_c(int signal, siginfo_t *info, void *context);
-void		closed_pipe(int signal, siginfo_t *info, void *context);
 
 //expansions.c
 int			check_for_dollar(char *str, int n);
