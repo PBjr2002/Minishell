@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:18:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/16 16:55:43 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:47:27 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,23 @@ void	signal_decider_part2(t_signal type, struct sigaction sa)
 		sigaction(SIGINT, &sa, NULL);
 		ignore(&sa, SIGQUIT);
 	}
+	else if (type == PIPE_CLOSED)
+	{
+		sa.sa_sigaction = closed_pipe;
+		sa.sa_flags = SA_SIGINFO;
+		if (sigemptyset(&sa.sa_mask) != 0)
+			return ;
+		sigaction(SIGPIPE, &sa, NULL);
+		ignore(&sa, SIGPIPE);
+	}
+}
+
+void	closed_pipe(int signal, siginfo_t *info, void *context)
+{
+	(void) info;
+	(void) context;
+	if (signal == SIGPIPE)
+		exec_exit(127, 0, 1);
 }
 
 //ls | cat | wc | echo

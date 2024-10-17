@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:23:43 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/16 16:55:48 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:46:27 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	exec_env(t_tree *cmd, t_environment *envr)
 	int		n;
 
 	n = 0;
+	signal_decider(PIPE_CLOSED);
 	while (envr->env[n])
 	{
 		ft_putendl_fd(envr->env[n], cmd->fd_out);

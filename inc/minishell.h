@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/17 13:46:04 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:47:14 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,7 @@ void		signal_decider(t_signal type);
 void		signal_decider_part2(t_signal type, struct sigaction sa);
 void		ignore(struct sigaction *sa, int signal);
 void		ctrl_c(int signal, siginfo_t *info, void *context);
+void		closed_pipe(int signal, siginfo_t *info, void *context);
 
 //expansions.c
 int			check_for_dollar(char *str, int n);
