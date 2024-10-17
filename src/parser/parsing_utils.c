@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:44:40 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/17 15:12:25 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/17 19:21:51 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,24 @@
 void	command_id(t_token *token_list)
 {
 	bool	first_word;
-	
+
 	first_word = true;
 	while (token_list->index != 0)
 		token_list = token_list->previous;
 	while (token_list)
 	{
-		if ((token_list->type == TYPE_COMMAND || token_list->type == TYPE_DOLLAR) && first_word == true)
-			{
-				first_word = false;
-				token_list->expand = false;
-				if (token_list->type == TYPE_DOLLAR)
-					token_list->type = TYPE_DOLLAR_COMMAND;
-			}
+		if ((token_list->type == TYPE_COMMAND \
+			|| token_list->type == TYPE_DOLLAR) && first_word == true)
+		{
+			first_word = false;
+			token_list->expand = false;
+			if (token_list->type == TYPE_DOLLAR)
+				token_list->type = TYPE_DOLLAR_COMMAND;
+		}
 		else if (token_list->type == TYPE_PIPE)
 			first_word = true;
-		else if (token_list->type == TYPE_COMMAND && first_word == false)
+		else if (token_list->type == TYPE_COMMAND \
+			&& first_word == false)
 			token_list->type = TYPE_ARGUMENT;
 		token_list = token_list->next;
 	}
@@ -40,35 +42,20 @@ void	command_id(t_token *token_list)
 //this function will scan all commands and expand them if necessary
 void	command_expand(t_token *token_list, t_environment *env)
 {
-	int 	n;
+	int		n;
 	char	*temp;
-	
+
 	while (token_list && token_list->str)
 	{
 		n = 0;
-		if (token_list->type == TYPE_COMMAND || token_list->type == TYPE_DOLLAR_COMMAND)
+		if (token_list->type == TYPE_COMMAND \
+			|| token_list->type == TYPE_DOLLAR_COMMAND)
 		{
 			if (token_list->str && token_list->str[0] == '\'')
 				token_list = token_list->next;
 			else
 			{
-				while (token_list->str && token_list->str[n])
-				{
-					if (token_list->str[n] == '$')
-					{
-						if (ft_strlen(token_list->str) == 2 && token_list->str[n + 1] == '?')
-						{
-							temp = token_list->str;
-							token_list->str = ft_itoa(env->status);
-							free(temp);
-							continue ;
-						}
-						token_list->str = ft_command_expander(token_list->str, env, 0);
-						post_command_expand_check(token_list);
-						break ;
-					}
-					n++;
-				}
+				command_expand_assist(token_list, env, &n);
 				token_list = token_list->next;
 			}
 		}
@@ -83,7 +70,7 @@ void	redirection_handler(t_token *list, int n, int export)
 	char	*temp;
 
 	if (list->str)
-	{	
+	{
 		if (list->type == SINGLE_IN || list->type == SINGLE_OUT
 			|| list->type == DOUBLE_IN || list->type == DOUBLE_OUT)
 		{
@@ -92,7 +79,8 @@ void	redirection_handler(t_token *list, int n, int export)
 				n++;
 			if (list->type == DOUBLE_IN)
 				list->expand = false;
-			while ((list->str[n] > 9 && list->str[n] < 13) || list->str[n] == ' ')
+			while ((list->str[n] > 9 && list->str[n] < 13) \
+				|| list->str[n] == ' ')
 				n++;
 			export = n;
 			while (list->str[n])
@@ -104,10 +92,11 @@ void	redirection_handler(t_token *list, int n, int export)
 	}
 }
 
-//everything inside the single quotes are treated as a word, no matter what they are.
+//everything inside the single quotes are treated as a word
+//no matter what they are.
 void	single_quote_token_remover(t_token *token, int quote_start, int n)
 {
-	int quote_end;
+	int	quote_end;
 
 	quote_end = 0;
 	while (token->str && token->str[n])
@@ -124,12 +113,12 @@ void	single_quote_token_remover(t_token *token, int quote_start, int n)
 			if (quote_end == quote_start + 1)
 			{
 				empty_single_quote_removal(token, quote_start, quote_end);
-				continue;
+				continue ;
 			}
 			else
 				single_quote_dissection(token, quote_start, quote_end);
 		}
-	n++;
+		n++;
 	}
 }
 
@@ -138,7 +127,7 @@ void	single_quote_token_remover(t_token *token, int quote_start, int n)
 // example cases... "e""c""h""o" ""echo ech""o echo""
 void	double_quote_token_remover(t_token *token, int quote_start, int n)
 {
-	int quote_end;
+	int	quote_end;
 
 	quote_end = 0;
 	while (token->str && token->str[n])
@@ -154,11 +143,11 @@ void	double_quote_token_remover(t_token *token, int quote_start, int n)
 			if (quote_end == quote_start + 1)
 			{
 				empty_double_quote_removal(token, quote_start, quote_end);
-				continue;
+				continue ;
 			}
 			else
 				double_quote_dissection(token, quote_start, quote_end);
 		}
-	n++;
+		n++;
 	}
 }
