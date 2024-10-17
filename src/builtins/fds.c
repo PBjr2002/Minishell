@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 11:58:28 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/16 13:36:41 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:27:10 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,24 +66,29 @@ void	close_specific_fds(t_environment *envr, int fd_in, int fd_out)
 	}
 }
 
-void	set_fds(t_tree *tree, t_environment *envr)
+void	set_fds(t_tree *tree, char **av, char *path, int *fd)
 {
-	if (!tree)
-		return ;
-	if (tree->type == TYPE_COMMAND)
+	if (tree && tree->type == TYPE_COMMAND)
 	{
 		if (tree->parent && tree->parent->type == TYPE_PIPE
 			&& tree == tree->parent->left)
-			set_fds_helper(tree, envr);
+			set_fds_helper(tree, fd);
 		else if (tree->parent && tree->parent->type == TYPE_PIPE
 			&& tree == tree->parent->right)
 		{
 			if (tree->parent->parent && tree->parent->parent->type == TYPE_PIPE)
-				set_fds_helper2(tree, envr);
+				set_fds_helper2(tree, fd);
 			else
-				set_fds_helper3(tree, envr);
+				set_fds_helper3(tree, fd);
 		}
 		else
-			set_fds_helper4(tree, envr);
+			set_fds_helper4(tree, fd);
+		if (fd[0] == -1 || fd[1] == -1)
+		{
+			free(path);
+			free(fd);
+			free_env(av);
+			exec_exit(1, 0, 1);
+		}
 	}
 }

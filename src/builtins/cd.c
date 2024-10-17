@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:55:40 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/16 17:29:54 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:46:29 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,11 @@ int	exec_cd(t_tree *tree, t_tree *cmd, t_environment *envr)
 		if (ft_strcmp(tree->str, "..") == 0)
 		{
 			if (cd_helper3(tree, cmd, cd) == 1)
-				return (1);
+				return (cd_cleaner(envr, cd, 1), 1);
 		}
 		else
 			if (cd_helper4(tree, cmd, cd) == 1)
-				return (1);
+				return (cd_cleaner(envr, cd, 1), 1);
 	}
-	cd_cleaner(envr, cd);
-	return (0);
+	return (cd_cleaner(envr, cd, 0), 0);
 }

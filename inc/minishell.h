@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/16 17:28:31 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:46:04 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void		cd_helper(t_environment *envr, t_cd *cd);
 void		cd_helper2(t_tree *cmd, t_environment *envr, t_cd *cd);
 int			cd_helper3(t_tree *tree, t_tree *cmd, t_cd *cd);
 int			cd_helper4(t_tree *tree, t_tree *cmd, t_cd *cd);
-void		cd_cleaner(t_environment *envr, t_cd *cd);
+void		cd_cleaner(t_environment *envr, t_cd *cd, int mode);
 
 //set_builtins_fds.c
 void		set_builtins_fds(t_tree *tree);
@@ -158,7 +158,7 @@ int			redirect_double_out(t_tree *tree);
 void		clean_all_fds(int fds);
 void		close_fds(t_tree *tree, t_environment *envr);
 void		close_specific_fds(t_environment *envr, int fd_in, int fd_out);
-void		set_fds(t_tree *tree, t_environment *envr);
+void		set_fds(t_tree *tree, char **av, char *path, int *fd);
 
 //fds2.c
 void		close_fds_helper(t_tree *tree, t_environment *envr);
@@ -167,10 +167,10 @@ void		close_fds_helper3(t_tree *tree, t_environment *envr);
 void		close_fds_helper4(t_tree *tree, t_environment *envr);
 
 //fds3.c
-void		set_fds_helper(t_tree *tree, t_environment *envr);
-void		set_fds_helper2(t_tree *tree, t_environment *envr);
-void		set_fds_helper3(t_tree *tree, t_environment *envr);
-void		set_fds_helper4(t_tree *tree, t_environment *envr);
+void		set_fds_helper(t_tree *tree, int *fd);
+void		set_fds_helper2(t_tree *tree, int *fd);
+void		set_fds_helper3(t_tree *tree, int *fd);
+void		set_fds_helper4(t_tree *tree, int *fd);
 
 //echo.c
 int			exec_echo(t_tree *tree, t_tree *cmd, t_environment *envr);

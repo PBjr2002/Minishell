@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 16:55:06 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/16 17:27:55 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:47:04 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,20 +84,23 @@ int	cd_helper4(t_tree *tree, t_tree *cmd, t_cd *cd)
 	return (0);
 }
 
-void	cd_cleaner(t_environment *envr, t_cd *cd)
+void	cd_cleaner(t_environment *envr, t_cd *cd, int mode)
 {
-	free(cd->cwd);
-	cd->env_pwd = ft_strjoin("PWD=", cd->new_cwd);
-	cd->new_envp = replace_line(envr->env, cd->env_pwd);
-	free_env(envr->env);
-	envr->env = replace_line(cd->new_envp, cd->old_pwd);
-	free_env(cd->new_envp);
-	cd->new_export = replace_line(envr->export_env, cd->env_pwd);
-	free_env(envr->export_env);
-	envr->export_env = replace_line(cd->new_export, cd->old_pwd);
-	free_env(cd->new_export);
-	free(cd->new_cwd);
-	free(cd->env_pwd);
-	free(cd->old_pwd);
+	if (mode == 0)
+	{
+		free(cd->cwd);
+		cd->env_pwd = ft_strjoin("PWD=", cd->new_cwd);
+		cd->new_envp = replace_line(envr->env, cd->env_pwd);
+		free_env(envr->env);
+		envr->env = replace_line(cd->new_envp, cd->old_pwd);
+		free_env(cd->new_envp);
+		cd->new_export = replace_line(envr->export_env, cd->env_pwd);
+		free_env(envr->export_env);
+		envr->export_env = replace_line(cd->new_export, cd->old_pwd);
+		free_env(cd->new_export);
+		free(cd->new_cwd);
+		free(cd->env_pwd);
+		free(cd->old_pwd);
+	}
 	free(cd);
 }

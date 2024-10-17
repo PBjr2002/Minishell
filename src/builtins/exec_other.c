@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 15:51:38 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/16 16:40:59 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:27:06 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,12 @@ void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr)
 void	executer(t_tree *cmd, t_tree *tree, t_environment *envr, char *path)
 {
 	char	**av;
+	int		*fd;
 
 	av = build_av(tree, cmd);
-	set_fds(cmd, envr);
+	fd = ft_calloc(sizeof(int), 2);
+	set_fds(cmd, av, path, fd);
+	free(fd);
 	clean_all_fds(envr->fds);
 	signal_decider(CHILD);
 	if (access(path, X_OK) == 0)
@@ -91,6 +94,8 @@ char	*check_path(char **paths, char *cmd)
 	i = 0;
 	if (!paths)
 		return (NULL);
+	if (cmd[0] == '\0')
+		return (free_paths(paths), NULL);
 	while (paths && paths[i])
 	{
 		tmp = ft_strjoin(paths[i], "/");
