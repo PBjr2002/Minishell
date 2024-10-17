@@ -14,7 +14,9 @@ SOURCES =	main/main.c main/prompt.c \
 			parser/lexer_test.c parser/token_define_utils.c parser/token_define_utils2.c parser/token_solvers.c \
 			parser/tree_and_list_append.c parser/tree_and_list_append2.c parser/tree_and_list_init.c \
 			parser/tree_cleanup_utils.c parser/tree_creation_utils.c \
-			parser/tree_creation_utils2.c parser/tokenization.c parser/parsing_utils.c parser/parsing_utils2.c \
+			parser/tree_creation_utils2.c parser/tree_creation_utils3.c parser/tree_creation_utils4.c \
+			parser/tree_creation_utils5.c \
+			parser/tokenization.c parser/parsing_utils.c parser/parsing_utils2.c \
 			parser/parsing.c
 
 OBJS_DIR = obj

@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/17 16:31:42 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:57:48 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void			empty_double_quote_removal(t_token *token,
 					int quote_start, int quote_end);
 void			empty_single_quote_removal(t_token *token,
 					int quote_start, int quote_end);
+void			find_pipes_assist(bool *first_pipe_detected, int *pipeline);
 void			ft_argument_branch_attach(t_tree *tree, t_tree *new);
 void			ft_branch_attach(t_tree *tree, t_tree *new,
 					int branch_type, int pipeline);
@@ -154,6 +155,12 @@ void			ft_fill_tree1(t_token *token_list, t_tree *current,
 					int pipeline);
 void			ft_fill_tree2(t_token *token_list, t_tree *current,
 					int pipeline, int pipenum);
+void			ft_fill_tree2_assist2(t_token *token_list,
+					t_tree *current, int pipeline);
+void			ft_fill_tree2_finisher(t_token *token_list, 
+					t_tree *current, int pipeline);
+void			ft_fill_tree_zero_assist2(t_token *token_list, 
+				t_tree *current, int pipeline);
 void			ft_redirect_branch_attach1(t_tree *tree, t_tree *new);
 void			ft_redirect_brach_attach1_assist(t_tree *tree, t_tree *new);
 void			ft_redirect_branch_attach2(t_tree *tree, t_tree *new);
@@ -187,16 +194,20 @@ void			store_input(t_lexer *lexer);
 
 //lists and trees
 
-t_tree			*find_pipes(t_token *token_list, t_tree *top, int pipenum);
+t_tree			*find_pipes(t_token *t_list, t_tree *top, int pipenum);
 t_tree			*ft_branch_new(t_token *token, char *str,
 					int type, int pipeline);
-t_tree			*ft_tree_spawn(t_token *token_list);
+t_tree			*ft_tree_spawn(t_token *t_list);
 t_tree			*ft_construct_pipelines_zero(t_token *token_list,
 					t_tree *top, int pipeline);
 t_tree			*ft_construct_pipelines(t_token *token_list,
 					t_tree *top, int pipenum, int pipeline);
 t_tree			*ft_pipe_branch_attach(t_tree *tree, t_tree *new);
 t_tree			*ft_fill_tree_zero(t_token *token_list,
+					t_tree *current, int pipeline);
+t_tree			*ft_fill_tree_zero_assist(t_token *token_list,
+					t_tree *current, int pipeline);
+t_tree			*ft_fill_tree2_assist(t_token *token_list,
 					t_tree *current, int pipeline);
 t_tree			*ft_command_branch_attach_zero(t_tree *tree,
 					t_tree *new, t_token *token_list);
