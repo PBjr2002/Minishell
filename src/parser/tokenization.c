@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 16:29:58 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/16 13:50:26 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:25:17 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,25 +81,27 @@ test2 would be created, but bash would return a
 
 #include "../../inc/parser.h"
 
-/* this recieves the user input and separates it into tokens to send to the token list, 
+/* this recieves the user input and separates it 
+	into tokens to send to the token list, 
 	in order of appearance */
-t_token *tokenization(t_lexer *lexer)
+t_token	*tokenization(t_lexer *lexer)
 {
-	int	n;
-	t_token	*temp;
-	
+	int			n;
+	t_token		*temp;
+
 	n = 0;
 	temp = ft_token_new("temp\0");
 	while (lexer->input && lexer->input[n])
 	{
-		while ((lexer->input[n] > 9 && lexer->input[n] < 13) || lexer->input[n] == ' ')
+		while ((lexer->input[n] > 9 && lexer->input[n] < 13) \
+			|| lexer->input[n] == ' ')
 			n++;
 		if (lexer->input[n] == '\'' || lexer->input[n] == '"')
 			n = quote_token_define(lexer, temp, n);
 		else if (lexer->input[n] == '<' || lexer->input[n] == '>')
 			n = redirect_token_define(lexer, temp, n);
-		else if (lexer->input[n] == '$' && (n > 0 && 
-			((lexer->input[n - 1] > 9 && lexer->input[n - 1] < 13) 
+		else if (lexer->input[n] == '$' && (n > 0 && \
+			((lexer->input[n - 1] > 9 && lexer->input[n - 1] < 13) \
 			|| lexer->input[n - 1] == ' ')))
 			n = dollar_token_define(lexer, temp, n);
 		else if (lexer->input[n] == '|')
@@ -111,11 +113,12 @@ t_token *tokenization(t_lexer *lexer)
 	return (temp);
 }
 
-//clears the temp token that serves as a starting reference to create the token list
+//clears the temp token that serves as a starting reference to create the 
+//token list
 t_token	*temp_list_cleaner(t_token *list)
 {
 	t_token	*temp;
-	
+
 	temp = list;
 	if (list->next)
 	{

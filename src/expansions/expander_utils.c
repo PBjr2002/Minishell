@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:27:43 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/17 15:42:33 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:52:09 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_command_expander(char *str, t_environment *env, int n)
 	d_d = false;
 	s_q = false;
 	d_q = false;
-	while (str && str[n])
+	while ((size_t)n <= ft_strlen(str) && (str && str[n]))
 	{
 		quote_scanner(str, n, &s_q, &d_q);
 		if ((command_expander_assist1(str, &n, &s_q, &d_d)) == 1)

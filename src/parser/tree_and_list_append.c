@@ -6,13 +6,14 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:52:11 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/16 15:01:20 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:30:55 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parser.h"
 
-//This includes functions to add additional branches to a tree or nodes to a list. branch_type 1 for left, 2 for right
+//This includes functions to add additional branches to a 
+// tree or nodes to a list. branch_type 1 for left, 2 for right
 t_tree	*ft_pipe_branch_attach(t_tree *tree, t_tree *new)
 {
 	tree->parent = new;
@@ -20,23 +21,15 @@ t_tree	*ft_pipe_branch_attach(t_tree *tree, t_tree *new)
 	return (new);
 }
 
-// this attaches redirect branches to our current tree pointer, hopefully a pipe, a command or another redirection
+// this attaches redirect branches to our current tree pointer, 
+// hopefully a pipe, a command or another redirection
 void	ft_redirect_branch_attach1(t_tree *tree, t_tree *new)
 {
-	t_tree	*temp;
-	
 	if (tree->left == NULL)
 	{
-		if (tree->type == SINGLE_IN || tree->type == DOUBLE_IN 
+		if (tree->type == SINGLE_IN || tree->type == DOUBLE_IN \
 		|| tree->type == SINGLE_OUT || tree->type == DOUBLE_OUT)
-		{
-			temp = tree;
-			if (tree->parent)
-				tree->parent->right = new;
-			tree = new;
-			tree->left = temp;
-			temp->parent = tree;
-		}
+			ft_redirect_brach_attach1_assist(tree, new);
 		else
 		{
 			new->parent = tree;
@@ -50,6 +43,18 @@ void	ft_redirect_branch_attach1(t_tree *tree, t_tree *new)
 		tree->left = new;
 		new->parent = tree;
 	}
+}
+
+void	ft_redirect_brach_attach1_assist(t_tree *tree, t_tree *new)
+{
+	t_tree	*temp;
+	
+	temp = tree;
+	if (tree->parent)
+		tree->parent->right = new;
+	tree = new;
+	tree->left = temp;
+	temp->parent = tree;
 }
 
 // this attaches redirect branches to the right side of the pipe

@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/17 15:41:37 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:31:42 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,8 @@ int				check_valid_pipes(t_tree *treetop);
 int				check_valid_redirects(t_tree *treetop);
 int				check_valid_redirects_2(t_tree *treetop);
 int				com_token_define(t_lexer *lexer, t_token *token_list, int n);
-int				command_expander_assist1(char *str, int *n, bool *s_q, bool *d_d);
+int				command_expander_assist1(char *str, int *n,
+					bool *s_q, bool *d_d);
 int				dollar_token_define(t_lexer *lexer, t_token *token_list, int n);
 int				double_quote_token_define(t_lexer *lexer,
 					t_token *token_list, int n);
@@ -154,13 +155,14 @@ void			ft_fill_tree1(t_token *token_list, t_tree *current,
 void			ft_fill_tree2(t_token *token_list, t_tree *current,
 					int pipeline, int pipenum);
 void			ft_redirect_branch_attach1(t_tree *tree, t_tree *new);
+void			ft_redirect_brach_attach1_assist(t_tree *tree, t_tree *new);
 void			ft_redirect_branch_attach2(t_tree *tree, t_tree *new);
 void			ft_token_append(t_token *token_list, t_token *new, char *str);
 void			ft_scan_for_redirects1(t_token *token_list,
 					t_tree *current, int pipeline);
 void			ft_scan_for_redirects2(t_token *token_list,
 					t_tree *current, int pipeline);
-void			ft_scan_for_redirects3(t_token *token_list,
+void			ft_scan_for_redirects3(t_token *t_list,
 					t_tree *current, int pipeline);
 void			limiter_dollar_remover(t_token *token_list);
 void			limiter_empty_double_quote_removal(t_token *token,
