@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 15:39:14 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/17 17:07:32 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:08:52 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	command_expander_assist1(char *str, int *n, bool *s_q, bool *d_d)
 {
 	if (str[*n] != '$')
 		*n = *n + 1;
-	if ((size_t) *n <= ft_strlen(str) && (str[*n] && str[*n + 1]) \
+	if ((size_t)(*n) <= ft_strlen(str) && (str[*n] && str[*n + 1]) \
 			&& (str[*n] == '$' \
 			&& ((str[*n + 1] > 47 && str[*n + 1] < 58) \
 			|| (str[*n + 1] > 64 && str[*n + 1] < 91) \
