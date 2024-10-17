@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/17 17:58:50 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/17 19:06:32 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ char			*dollar_removal(char *str, int expand_start,
 char			*env_search(char *expand, t_environment *env);
 
 //int, unsigned int, long, long long
-
 int				check_valid_pipes(t_tree *treetop);
 int				check_valid_redirects(t_tree *treetop);
 int				check_valid_redirects_2(t_tree *treetop);
@@ -131,15 +130,21 @@ int				quote_decider(t_token *token_list);
 int				quote_dollar_solver(t_lexer *lexer, char *str, int n);
 int				redirect_token_define(t_lexer *lexer,
 					t_token *token_list, int n);
+int				redirect_token_define_assist(t_lexer *lexer, bool *s_q,
+					bool *d_q, int *n);
 int				redirect_token_type_solver(t_lexer *lexer, int n);
 int				single_quote_token_define(t_lexer *lexer,
 					t_token *token_list, int n);
 
 //void
+void			com_token_define_assist(t_lexer *lexer, bool *s_q,
+					bool *d_q, int *n);
 void			command_expand(t_token *token_list, t_environment *env);
 void			command_id(t_token *token_list);
 void			double_quote_dissection(t_token *token,
 					int quote_start, int quote_end);
+void			double_quote_token_assist(t_lexer *lexer, bool *inside_quotes,
+					int *n);
 void			double_quote_token_remover(t_token *token,
 					int export, int n);
 void			empty_double_quote_removal(t_token *token,
@@ -158,10 +163,10 @@ void			ft_fill_tree2(t_token *token_list, t_tree *current,
 					int pipeline, int pipenum);
 void			ft_fill_tree2_assist2(t_token *token_list,
 					t_tree *current, int pipeline);
-void			ft_fill_tree2_finisher(t_token *token_list, 
+void			ft_fill_tree2_finisher(t_token *token_list,
 					t_tree *current, int pipeline);
-void			ft_fill_tree_zero_assist2(t_token *token_list, 
-				t_tree *current, int pipeline);
+void			ft_fill_tree_zero_assist2(t_token *token_list,
+					t_tree *current, int pipeline);
 void			ft_redirect_branch_attach1(t_tree *tree, t_tree *new);
 void			ft_redirect_brach_attach1_assist(t_tree *tree, t_tree *new);
 void			ft_redirect_branch_attach2(t_tree *tree, t_tree *new);
@@ -190,6 +195,8 @@ void			quote_token_remover(t_token *token, int export, int n);
 void			redirection_handler(t_token *list, int n, int export);
 void			single_quote_dissection(t_token *token,
 					int quote_start, int quote_end);
+void			single_quote_token_assist(t_lexer *lexer,
+					bool *inside_quotes, int *n);
 void			single_quote_token_remover(t_token *token, int export, int n);
 void			store_input(t_lexer *lexer);
 
@@ -214,6 +221,8 @@ t_tree			*ft_command_branch_attach_zero(t_tree *tree,
 					t_tree *new, t_token *token_list);
 t_tree			*tree_creation_function(t_token *token_list);
 t_token			*ft_token_new(char *str);
+t_token			*redirect_token_define_assist2(t_lexer *lexer,
+					t_token *new_token, int export, int n);
 t_tree			*parsing(t_token *token_list, t_environment *env);
 t_token			*temp_list_cleaner(t_token *list);
 t_token			*tokenization(t_lexer *lexer);
