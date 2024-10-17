@@ -10,7 +10,7 @@ SOURCES =	main/main.c main/prompt.c \
 			builtins/builtins_helper10.c builtins/echo.c builtins/cd.c builtins/pwd.c builtins/export.c\
 			builtins/env.c builtins/set_builtins_fds.c builtins/exec_other.c builtins/redirects.c\
 			builtins/fds.c builtins/fds2.c builtins/fds3.c\
-			expansions/expansions.c expansions/expander_utils.c expansions/signal.c \
+			expansions/expansions.c expansions/expander_utils.c expansions/expander_utils2.c expansions/signal.c \
 			parser/lexer_test.c parser/token_define_utils.c parser/token_define_utils2.c parser/token_solvers.c \
 			parser/tree_and_list_append.c parser/tree_and_list_init.c \
 			parser/tree_cleanup_utils.c parser/tree_creation_utils.c \
