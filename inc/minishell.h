@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/18 14:33:18 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:08:34 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void		get_rest_helper(char *str, t_expand *ex);
 int			path_creator_checker(char *path);
 
 //builtins_helper10.c
-void		cd_helper(t_environment *envr, t_cd *cd);
+void		cd_helper(t_tree *cmd, t_environment *envr, t_cd *cd);
 void		cd_helper2(t_tree *cmd, t_environment *envr, t_cd *cd);
 int			cd_helper3(t_tree *tree, t_tree *cmd, t_cd *cd);
 int			cd_helper4(t_tree *tree, t_tree *cmd, t_cd *cd);

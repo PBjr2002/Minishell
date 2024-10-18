@@ -6,14 +6,19 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 16:55:06 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/17 13:47:04 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:09:20 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	cd_helper(t_environment *envr, t_cd *cd)
+void	cd_helper(t_tree *cmd, t_environment *envr, t_cd *cd)
 {
+	if (search_part_line(envr->env, "HOME=", 5) == -1)
+	{
+		ft_putendl_fd("minishell: cd: HOME not set", cmd->fd_out);
+		return ;
+	}
 	cd->new_cwd = return_part_line(envr->env,
 			search_part_line(envr->env, "HOME=", 5), 0);
 	cd->tmp = return_part_line(envr->env,
@@ -79,7 +84,7 @@ int	cd_helper4(t_tree *tree, t_tree *cmd, t_cd *cd)
 		ft_putstr_fd(tree->str, cmd->fd_out);
 		ft_putstr_fd(": ", cmd->fd_out);
 		perror("");
-		return (free(cd->cwd), free(cd->new_cwd), free(cd->old_pwd), 1);
+		return (free(cd->new_cwd), free(cd->old_pwd), 1);
 	}
 	return (0);
 }
@@ -88,7 +93,6 @@ void	cd_cleaner(t_environment *envr, t_cd *cd, int mode)
 {
 	if (mode == 0)
 	{
-		free(cd->cwd);
 		cd->env_pwd = ft_strjoin("PWD=", cd->new_cwd);
 		cd->new_envp = replace_line(envr->env, cd->env_pwd);
 		free_env(envr->env);
@@ -102,5 +106,6 @@ void	cd_cleaner(t_environment *envr, t_cd *cd, int mode)
 		free(cd->env_pwd);
 		free(cd->old_pwd);
 	}
+	free(cd->cwd);
 	free(cd);
 }

@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:55:40 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/17 13:46:29 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:08:40 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	exec_cd(t_tree *tree, t_tree *cmd, t_environment *envr)
 	cd->cwd = return_part_line(envr->env,
 			search_part_line(envr->env, "PWD=", 4), 0);
 	if (!tree)
-		cd_helper(envr, cd);
+		cd_helper(cmd, envr, cd);
 	else if (tree->null_char == true)
 		return (0);
 	else if (ft_strcmp(tree->str, "-") == 0)
@@ -36,5 +36,7 @@ int	exec_cd(t_tree *tree, t_tree *cmd, t_environment *envr)
 			if (cd_helper4(tree, cmd, cd) == 1)
 				return (cd_cleaner(envr, cd, 1), 1);
 	}
+	if (!cd->new_cwd)
+		return (cd_cleaner(envr, cd, 1), 0);
 	return (cd_cleaner(envr, cd, 0), 0);
 }
