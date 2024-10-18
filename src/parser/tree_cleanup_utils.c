@@ -6,18 +6,16 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:06:39 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/10 17:23:28 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:31:08 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parser.h"
 
 //just a simple function, to save space, if syntax error, status = 2
+
 t_environment	*tree_cleanup_function(t_tree *treetop, t_environment *info)
 {
-	//t_tree *temp;
-
-	//temp = treetop;
 	if (check_valid_pipes(treetop) == -1)
 		info->status = 2;
 	else if (check_valid_redirects(treetop) == -1)
@@ -31,19 +29,21 @@ t_environment	*tree_cleanup_function(t_tree *treetop, t_environment *info)
 }
 
 //checks to see if pipes have commands attached to them, to avoid segfaults
-//without my intention, it also checks if commands are present if a pipeless input is sent...
-int check_valid_pipes(t_tree *treetop)
+//without my intention, it also checks
+//if commands are present if a pipeless input is sent...
+int	check_valid_pipes(t_tree *treetop)
 {
-	t_tree *temp;
+	t_tree	*temp;
 
 	temp = treetop;
 	if (treetop->type != TYPE_PIPE)
 	{
-		if (treetop->type != TYPE_COMMAND && (treetop->type != SINGLE_IN && treetop->type != SINGLE_OUT
-			&& treetop->type != DOUBLE_IN && treetop->type != DOUBLE_OUT))
+		if (treetop->type != TYPE_COMMAND && (treetop->type != SINGLE_IN
+				&& treetop->type != SINGLE_OUT
+				&& treetop->type != DOUBLE_IN && treetop->type != DOUBLE_OUT))
 			return (-1);
 		if ((treetop->type == SINGLE_IN || treetop->type == SINGLE_OUT
-			|| treetop->type == DOUBLE_IN || treetop->type == DOUBLE_OUT) 
+				|| treetop->type == DOUBLE_IN || treetop->type == DOUBLE_OUT)
 			&& treetop->str == NULL)
 			return (-1);
 	}
@@ -54,16 +54,16 @@ int check_valid_pipes(t_tree *treetop)
 		if (treetop->left && treetop->left->type == TYPE_PIPE)
 			treetop = treetop->left;
 		else
-			break;
+			break ;
 	}
-	if (temp->type == TYPE_PIPE && treetop->left && treetop->left->type != TYPE_COMMAND)
+	if (temp->type == TYPE_PIPE && treetop->left
+		&& treetop->left->type != TYPE_COMMAND)
 		return (-1);
 	return (0);
 }
 
-
 //runs the tree to setup check_valid_redirects2
-int check_valid_redirects(t_tree *treetop)
+int	check_valid_redirects(t_tree *treetop)
 {
 	while (treetop)
 	{
@@ -91,13 +91,16 @@ int check_valid_redirects(t_tree *treetop)
 	}
 	return (0);
 }
+
 // checks the current command for valid redirections
-int check_valid_redirects_2(t_tree *treetop)
+int	check_valid_redirects_2(t_tree *treetop)
 {
 	while (treetop && treetop->left)
 	{
-		if (treetop->left->type == SINGLE_IN || treetop->left->type == SINGLE_OUT
-			|| treetop->left->type == DOUBLE_IN || treetop->left->type == DOUBLE_OUT)
+		if (treetop->left->type == SINGLE_IN
+			|| treetop->left->type == SINGLE_OUT
+			|| treetop->left->type == DOUBLE_IN
+			|| treetop->left->type == DOUBLE_OUT)
 		{
 			if (!treetop->left->str)
 				return (-1);

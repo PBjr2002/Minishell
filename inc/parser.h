@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/17 20:01:42 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 10:31:54 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,10 +200,10 @@ void			single_quote_token_assist(t_lexer *lexer,
 void			single_quote_token_remover(t_token *token, int export, int n);
 void			store_input(t_lexer *lexer);
 void			store_input_quote_assist(t_lexer *lexer, bool *o_s_q,
-				bool *o_d_q, int *n);
+					bool *o_d_q, int *n);
 void			dollar_token_define_assist(t_lexer *lexer, int *n);
 void			command_expand_assist(t_token *token_list, t_environment *env,
-				int *n);
+					int *n);
 
 //lists and trees
 

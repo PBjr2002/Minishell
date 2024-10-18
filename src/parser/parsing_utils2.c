@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 16:46:49 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/11 13:47:59 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:34:06 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,19 @@
 void	single_quote_dissection(t_token *token, int quote_start, int quote_end)
 {
 	char	*previous_and_quotes;
-	char 	*temp;
+	char	*temp;
 	char	*previous;
 	char	*remaining;
 	char	*in_quotes;
-	
+
 	temp = token->str;
 	in_quotes = ft_substr(token->str, quote_start + 1, quote_end - quote_start);
 	if (quote_start == 0)
 	{
 		if (quote_end != (int)ft_strlen(token->str))
 		{
-			remaining = ft_substr(token->str, quote_end + 1, ((ft_strlen(token->str)) - 2));
+			remaining = ft_substr(token->str, quote_end + 1,
+					((ft_strlen(token->str)) - 2));
 			token->str = ft_strjoin(in_quotes, remaining);
 			return (free(in_quotes), free(remaining), free(temp));
 		}
@@ -46,18 +47,21 @@ void	single_quote_dissection(t_token *token, int quote_start, int quote_end)
 	else
 	{
 		previous = ft_substr(token->str, 0, quote_start);
-		remaining = ft_substr(token->str, quote_end + 1, ((ft_strlen(token->str)) - quote_end));
+		remaining = ft_substr(token->str, quote_end + 1,
+				((ft_strlen(token->str)) - quote_end));
 		previous_and_quotes = ft_strjoin(previous, in_quotes);
 		token->str = ft_strjoin(previous_and_quotes, remaining);
-		return (free(previous), free(remaining), free(in_quotes), free(temp), free(previous_and_quotes));
+		return (free(previous), free(remaining), free(in_quotes),
+			free(temp), free(previous_and_quotes));
 	}
 }
 
 //removes ONLY empty single quotes, meaning this ""echo = echo or ech""o = echo
-void	empty_single_quote_removal(t_token *token, int quote_start, int quote_end)
+void	empty_single_quote_removal(t_token *token,
+		int quote_start, int quote_end)
 {
-	int 	len;
-	char 	*temp;
+	int		len;
+	char	*temp;
 	char	*previous;
 	char	*remaining;
 
@@ -88,18 +92,19 @@ void	empty_single_quote_removal(t_token *token, int quote_start, int quote_end)
 void	double_quote_dissection(t_token *token, int quote_start, int quote_end)
 {
 	char	*previous_and_quotes;
-	char 	*temp;
+	char	*temp;
 	char	*previous;
 	char	*remaining;
 	char	*in_quotes;
-	
+
 	temp = token->str;
 	in_quotes = ft_substr(token->str, quote_start + 1, quote_end - quote_start);
 	if (quote_start == 0)
 	{
 		if (quote_end != (int)ft_strlen(token->str))
 		{
-			remaining = ft_substr(token->str, quote_end + 1, ((ft_strlen(token->str)) - 2));
+			remaining = ft_substr(token->str, quote_end + 1,
+					((ft_strlen(token->str)) - 2));
 			token->str = ft_strjoin(in_quotes, remaining);
 			return (free(in_quotes), free(remaining), free(temp));
 		}
@@ -118,18 +123,21 @@ void	double_quote_dissection(t_token *token, int quote_start, int quote_end)
 	else
 	{
 		previous = ft_substr(token->str, 0, quote_start);
-		remaining = ft_substr(token->str, quote_end + 1, ((ft_strlen(token->str)) - quote_end));
+		remaining = ft_substr(token->str, quote_end + 1,
+				((ft_strlen(token->str)) - quote_end));
 		previous_and_quotes = ft_strjoin(previous, in_quotes);
 		token->str = ft_strjoin(previous_and_quotes, remaining);
-		return (free(previous), free(remaining), free(in_quotes), free(temp), free(previous_and_quotes));
+		return (free(previous), free(remaining), free(in_quotes),
+			free(temp), free(previous_and_quotes));
 	}
 }
 
 //removes ONLY empty double quotes, meaning this ""echo = echo or ech""o = echo
-void	empty_double_quote_removal(t_token *token, int quote_start, int quote_end)
+void	empty_double_quote_removal(t_token *token,
+		int quote_start, int quote_end)
 {
-	int 	len;
-	char 	*temp;
+	int		len;
+	char	*temp;
 	char	*previous;
 	char	*remaining;
 
@@ -155,5 +163,3 @@ void	empty_double_quote_removal(t_token *token, int quote_start, int quote_end)
 	}
 	free(temp);
 }
-
-

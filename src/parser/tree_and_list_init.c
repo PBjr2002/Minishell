@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   tree_and_list_init.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:47 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/14 15:26:06 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/18 10:37:40 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/parser.h"
 
-//This initializes tokens and the main tree. (not sure which one is necessary)(both are.)
+//This initializes tokens and the main tree.
+//(not sure which one is necessary)(both are.)
 
 t_token	*ft_token_new(char *str)
 {
 	t_token	*new;
-	int 	index;
+	int		index;
 
 	index = -1;
 	new = (t_token *)malloc(sizeof(t_token));
@@ -64,11 +65,12 @@ t_tree	*ft_branch_new(t_token *token, char *str, int type, int pipeline)
 	return (new);
 }
 
-//removes the temporary token from the tokenization function and frees it (supposedly)
+//removes the temporary token
+//from the tokenization function and frees it (supposedly)
 t_token	*temp_token_remove(t_token *temp)
 {
-	t_token *temp2;
-	
+	t_token	*temp2;
+
 	while (temp->previous != NULL)
 		temp = temp->previous;
 	temp = temp->next;
@@ -79,15 +81,15 @@ t_token	*temp_token_remove(t_token *temp)
 }
 
 //copies the environment variable list to our own environment struct
-t_environment *env_setup(char **envp)
-{	
-	int len;
-	int i;
-	t_environment *environment;
+t_environment	*env_setup(char **envp)
+{
+	int				len;
+	int				i;
+	t_environment	*environment;
 
 	len = 0;
 	i = 0;
-	environment = (t_environment*)malloc(sizeof(t_environment));
+	environment = (t_environment *)malloc(sizeof(t_environment));
 	while (envp && envp[len])
 		len++;
 	environment->env = (char **)malloc(sizeof(char *) * (len));
@@ -97,8 +99,5 @@ t_environment *env_setup(char **envp)
 		i++;
 	}
 	environment->env[i] = NULL;
-	return(environment);
+	return (environment);
 }
-
-
-
