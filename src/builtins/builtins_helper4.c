@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 11:59:47 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/17 11:48:14 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:43:47 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,17 @@ int	build_av_helper2(t_tree *tree, char **av, char *stmp, int len)
 	return (0);
 }
 
-void	tree_cleaner(t_tree *tree)
+void	tree_cleaner(t_tree *tree, int mode)
 {
 	if (!tree)
 		return ;
-	tree_cleaner(tree->left);
-	tree_cleaner(tree->right);
+	if (mode == 0)
+	{
+		while (tree->parent)
+			tree = tree->parent;
+	}
+	tree_cleaner(tree->left, 1);
+	tree_cleaner(tree->right, 1);
 	if (tree->str)
 		free(tree->str);
 	free(tree);

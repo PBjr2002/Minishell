@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/17 15:25:52 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:44:21 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	parser_and_exec(t_lexer *lexer, t_environment *info)
 	info = tree_cleanup_function(tree, info);
 	if (info->status == 2)
 	{
-		tree_cleaner(tree);
+		tree_cleaner(tree, 0);
 		printf("Syntax error\n");
 		info->status = 0;
 		return (1);
@@ -63,7 +63,7 @@ int	parser_and_exec(t_lexer *lexer, t_environment *info)
 	expand_everything(tree, info);
 	exec_cmd(tree, info);
 	clean_all_fds(info->fds);
-	tree_cleaner(tree);
+	tree_cleaner(tree, 0);
 	return (0);
 }
 

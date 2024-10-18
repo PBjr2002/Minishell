@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:06:39 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/18 11:31:08 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:28:15 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,12 @@
 
 t_environment	*tree_cleanup_function(t_tree *treetop, t_environment *info)
 {
-	if (check_valid_pipes(treetop) == -1)
+	t_tree	*tmp;
+
+	tmp = treetop;
+	if (check_valid_pipes(tmp) == -1)
 		info->status = 2;
-	else if (check_valid_redirects(treetop) == -1)
+	else if (check_valid_redirects(tmp) == -1)
 		info->status = 2;
 	else
 	{
@@ -102,7 +105,7 @@ int	check_valid_redirects_2(t_tree *treetop)
 			|| treetop->left->type == DOUBLE_IN
 			|| treetop->left->type == DOUBLE_OUT)
 		{
-			if (!treetop->left->str)
+			if (!treetop->left->str && !treetop->left->left)
 				return (-1);
 		}
 		if (treetop->left)
