@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:56:06 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/15 15:04:45 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:23:57 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 int	main(int ac, char **av, char **envp)
 {
 	t_environment	*info;
+	t_lexer			*lexer;
 	char			**env;
 
 	(void) av;
+	lexer = NULL;
 	if (ac != 1)
 		return (ft_putendl_fd("Wrong number of arguments", 1), 1);
 	info = calloc(sizeof(t_environment), 1);
@@ -35,6 +37,6 @@ int	main(int ac, char **av, char **envp)
 		info->export_env = copy_env(info->env, 0);
 	}
 	info->fds = 3;
-	prompt(info);
+	prompt(info, lexer);
 	return (0);
 }

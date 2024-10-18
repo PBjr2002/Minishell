@@ -3,19 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/18 13:47:14 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:35:25 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	prompt(t_environment *info)
+void	prompt(t_environment *info, t_lexer *lexer)
 {
-	t_lexer	*lexer;
-
 	while (1)
 	{
 		lexer = ft_calloc(sizeof(t_lexer), 1);
@@ -24,18 +22,8 @@ void	prompt(t_environment *info)
 		lexer->invalid_lexer = false;
 		store_input(lexer);
 		add_history(lexer->input);
-		if (!lexer->input)
-		{
-			free(lexer);
-			exec_exit(info->status, 1, 0);
-		}
-		else if (lexer->invalid_lexer == true || input_checker(lexer) == 0)
-		{
-			free(lexer);
-			info->status = 2;
-			printf("Syntax error\n");
+		if (maybe_free(lexer, info) == 1)
 			continue ;
-		}
 		if (parser_and_exec(lexer, info) == 1)
 			continue ;
 	}
@@ -64,6 +52,24 @@ int	parser_and_exec(t_lexer *lexer, t_environment *info)
 	exec_cmd(tree, info);
 	clean_all_fds(info->fds);
 	tree_cleaner(tree, 0);
+	return (0);
+}
+
+int	maybe_free(t_lexer *lexer, t_environment *info)
+{
+	if (!lexer->input)
+	{
+		free(lexer);
+		exec_exit(info->status, 1, 0);
+	}
+	else if (lexer->input[0] == '\0')
+		return (free(lexer), 1);
+	else if (lexer->invalid_lexer == true || input_checker(lexer) == 0)
+	{
+		free(lexer);
+		info->status = 2;
+		return (printf("Syntax error\n"), 1);
+	}
 	return (0);
 }
 

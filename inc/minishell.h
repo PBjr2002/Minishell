@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/18 13:44:10 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:33:18 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,9 @@ typedef struct s_global
 //main.c
 
 //prompt.c
-void		prompt(t_environment *info);
+void		prompt(t_environment *info, t_lexer *lexer);
 int			parser_and_exec(t_lexer *lexer, t_environment *info);
+int			maybe_free(t_lexer *lexer, t_environment *info);
 
 //builtins.c
 void		decider(t_tree *tree, t_tree *cmd, t_environment *envr);
