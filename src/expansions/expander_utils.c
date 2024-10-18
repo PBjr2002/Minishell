@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:27:43 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/18 19:34:58 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/18 19:36:49 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ void	post_command_expand_check(t_token *token_list)
 	n = 0;
 	temp = token_list->str;
 	str = NULL;
-	if (token_list->str[n] == '\0' || (ft_strlen(token_list->str) > 2 && token_list->str[0] == '$' \
+	if (token_list->str[n] == '\0' || (ft_strlen(token_list->str) > 2 \
+		&& token_list->str[0] == '$' \
 		&& token_list->str[1] == '?'))
 		return ;
 	str = ft_split(token_list->str, ' ');
