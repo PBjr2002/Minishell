@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 15:51:38 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/18 13:18:06 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 15:11:49 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	executer(t_tree *cmd, t_tree *tree, t_environment *envr, char *path)
 	if (access(path, X_OK) == 0)
 		if (execve(path, av, envr->env) == -1)
 			perror("");
+	free(path);
 	clean_all_fds(envr->fds);
 	free_env(av);
 	exec_exit(1, 0, 1);
