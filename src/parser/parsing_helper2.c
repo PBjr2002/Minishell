@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:51:42 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/18 14:40:40 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:45:38 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	parsing_quote_assist(t_token *token_list)
 		limiter_handler(token_list);
 }
 
-void	limiter_double_quote_assist(t_token *token, int quote_start,
-		int quote_end)
+void	limiter_double_quote_assist(t_token *token,
+		int quote_start, int quote_end)
 {
 	char	*in_quotes;
 	char	*temp;
@@ -46,7 +46,8 @@ void	limiter_double_quote_assist(t_token *token, int quote_start,
 	}
 }
 
-void	limiter_double_quote_assist2(t_token *token, int quote_start, int quote_end)
+void	limiter_double_quote_assist2(t_token *token,
+		int quote_start, int quote_end)
 {
 	char	*in_quotes;
 	char	*temp;

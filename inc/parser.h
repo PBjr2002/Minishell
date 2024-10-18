@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/18 14:41:21 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/18 15:06:57 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,14 @@ void			limiter_double_quote_assist2(t_token *token,
 void			limiter_single_quote_asssist(t_token *token,
 					int quote_start, int quote_end);
 void			limiter_single_quote_asssist2(t_token *token,
+					int quote_start, int quote_end);
+void			parsing_double_quote_assist(t_token *token,
+					int quote_start, int quote_end);
+void			parsing_double_quote_assist2(t_token *token,
+					int quote_start, int quote_end);
+void			parsing_single_quote_assist(t_token *token,
+					int quote_start, int quote_end);
+void			parsing_single_quote_assist2(t_token *token,
 					int quote_start, int quote_end);
 void			parsing_quote_assist(t_token *token_list);
 void			post_command_expand_check(t_token *token_list);

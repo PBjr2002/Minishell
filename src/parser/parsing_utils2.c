@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 16:46:49 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/18 11:34:06 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 15:07:28 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,9 @@ void	single_quote_dissection(t_token *token, int quote_start, int quote_end)
 	temp = token->str;
 	in_quotes = ft_substr(token->str, quote_start + 1, quote_end - quote_start);
 	if (quote_start == 0)
-	{
-		if (quote_end != (int)ft_strlen(token->str))
-		{
-			remaining = ft_substr(token->str, quote_end + 1,
-					((ft_strlen(token->str)) - 2));
-			token->str = ft_strjoin(in_quotes, remaining);
-			return (free(in_quotes), free(remaining), free(temp));
-		}
-		else
-		{
-			token->str = ft_strdup(in_quotes);
-			return (free(in_quotes), free(temp));
-		}
-	}
+		parsing_single_quote_assist(token, quote_start, quote_end);
 	else if (quote_end == (int)ft_strlen(token->str))
-	{
-		previous = ft_substr(token->str, 0, quote_start);
-		token->str = ft_strjoin(previous, in_quotes);
-		return (free(previous), free(in_quotes), free(temp));
-	}
+		parsing_single_quote_assist2(token, quote_start, quote_end);
 	else
 	{
 		previous = ft_substr(token->str, 0, quote_start);
@@ -82,8 +65,7 @@ void	empty_single_quote_removal(t_token *token,
 		}
 		else
 			token->str = ft_strjoin(previous, remaining);
-		free(previous);
-		free(remaining);
+		prev_and_remaining_free(previous, remaining);
 	}
 	free(temp);
 }
@@ -100,26 +82,9 @@ void	double_quote_dissection(t_token *token, int quote_start, int quote_end)
 	temp = token->str;
 	in_quotes = ft_substr(token->str, quote_start + 1, quote_end - quote_start);
 	if (quote_start == 0)
-	{
-		if (quote_end != (int)ft_strlen(token->str))
-		{
-			remaining = ft_substr(token->str, quote_end + 1,
-					((ft_strlen(token->str)) - 2));
-			token->str = ft_strjoin(in_quotes, remaining);
-			return (free(in_quotes), free(remaining), free(temp));
-		}
-		else
-		{
-			token->str = ft_strdup(in_quotes);
-			return (free(in_quotes), free(temp));
-		}
-	}
+		parsing_double_quote_assist(token, quote_start, quote_end);
 	else if (quote_end == (int)ft_strlen(token->str))
-	{
-		previous = ft_substr(token->str, 0, quote_start);
-		token->str = ft_strjoin(previous, in_quotes);
-		return (free(previous), free(in_quotes), free(temp));
-	}
+		parsing_double_quote_assist2(token, quote_start, quote_end);
 	else
 	{
 		previous = ft_substr(token->str, 0, quote_start);
@@ -158,8 +123,7 @@ void	empty_double_quote_removal(t_token *token,
 		}
 		else
 			token->str = ft_strjoin(previous, remaining);
-		free(previous);
-		free(remaining);
+		prev_and_remaining_free(previous, remaining);
 	}
 	free(temp);
 }

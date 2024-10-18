@@ -17,8 +17,9 @@ SOURCES =	main/main.c main/prompt.c \
 			parser/tree_cleanup_utils.c parser/tree_creation_utils.c \
 			parser/tree_creation_utils2.c parser/tree_creation_utils3.c parser/tree_creation_utils4.c \
 			parser/tree_creation_utils5.c \
-			parser/tokenization.c parser/parsing_utils.c parser/parsing_utils2.c parser/parsing_utils3.c\
-			parser/parsing_helper.c parser/parsing_helper2.c parser/parsing_helper3.c parser/parsing.c
+			parser/tokenization.c parser/parsing_utils.c parser/parsing_utils2.c parser/parsing_utils3.c \
+			parser/parsing_helper.c parser/parsing_helper2.c parser/parsing_helper3.c parser/parsing_helper4.c \
+			parser/parsing.c
 
 OBJS_DIR = obj
 OBJECTS = $(addprefix $(OBJS_DIR)/, $(SRC:src/%.c=%.o))
