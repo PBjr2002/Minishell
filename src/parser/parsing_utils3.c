@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 19:08:29 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/17 19:21:11 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:23:59 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,3 +37,5 @@ void	command_expand_assist(t_token *token_list, t_environment *env,
 		*n = *n + 1;
 	}
 }
+
+

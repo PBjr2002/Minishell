@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_cleanup_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 16:06:39 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/18 11:31:08 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:21:50 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@
 
 t_environment	*tree_cleanup_function(t_tree *treetop, t_environment *info)
 {
-	if (check_valid_pipes(treetop) == -1)
+	t_tree	*temp;
+
+	temp = NULL;
+	if (check_valid_pipes(treetop, temp) == -1)
 		info->status = 2;
 	else if (check_valid_redirects(treetop) == -1)
 		info->status = 2;
@@ -31,10 +34,8 @@ t_environment	*tree_cleanup_function(t_tree *treetop, t_environment *info)
 //checks to see if pipes have commands attached to them, to avoid segfaults
 //without my intention, it also checks
 //if commands are present if a pipeless input is sent...
-int	check_valid_pipes(t_tree *treetop)
+int	check_valid_pipes(t_tree *treetop, t_tree *temp)
 {
-	t_tree	*temp;
-
 	temp = treetop;
 	if (treetop->type != TYPE_PIPE)
 	{
