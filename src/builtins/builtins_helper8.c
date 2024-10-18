@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:21:37 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/18 13:16:38 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/18 18:59:22 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	expand_everything(t_tree *tree, t_environment *envr)
 		expand_everything(tree->left, envr);
 	if (tree->right)
 		expand_everything(tree->right, envr);
-	if (tree->type == TYPE_PIPE || tree->type == TYPE_ARGUMENT)
+	if (tree->type == TYPE_PIPE || (tree->type == TYPE_ARGUMENT && tree->expand == false))
 		return ;
 	if (tree->invalid_expand == true)
 	{
