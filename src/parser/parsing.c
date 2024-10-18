@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:30:15 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/18 14:36:18 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:44:16 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	limiter_double_quote_dissection(t_token *token,
 	if (quote_start == 0)
 		limiter_double_quote_assist(token, quote_start, quote_end);
 	else if (quote_end == (int)ft_strlen(token->str))
-		limiter_double_quote_assist2(token, previous, \
+		limiter_double_quote_assist2(token, \
 			quote_start, quote_end);
 	else
 	{
@@ -121,9 +121,6 @@ void	limiter_double_quote_dissection(t_token *token,
 void	limiter_dollar_remover(t_token *token_list)
 {
 	int		n;
-	char	*temp;
-	char	*temp1;
-	char	*temp2;
 	bool	inside_quote;
 
 	n = 0;

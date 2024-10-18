@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 14:20:50 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/18 14:38:38 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:41:05 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ void	limiter_single_quote_asssist(t_token *token, int quote_start,
 	}
 }
 
-void	limiter_single_quote_asssist2(t_token *token, char *previous,
-		int quote_start, int quote_end)
+void	limiter_single_quote_asssist2(t_token *token, int quote_start, int quote_end)
 {
 	char	*in_quotes;
 	char	*temp;
+	char	*previous;
 
 	temp = token->str;
 	in_quotes = ft_substr(token->str, quote_start + 1,

@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 13:49:45 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/18 14:35:52 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:43:45 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	limiter_single_quote_dissection(t_token *token,
 	if (quote_start == 0)
 		limiter_single_quote_asssist(token, quote_start, quote_end);
 	else if (quote_end == (int)ft_strlen(token->str))
-		limiter_single_quote_asssist2(token, previous, quote_start, quote_end);
+		limiter_single_quote_asssist2(token, quote_start, quote_end);
 	else
 	{
 		previous = ft_substr(token->str, 0, quote_start);
