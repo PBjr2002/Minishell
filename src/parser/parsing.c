@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:30:15 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/18 13:12:11 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:36:18 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,7 @@ t_tree	*parsing(t_token *token_list, t_environment *env)
 	token_list = temp;
 	while (token_list)
 	{
-		if (quote_decider(token_list) == 0)
-			single_quote_token_remover(token_list, 0, 0);
-		else if (quote_decider(token_list) == 1)
-			double_quote_token_remover(token_list, 0, 0);
-		else if (quote_decider(token_list) == 2)
-			limiter_handler(token_list);
+		parsing_quote_assist(token_list);
 		token_list = token_list->next;
 	}
 	token_list = temp;
@@ -94,156 +89,6 @@ void	limiter_handler(t_token *token_list)
 	}
 }
 
-int	limiter_single_quote_remover(t_token *token_list, int quote_start, int n)
-{
-	int	quote_end;
-
-	quote_end = 0;
-	n++;
-	while (token_list->str[n] && token_list->str[n] != '\'')
-		n++;
-	quote_end = n;
-	if (quote_end == quote_start + 1)
-	{
-		limiter_empty_single_quote_removal(token_list,
-			quote_start, quote_end);
-		return (n - 1);
-	}
-	else
-	{
-		limiter_single_quote_dissection(token_list, quote_start, quote_end);
-		return (quote_start);
-	}
-}
-
-void	limiter_empty_single_quote_removal(t_token *token,
-		int quote_start, int quote_end)
-{
-	int		len;
-	char	*temp;
-	char	*previous;
-	char	*remaining;
-
-	temp = token->str;
-	len = ft_strlen(token->str);
-	if (quote_start == 0 && ft_strlen(token->str) > 2)
-		token->str = ft_substr(token->str, quote_end + 1, len - 2);
-	else if (quote_end == len)
-		token->str = ft_substr(token->str, 0, quote_start);
-	else
-	{
-		previous = ft_substr(token->str, 0, quote_start);
-		remaining = ft_substr(token->str, quote_end + 1, (len - quote_end));
-		if (len == 2)
-		{
-			token->str = ft_strdup("\0");
-			token->null_char = true;
-		}
-		else
-			token->str = ft_strjoin(previous, remaining);
-		free(previous);
-		free(remaining);
-	}
-	free(temp);
-}
-
-void	limiter_single_quote_dissection(t_token *token,
-		int quote_start, int quote_end)
-{
-	char	*previous_and_quotes;
-	char	*temp;
-	char	*previous;
-	char	*remaining;
-	char	*in_quotes;
-
-	temp = token->str;
-	in_quotes = ft_substr(token->str, quote_start + 1,
-			((quote_end - 1) - quote_start));
-	if (quote_start == 0)
-	{
-		if (quote_end != (int)ft_strlen(token->str))
-		{
-			remaining = ft_substr(token->str, quote_end + 1,
-					((ft_strlen(token->str)) - 2));
-			token->str = ft_strjoin(in_quotes, remaining);
-			return (free(in_quotes), free(remaining), free(temp));
-		}
-		else
-		{
-			token->str = ft_strdup(in_quotes);
-			return (free(in_quotes), free(temp));
-		}
-	}
-	else if (quote_end == (int)ft_strlen(token->str))
-	{
-		previous = ft_substr(token->str, 0, quote_start);
-		token->str = ft_strjoin(previous, in_quotes);
-		return (free(previous), free(in_quotes), free(temp));
-	}
-	else
-	{
-		previous = ft_substr(token->str, 0, quote_start);
-		remaining = ft_substr(token->str, quote_end + 1,
-				((ft_strlen(token->str)) - quote_end));
-		previous_and_quotes = ft_strjoin(previous, in_quotes);
-		token->str = ft_strjoin(previous_and_quotes, remaining);
-		return (free(previous), free(remaining), free(in_quotes),
-			free(temp), free(previous_and_quotes));
-	}
-}
-
-int	limiter_double_quote_remover(t_token *token_list, int quote_start, int n)
-{
-	int	quote_end;
-
-	quote_end = 0;
-	n++;
-	while (token_list->str[n] && token_list->str[n] != '"')
-		n++;
-	quote_end = n;
-	if (quote_end == quote_start + 1)
-	{
-		limiter_empty_double_quote_removal(token_list, quote_start, quote_end);
-		return (n - 1);
-	}
-	else
-	{
-		limiter_double_quote_dissection(token_list, quote_start, quote_end);
-		return (quote_start);
-	}
-}
-
-void	limiter_empty_double_quote_removal(t_token *token,
-		int quote_start, int quote_end)
-{
-	int		len;
-	char	*temp;
-	char	*previous;
-	char	*remaining;
-
-	temp = token->str;
-	len = ft_strlen(token->str);
-	if (quote_start == 0 && ft_strlen(token->str) > 2)
-		token->str = ft_substr(token->str, quote_end + 1, len - 2);
-	else if (quote_end == quote_start + 1 && quote_end == len)
-		token->str = ft_substr(token->str, 0, quote_start);
-	else
-	{
-		previous = ft_substr(token->str, 0, quote_start);
-		remaining = ft_substr(token->str, quote_end + 1, (len - quote_end));
-		if (len == 2)
-		{
-			token->str = ft_strdup("\0");
-			token->null_char = true;
-		}
-		else
-			token->str = ft_strjoin(previous, remaining);
-		free(previous);
-		free(remaining);
-	}
-	free(temp);
-}
-
 void	limiter_double_quote_dissection(t_token *token,
 		int quote_start, int quote_end)
 {
@@ -257,26 +102,10 @@ void	limiter_double_quote_dissection(t_token *token,
 	in_quotes = ft_substr(token->str, quote_start + 1,
 			((quote_end - 1) - quote_start));
 	if (quote_start == 0)
-	{
-		if (quote_end != (int)ft_strlen(token->str))
-		{
-			remaining = ft_substr(token->str, quote_end + 1,
-					((ft_strlen(token->str)) - 2));
-			token->str = ft_strjoin(in_quotes, remaining);
-			return (free(in_quotes), free(remaining), free(temp));
-		}
-		else
-		{
-			token->str = ft_strdup(in_quotes);
-			return (free(in_quotes), free(temp));
-		}
-	}
+		limiter_double_quote_assist(token, quote_start, quote_end);
 	else if (quote_end == (int)ft_strlen(token->str))
-	{
-		previous = ft_substr(token->str, 0, quote_start);
-		token->str = ft_strjoin(previous, in_quotes);
-		return (free(previous), free(in_quotes), free(temp));
-	}
+		limiter_double_quote_assist2(token, previous, \
+			quote_start, quote_end);
 	else
 	{
 		previous = ft_substr(token->str, 0, quote_start);
@@ -308,20 +137,11 @@ void	limiter_dollar_remover(t_token *token_list)
 			else
 				inside_quote = false;
 		}
-		if (token_list->str[n] == '$'
-			&& (token_list->str[n + 1] && (token_list->str[n + 1] == '"'
-					|| token_list->str[n + 1] == '\''))
+		if (token_list->str[n] == '$' \
+			&& (token_list->str[n + 1] && (token_list->str[n + 1] == '"' \
+			|| token_list->str[n + 1] == '\'')) \
 			&& (inside_quote == false))
-		{
-			temp = token_list->str;
-			temp1 = ft_substr(token_list->str, 0, n);
-			temp2 = ft_substr(token_list->str, (n + 1),
-					(ft_strlen(token_list->str) - n));
-			token_list->str = (ft_strjoin(temp1, temp2));
-			free(temp);
-			free(temp1);
-			free(temp2);
-		}
+			limiter_dollar_assist(token_list, n);
 		n++;
 	}
 }

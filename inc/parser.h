@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/18 13:21:23 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:36:40 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,18 @@ void			limiter_handler(t_token *token_list);
 void			limiter_single_quote_dissection(t_token *token,
 					int quote_start, int quote_end);
 void			midlist_token_append(t_token *token_list, t_token *new);
+void			limiter_dollar_assist(t_token *token_list, int n);
+void			limiter_double_quote_assist(t_token *token,
+					int quote_start, int quote_end);
+void			limiter_double_quote_assist2(t_token *token, char *previous,
+					int quote_start, int quote_end);
+void			limiter_single_quote_asssist(t_token *token,
+					int quote_start, int quote_end);
+void			limiter_single_quote_asssist2(t_token *token, char *previous,
+					int quote_start, int quote_end);
+void			parsing_quote_assist(t_token *token_list);
 void			post_command_expand_check(t_token *token_list);
+void			prev_and_remaining_free(char *previous, char *remaining);
 void			quote_scanner(char *str, int n,
 					bool *double_quote, bool *single_quote);
 void			quote_token_remover(t_token *token, int export, int n);
