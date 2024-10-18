@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 16:46:49 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/18 15:07:28 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/18 15:22:11 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,14 @@ void	single_quote_dissection(t_token *token, int quote_start, int quote_end)
 	char	*in_quotes;
 
 	temp = token->str;
-	in_quotes = ft_substr(token->str, quote_start + 1, quote_end - quote_start);
 	if (quote_start == 0)
 		parsing_single_quote_assist(token, quote_start, quote_end);
 	else if (quote_end == (int)ft_strlen(token->str))
 		parsing_single_quote_assist2(token, quote_start, quote_end);
 	else
 	{
+		in_quotes = ft_substr(token->str, quote_start + 1,
+				quote_end - quote_start);
 		previous = ft_substr(token->str, 0, quote_start);
 		remaining = ft_substr(token->str, quote_end + 1,
 				((ft_strlen(token->str)) - quote_end));
@@ -80,13 +81,14 @@ void	double_quote_dissection(t_token *token, int quote_start, int quote_end)
 	char	*in_quotes;
 
 	temp = token->str;
-	in_quotes = ft_substr(token->str, quote_start + 1, quote_end - quote_start);
 	if (quote_start == 0)
 		parsing_double_quote_assist(token, quote_start, quote_end);
 	else if (quote_end == (int)ft_strlen(token->str))
 		parsing_double_quote_assist2(token, quote_start, quote_end);
 	else
 	{
+		in_quotes = ft_substr(token->str, quote_start + 1,
+				quote_end - quote_start);
 		previous = ft_substr(token->str, 0, quote_start);
 		remaining = ft_substr(token->str, quote_end + 1,
 				((ft_strlen(token->str)) - quote_end));
