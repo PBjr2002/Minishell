@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:02:58 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/17 16:19:17 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:23:34 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	ft_scan_for_redirects1(t_token *token_list, \
 			if (first_redirect_detected == true)
 				first_redirect_detected = false;
 			else
-				ft_redirect_branch_attach1(current, ft_branch_new(token_list, \
+				current = ft_redirect_branch_attach1(current, \
+					ft_branch_new(token_list, \
 					token_list->str, token_list->type, pipeline));
 		}
 		token_list = token_list->next;

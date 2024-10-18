@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:52:11 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/18 13:37:04 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/18 18:20:07 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,34 @@ t_tree	*ft_pipe_branch_attach(t_tree *tree, t_tree *new)
 
 // this attaches redirect branches to our current tree pointer, 
 // hopefully a pipe, a command or another redirection
-void	ft_redirect_branch_attach1(t_tree *tree, t_tree *new)
+t_tree	*ft_redirect_branch_attach1(t_tree *tree, t_tree *new)
 {
 	if (tree->left == NULL)
 	{
 		if (tree->type == SINGLE_IN || tree->type == DOUBLE_IN \
 		|| tree->type == SINGLE_OUT || tree->type == DOUBLE_OUT)
-			ft_redirect_brach_attach1_assist(tree, new);
+		{
+			tree = ft_redirect_branch_attach1_assist(tree, new);
+			return (tree);
+		}
 		else
 		{
 			new->parent = tree;
 			tree->left = new;
+			return (tree);
 		}
 	}
 	else
 	{
-		tree->left->parent = new;
-		new->left = tree->left;
-		tree->left = new;
-		new->parent = tree;
+		if (tree->parent)
+			new->parent = tree->parent;
+		new->left = tree;
+		tree->parent = new;
+		return (new);
 	}
 }
 
-void	ft_redirect_brach_attach1_assist(t_tree *tree, t_tree *new)
+t_tree	*ft_redirect_branch_attach1_assist(t_tree *tree, t_tree *new)
 {
 	t_tree	*temp;
 
@@ -55,6 +60,7 @@ void	ft_redirect_brach_attach1_assist(t_tree *tree, t_tree *new)
 	tree = new;
 	tree->left = temp;
 	temp->parent = tree;
+	return (tree);
 }
 
 // this attaches redirect branches to the right side of the pipe

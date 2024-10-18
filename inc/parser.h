@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/18 15:06:57 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:31:16 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,8 +167,6 @@ void			ft_fill_tree2_finisher(t_token *token_list,
 					t_tree *current, int pipeline);
 void			ft_fill_tree_zero_assist2(t_token *token_list,
 					t_tree *current, int pipeline);
-void			ft_redirect_branch_attach1(t_tree *tree, t_tree *new);
-void			ft_redirect_brach_attach1_assist(t_tree *tree, t_tree *new);
 void			ft_redirect_branch_attach2(t_tree *tree, t_tree *new);
 void			ft_token_append(t_token *token_list, t_token *new, char *str);
 void			ft_scan_for_redirects1(t_token *token_list,
@@ -243,6 +241,8 @@ t_tree			*ft_fill_tree2_assist(t_token *token_list,
 					t_tree *current, int pipeline);
 t_tree			*ft_command_branch_attach_zero(t_tree *tree,
 					t_tree *new, t_token *token_list);
+t_tree			*ft_redirect_branch_attach1(t_tree *tree, t_tree *new);
+t_tree			*ft_redirect_branch_attach1_assist(t_tree *tree, t_tree *new);
 t_tree			*tree_creation_function(t_token *token_list);
 t_token			*ft_token_new(char *str);
 t_token			*redirect_token_define_assist2(t_lexer *lexer,
