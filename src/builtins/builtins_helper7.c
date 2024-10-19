@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:11:51 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/18 13:44:48 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/19 13:01:48 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	exec_here_doc(t_tree *tree, t_environment *envr)
 
 	if (pipe(fd) == -1)
 		return (printf("There was an error opening the pipe\n"), -1);
+	global_info(tree, envr, fd[0], fd[1]);
 	envr->pid = fork();
 	if (envr->pid == 0)
 		here_doc_helper(tree, envr, fd);

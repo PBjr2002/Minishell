@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:42:24 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/16 16:40:19 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/19 13:00:24 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@ void	ch_signal(int signal)
 {
 	t_global	info;
 
-	info = global_info(NULL, NULL);
+	info = global_info(NULL, NULL, -1, -1);
 	info.envr->status = signal;
 }
 
-t_global	global_info(t_tree *tree, t_environment *envr)
+t_global	global_info(t_tree *tree, t_environment *envr,
+			int fd_in, int fd_out)
 {
 	static t_global	info;
 
@@ -28,6 +29,10 @@ t_global	global_info(t_tree *tree, t_environment *envr)
 		info.tree = tree;
 	if (envr)
 		info.envr = envr;
+	if (fd_in != -1)
+		info.fd_in = fd_in;
+	if (fd_out != -1)
+		info.fd_out = fd_out;
 	return (info);
 }
 

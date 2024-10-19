@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/18 16:08:34 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/19 13:04:53 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ typedef struct s_global
 {
 	t_tree			*tree;
 	t_environment	*envr;
+	int				fd_in;
+	int				fd_out;
 }				t_global;
 
 //main.c
@@ -82,6 +84,7 @@ int			ft_strlen2(char *str, int sep);
 int			return_value(char **envp, int index);
 int			search_env_line(char **envp, char *line_to_search);
 int			search_part_line(char **envp, char *line_to_search, size_t len);
+void		execute_processes(t_tree *tree, t_environment *envr, int mode);
 
 //builtins_helper3.c
 char		*return_env_line(char **envp, int index);
@@ -124,13 +127,14 @@ void		prepare_exit(t_tree *tree, t_environment *envr);
 //builtins_helper8.c
 int			check_expansion(char *str);
 void		expand_everything(t_tree *tree, t_environment *envr);
-void		exec_cmd(t_tree *tree, t_environment *envr);
+void		exec_cmd(t_tree *tree, t_environment *envr, int mode);
 void		exec_child(t_tree *tree, t_environment *envr, int mode);
 void		real_exec_cmd(t_tree *tree, t_environment *envr);
 
 //builtins_helper9.c
 void		ch_signal(int signal);
-t_global	global_info(t_tree *tree, t_environment *envr);
+t_global	global_info(t_tree *tree, t_environment *envr,
+				int fd_in, int fd_out);
 void		exit_checker(t_tree *tree);
 void		get_rest_helper(char *str, t_expand *ex);
 int			path_creator_checker(char *path);
@@ -160,6 +164,7 @@ void		clean_all_fds(int fds);
 void		close_fds(t_tree *tree, t_environment *envr);
 void		close_specific_fds(t_environment *envr, int fd_in, int fd_out);
 void		set_fds(t_tree *tree, char **av, char *path, int *fd);
+void		prepare_pipe(t_tree *tree, t_environment *envr, int mode);
 
 //fds2.c
 void		close_fds_helper(t_tree *tree, t_environment *envr);

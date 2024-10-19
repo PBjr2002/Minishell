@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 11:58:28 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/17 13:27:10 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/19 12:43:58 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	clean_all_fds(int fds)
 	int	n;
 
 	n = 3;
-	while (n < fds)
+	(void) fds;
+	while (n < FOPEN_MAX)
 	{
 		close(n);
 		n++;
@@ -90,5 +91,24 @@ void	set_fds(t_tree *tree, char **av, char *path, int *fd)
 			free_env(av);
 			exec_exit(1, 0, 1);
 		}
+	}
+}
+
+void	prepare_pipe(t_tree *tree, t_environment *envr, int mode)
+{
+	if (mode == 0)
+	{
+		pipe_setup(tree);
+		envr->fds += 2;
+	}
+	if (mode == 1)
+	{
+		close(tree->left->fd_in);
+		close(tree->left->fd_out);
+	}
+	if (tree->parent)
+	{
+		pipe_setup(tree->parent);
+		envr->fds += 2;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_helper8.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:21:37 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/18 19:37:15 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/19 13:25:51 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,30 +57,20 @@ void	expand_everything(t_tree *tree, t_environment *envr)
 	}
 }
 
-void	exec_cmd(t_tree *tree, t_environment *envr)
+void	exec_cmd(t_tree *tree, t_environment *envr, int mode)
 {
-	pid_t	id;
-	pid_t	id2;
-
 	if (!tree)
 		return ;
 	search_redirect(tree, envr, 0);
+	if (mode == 0)
+	{
+		while (tree->left && tree->left->type == TYPE_PIPE)
+			tree = tree->left;
+	}
 	if (tree->type == TYPE_PIPE)
 	{
 		signal_decider(IGNORE);
-		pipe_setup(tree);
-		envr->fds += 2;
-		id = fork();
-		if (id == 0)
-			exec_child(tree, envr, 0);
-		close_fds(tree, envr);
-		id2 = fork();
-		if (id2 == 0)
-			exec_child(tree, envr, 1);
-		clean_all_fds(envr->fds);
-		waitpid(id2, &envr->status, 0);
-		waitpid(id, &envr->status, 0);
-		envr->status = envr->status / 256;
+		execute_processes(tree, envr, mode);
 	}
 	else
 		real_exec_cmd(tree, envr);
@@ -90,9 +80,11 @@ void	exec_child(t_tree *tree, t_environment *envr, int mode)
 {
 	signal_decider(CHILD);
 	if (mode == 0)
-		exec_cmd(tree->left, envr);
+		exec_cmd(tree->left, envr, 1);
 	else if (mode == 1)
-		exec_cmd(tree->right, envr);
+		exec_cmd(tree->right, envr, 1);
+	else if (mode == 2)
+		exec_cmd(tree->parent, envr, 1);
 	clean_all_fds(envr->fds);
 	exec_exit(envr->status, 0, 1);
 }
@@ -104,7 +96,11 @@ void	real_exec_cmd(t_tree *tree, t_environment *envr)
 	cmd = NULL;
 	if (tree->type == 1 || tree->type == 2
 		|| tree->type == 3 || tree->type == 4)
+	{
+		if (!tree->parent)
+			clean_all_fds(envr->fds);
 		return ;
+	}
 	close_fds(tree, envr);
 	if (tree->right)
 	{

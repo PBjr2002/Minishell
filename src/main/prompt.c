@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/18 14:35:25 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/19 13:23:44 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	prompt(t_environment *info, t_lexer *lexer)
 	{
 		lexer = ft_calloc(sizeof(t_lexer), 1);
 		signal_decider(PARENT);
-		global_info(NULL, info);
+		global_info(NULL, info, -2, -2);
 		lexer->invalid_lexer = false;
 		store_input(lexer);
 		add_history(lexer->input);
@@ -47,9 +47,9 @@ int	parser_and_exec(t_lexer *lexer, t_environment *info)
 		info->status = 0;
 		return (1);
 	}
-	global_info(tree, info);
+	global_info(tree, info, -1, -1);
 	expand_everything(tree, info);
-	exec_cmd(tree, info);
+	exec_cmd(tree, info, 0);
 	clean_all_fds(info->fds);
 	tree_cleaner(tree, 0);
 	return (0);
