@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 14:26:47 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/17 17:48:47 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/19 17:19:05 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ int	exec_export(t_tree *tree, t_tree *cmd, t_environment *envr)
 	if (!tree)
 	{
 		signal_decider(PIPE_CLOSED);
-		sorted = env_to_print(envr->export_env);
+		if (envr->path_flag == 1)
+			sorted = env_to_print(envr->export_env, 1);
+		else
+			sorted = env_to_print(envr->export_env, 0);
 		if (!sorted)
 			return (1);
 		print_export(cmd->fd_out, sorted);

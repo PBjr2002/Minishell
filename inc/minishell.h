@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/19 13:04:53 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/19 16:15:36 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ typedef struct s_global
 }				t_global;
 
 //main.c
+void		inicial_env(t_environment *info, char **envp);
+void		add_info_to_env(t_environment *info, char **envp, char *str);
 
 //prompt.c
 void		prompt(t_environment *info, t_lexer *lexer);
@@ -110,7 +112,7 @@ int			replace_value_helper(char **envp, char **tmp_env,
 				char *nb, int index);
 
 //builtins_helper6.c
-char		**env_to_print(char **envp);
+char		**env_to_print(char **envp, int mode);
 void		sort_env(char **new_env, int limit);
 void		print_export(int fd, char **sorted);
 void		print_export_helper(char **sorted, int fd, int n, int i);

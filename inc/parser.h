@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/18 17:31:16 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/19 16:09:36 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_environment
 	int						status;
 	int						old_status;
 	int						fds;
+	int						path_flag;
 	pid_t					pid;
 }	t_environment;
 

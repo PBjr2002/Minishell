@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:23:43 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/19 13:02:40 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/19 17:18:21 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ int	exec_env(t_tree *cmd, t_environment *envr)
 	signal_decider(PIPE_CLOSED);
 	while (envr->env[n])
 	{
+		if (envr->path_flag == 1
+			&& ft_strncmp("PATH=", envr->env[n], 5) == 0)
+		{
+			n++;
+			continue ;
+		}
 		ft_putendl_fd(envr->env[n], cmd->fd_out);
 		n++;
 	}
@@ -63,8 +69,10 @@ void	exec_exit(int signal, int mode, int write)
 		clean_all_fds(info.envr->fds);
 		tree_cleaner(info.tree, 0);
 	}
-	close(info.fd_in);
-	close(info.fd_out);
+	if (info.fd_in != -2)
+		close(info.fd_in);
+	if (info.fd_out != -2)
+		close(info.fd_out);
 	if (info.envr->env)
 		free_env(info.envr->env);
 	if (info.envr->export_env)

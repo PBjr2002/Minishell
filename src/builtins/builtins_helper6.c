@@ -6,13 +6,13 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:04:15 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/08 16:07:02 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/19 17:20:15 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	**env_to_print(char **envp)
+char	**env_to_print(char **envp, int mode)
 {
 	char	**tmp_env;
 	int		n;
@@ -20,18 +20,18 @@ char	**env_to_print(char **envp)
 	n = 0;
 	while (envp[n])
 		n++;
-	tmp_env = malloc(sizeof(char *) * (n + 1));
+	if (mode == 0)
+		tmp_env = copy_env(envp, 0);	
+	else
+	{
+		if (search_part_line(envp, "PATH=", 5) == -1)
+			tmp_env = copy_env(envp, 0);
+		else
+			tmp_env = remove_env_line(envp, search_part_line(envp, "PATH=", 5));
+	}
 	if (!tmp_env)
 		return (NULL);
-	n = 0;
-	while (envp[n])
-	{
-		tmp_env[n] = ft_strdup(envp[n]);
-		n++;
-	}
-	tmp_env[n] = NULL;
-	sort_env(tmp_env, n - 1);
-	return (tmp_env);
+	return (sort_env(tmp_env, n - 1), tmp_env);
 }
 
 void	sort_env(char **new_env, int limit)
