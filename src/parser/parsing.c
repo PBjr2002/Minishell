@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:30:15 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/21 14:32:41 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:43:20 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ t_tree	*parsing(t_token *token_list, t_environment *env)
 	}
 	token_list = temp;
 	tree = tree_creation_function(token_list);
-	/* while (tree->parent)
-		tree = tree->parent; */
+	while (tree->parent)
+		tree = tree->parent;
 	return (tree);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:52:11 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/18 18:20:07 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:30:28 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_tree	*ft_redirect_branch_attach1(t_tree *tree, t_tree *new)
 	{
 		if (tree->parent)
 			new->parent = tree->parent;
+		tree->parent->right = new;
 		new->left = tree;
 		tree->parent = new;
 		return (new);
@@ -56,7 +57,10 @@ t_tree	*ft_redirect_branch_attach1_assist(t_tree *tree, t_tree *new)
 
 	temp = tree;
 	if (tree->parent)
+	{
 		tree->parent->right = new;
+		new->parent = tree->parent;
+	}
 	tree = new;
 	tree->left = temp;
 	temp->parent = tree;

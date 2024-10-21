@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_helper6.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:04:15 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/19 17:20:15 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:32:09 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**env_to_print(char **envp, int mode)
 	while (envp[n])
 		n++;
 	if (mode == 0)
-		tmp_env = copy_env(envp, 0);	
+		tmp_env = copy_env(envp, 0);
 	else
 	{
 		if (search_part_line(envp, "PATH=", 5) == -1)
