@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:52:11 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/21 15:30:28 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:03:08 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_tree	*ft_pipe_branch_attach(t_tree *tree, t_tree *new)
 // hopefully a pipe, a command or another redirection
 t_tree	*ft_redirect_branch_attach1(t_tree *tree, t_tree *new)
 {
-	if (tree->left == NULL)
+	if (tree->left == NULL && tree->pipeline < 2)
 	{
 		if (tree->type == SINGLE_IN || tree->type == DOUBLE_IN \
 		|| tree->type == SINGLE_OUT || tree->type == DOUBLE_OUT)
@@ -42,12 +42,12 @@ t_tree	*ft_redirect_branch_attach1(t_tree *tree, t_tree *new)
 	}
 	else
 	{
-		if (tree->parent)
-			new->parent = tree->parent;
-		tree->parent->right = new;
-		new->left = tree;
-		tree->parent = new;
-		return (new);
+		if (tree->pipeline > 1)
+			return (ft_redirect_branch_attach1_assist2(tree, new));
+		if (tree->pipeline == 1)
+			return (ft_redirect_branch_attach1_assist3(tree, new));
+		else
+			return (ft_redirect_branch_attach1_assist4(tree, new));
 	}
 }
 
@@ -56,9 +56,14 @@ t_tree	*ft_redirect_branch_attach1_assist(t_tree *tree, t_tree *new)
 	t_tree	*temp;
 
 	temp = tree;
-	if (tree->parent)
+	if (tree->parent && tree->pipeline > 1)
 	{
 		tree->parent->right = new;
+		new->parent = tree->parent;
+	}
+	else if (tree->parent)
+	{
+		tree->parent->left = new;
 		new->parent = tree->parent;
 	}
 	tree = new;

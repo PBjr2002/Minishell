@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/21 14:28:02 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:06:59 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,12 @@ void			command_expand_assist(t_token *token_list, t_environment *env,
 					int *n);
 
 //lists and trees
-
+t_tree			*ft_redirect_branch_attach1_assist2(t_tree *tree,
+					t_tree *new);
+t_tree			*ft_redirect_branch_attach1_assist3(t_tree *tree,
+					t_tree *new);
+t_tree			*ft_redirect_branch_attach1_assist4(t_tree *tree,
+					t_tree *new);
 t_tree			*find_pipes(t_token *t_list, t_tree *top, int pipenum);
 t_tree			*ft_branch_new(t_token *token, char *str,
 					int type, int pipeline);
