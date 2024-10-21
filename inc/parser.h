@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 14:27:54 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/19 16:09:36 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:28:02 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ void			redirect_token_define_assist(t_lexer *lexer, bool *s_q,
 int				redirect_token_type_solver(t_lexer *lexer, int n);
 int				single_quote_token_define(t_lexer *lexer,
 					t_token *token_list, int n);
+int				syntax_checker_assist1(t_tree *treetop, int type);
 
 //void
 void			com_token_define_assist(t_lexer *lexer, bool *s_q,
