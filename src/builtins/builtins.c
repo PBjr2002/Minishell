@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:30:34 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/16 12:58:28 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:53:17 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,24 @@ void	decider(t_tree *tree, t_tree *cmd, t_environment *envr)
 		cmd->solved = true;
 }
 
-int	redirect_solver(t_tree *tree, t_environment *envr)
+int	redirect_solver(t_tree *tree, t_environment *envr, int write)
 {
 	int	mode;
 
 	mode = -1;
 	if (tree->type == SINGLE_IN)
-		mode = redirect_single_in(tree);
+		mode = redirect_single_in(tree, write);
 	else if (tree->type == SINGLE_OUT)
-		mode = redirect_single_out(tree);
+		mode = redirect_single_out(tree, write);
 	else if (tree->type == DOUBLE_IN)
 		mode = redirect_double_in(tree, envr);
 	else if (tree->type == DOUBLE_OUT)
-		mode = redirect_double_out(tree);
+		mode = redirect_double_out(tree, write);
 	envr->fds++;
+	printf("tree->str = %s\n", tree->str);
+	printf("tree->fd_in = %d\n", tree->fd_in);
+	printf("tree->fd_out = %d\n", tree->fd_out);
+	printf("------------------\n");
 	return (mode);
 }
 

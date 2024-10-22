@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:11:51 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/22 18:08:06 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/22 19:07:08 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ int	exec_here_doc(t_tree *tree, t_environment *envr)
 	if (envr->pid == 0)
 		here_doc_helper(tree, envr, fd);
 	waitpid(envr->pid, &envr->status, 0);
-	/* 	if (WEXITSTATUS(envr->status) == 130)
-		{
-			
-			return to prompt
-		} */
+	if (WEXITSTATUS(envr->status) == 130)
+	{
+		clean_all_fds(envr->fds);
+		return (-1);
+	}
 	tree->solved = true;
 	return (close(fd[1]), fd[0]);
 }

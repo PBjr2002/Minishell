@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/22 14:40:32 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:29:41 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int			maybe_free(t_lexer *lexer, t_environment *info);
 
 //builtins.c
 void		decider(t_tree *tree, t_tree *cmd, t_environment *envr);
-int			redirect_solver(t_tree *tree, t_environment *envr);
+int			redirect_solver(t_tree *tree, t_environment *envr, int write);
 void		pipe_setup(t_tree *tree);
 
 //builtins_helper.c
@@ -105,7 +105,7 @@ void		token_cleaner(t_token *token_list);
 
 //builtins_helper5.c
 void		search_pipe(t_tree *tree, t_environment *envr);
-int			search_redirect(t_tree *tree, t_environment *envr, int mode);
+int			search_redirect(t_tree *tree, t_environment *envr, int mode, int w);
 char		**replace_line(char **envp, char *info_to_add);
 char		**replace_value(char **envp, int index, int value);
 int			replace_value_helper(char **envp, char **tmp_env,
@@ -156,10 +156,10 @@ void		set_builtins_fds_helper3(t_tree *tree);
 void		set_builtins_fds_helper4(t_tree *tree);
 
 //redirects.c
-int			redirect_single_in(t_tree *tree);
-int			redirect_single_out(t_tree *tree);
+int			redirect_single_in(t_tree *tree, int write);
+int			redirect_single_out(t_tree *tree, int write);
 int			redirect_double_in(t_tree *tree, t_environment *envr);
-int			redirect_double_out(t_tree *tree);
+int			redirect_double_out(t_tree *tree, int write);
 
 //fds.c
 void		clean_all_fds(int fds);

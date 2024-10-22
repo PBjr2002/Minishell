@@ -6,34 +6,38 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:43:49 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/15 17:20:52 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:29:14 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	search_redirect(t_tree *tree, t_environment *envr, int mode)
+int	search_redirect(t_tree *tree, t_environment *envr, int mode, int w)
 {
 	if (!tree)
 		return (-1);
 	if (tree->type == TYPE_PIPE)
 	{
-		if (tree->left)
-			search_redirect(tree->left, envr, mode);
-		if (tree->right)
-			search_redirect(tree->right, envr, mode);
+		if (tree->left && search_redirect(tree->left, envr, mode, w) == -1)
+			return (mode);
+		if (tree->right && search_redirect(tree->right, envr, mode, w) == -1)
+			return (mode);
 	}
 	else if (tree->type == TYPE_COMMAND && tree->left)
-		search_redirect(tree->left, envr, mode);
+	{
+		if (search_redirect(tree->left, envr, mode, w) == -1)
+			return (mode);
+	}
 	else if (tree->left && (tree->type == 1 || tree->type == 2
 			|| tree->type == 3 || tree->type == 4))
 	{
-		search_redirect(tree->left, envr, mode);
-		redirect_solver(tree, envr);
+		if (search_redirect(tree->left, envr, mode, w) == -1)
+			return (mode);
+		redirect_solver(tree, envr, w);
 	}
 	else if (tree->type == 1 || tree->type == 2
 		|| tree->type == 3 || tree->type == 4)
-		redirect_solver(tree, envr);
+		redirect_solver(tree, envr, w);
 	return (mode);
 }
 
