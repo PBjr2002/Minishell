@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 14:38:23 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/22 16:20:12 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:29:29 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ int	echo_flag_checker(t_tree *tree, int *nl)
 	char	**split;
 
 	split = ft_split(tree->str, ' ');
-	if (!split)
-		return (1);
-	if (split[1] && *nl == 0)
+	if (split && split[1] && *nl == 0)
 	{
 		free_env(split);
 		*nl = 2;
