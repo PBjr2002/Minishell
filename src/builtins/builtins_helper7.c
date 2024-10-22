@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_helper7.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:11:51 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/22 17:02:54 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:08:06 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ int	exec_here_doc(t_tree *tree, t_environment *envr)
 	if (envr->pid == 0)
 		here_doc_helper(tree, envr, fd);
 	waitpid(envr->pid, &envr->status, 0);
+	/* 	if (WEXITSTATUS(envr->status) == 130)
+		{
+			
+			return to prompt
+		} */
 	tree->solved = true;
 	return (close(fd[1]), fd[0]);
 }

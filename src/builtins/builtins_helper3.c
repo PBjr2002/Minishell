@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_helper3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:22:12 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/16 15:52:46 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/22 19:00:40 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	*cut_strhelper(t_expand *ex, t_environment *envr, char *str, char *var)
 			value = ft_itoa(envr->old_status);
 		else
 			value = ft_getpid();
-		envr->old_status = 0;
+		// envr->old_status = 0
 	}
 	else
 	{
