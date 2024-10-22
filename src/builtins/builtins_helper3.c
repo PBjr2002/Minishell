@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:22:12 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/22 19:00:40 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/22 19:17:39 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ char	*cut_strhelper(t_expand *ex, t_environment *envr, char *str, char *var)
 			value = ft_itoa(envr->old_status);
 		else
 			value = ft_getpid();
-		// envr->old_status = 0
 	}
 	else
 	{
