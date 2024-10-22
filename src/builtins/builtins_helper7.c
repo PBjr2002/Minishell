@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:11:51 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/21 14:58:25 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:52:25 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ int	exec_here_doc(t_tree *tree, t_environment *envr)
 	if (envr->pid == 0)
 		here_doc_helper(tree, envr, fd);
 	waitpid(envr->pid, &envr->status, 0);
+	envr->status = envr->status / 256;
+	if (envr->status == 42)
+	{
+		envr->status = 130;
+		return (close(fd[0]), close(fd[1]), -1);
+	}
 	tree->solved = true;
 	return (close(fd[1]), fd[0]);
 }
