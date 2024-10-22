@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:21:37 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/19 13:25:51 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:19:11 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ void	exec_cmd(t_tree *tree, t_environment *envr, int mode)
 {
 	if (!tree)
 		return ;
-	search_redirect(tree, envr, 0);
 	if (mode == 0)
 	{
+		search_redirect(tree, envr, 0);
 		while (tree->left && tree->left->type == TYPE_PIPE)
 			tree = tree->left;
 	}
