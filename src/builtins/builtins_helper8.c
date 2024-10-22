@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:21:37 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/22 19:07:13 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/22 19:09:03 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	exec_cmd(t_tree *tree, t_environment *envr, int mode)
 {
 	if (!tree)
 		return ;
-	search_redirect(tree, envr, 0);
 	if (mode == 0)
 	{
 		if (search_redirect(tree, envr, 0, 0) == -1)
