@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/19 16:15:36 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:40:32 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,9 @@ void		echo_helper(t_tree *tree, t_tree *cmd,
 int			echo_helper2(t_tree *tree, int *nl);
 int			echo_helper3(t_tree *tree, int *nl, int *space);
 void		echo_helper4(t_tree *tree, t_tree *cmd, t_environment *envr);
+
+//echo_helper.c
+int			echo_flag_checker(t_tree *tree, int *nl);
 
 //cd.c
 int			exec_cd(t_tree *tree, t_tree *cmd, t_environment *envr);
