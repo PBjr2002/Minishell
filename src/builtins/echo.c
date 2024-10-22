@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:38:16 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/16 12:29:31 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:41:06 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,11 @@ void	echo_helper(t_tree *tree, t_tree *cmd, t_environment *envr, int *nl)
 
 int	echo_helper2(t_tree *tree, int *nl)
 {
-	int	i;
+	int		i;
 
 	i = 0;
+	if (echo_flag_checker(tree, nl) == 1)
+		return (0);
 	if (ft_strncmp(tree->str, "-n", 2) == 0 && *nl == 0)
 	{
 		i++;
