@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:18:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/23 15:23:29 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:45:56 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,6 @@ void	here_doc(int signal, siginfo_t *info, void *context)
 		ft_putchar_fd('\n', 1);
 		exec_exit(130, 0, 1);
 	}
-}
-
-void	child(int signal, siginfo_t *info, void *context)
-{
-	(void) info;
-	(void) context;
-	if (signal == SIGINT)
-		ch_signal(130 * 256);
-	if (signal == SIGQUIT)
-		ch_signal(131 * 256);
 }
 
 void	signal_decider(t_signal type)
@@ -112,4 +102,3 @@ void	signal_decider_part2(t_signal type, struct sigaction sa)
 		ignore(&sa, SIGPIPE);
 	}
 }
-

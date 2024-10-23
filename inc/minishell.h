@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/23 12:54:18 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:47:41 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void		add_info_to_env(t_environment *info, char **envp, char *str);
 void		prompt(t_environment *info, t_lexer *lexer);
 int			parser_and_exec(t_lexer *lexer, t_environment *info);
 int			maybe_free(t_lexer *lexer, t_environment *info);
+void		child(int signal, siginfo_t *info, void *context);
 
 //builtins.c
 void		decider(t_tree *tree, t_tree *cmd, t_environment *envr);
