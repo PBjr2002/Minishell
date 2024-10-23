@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_helper9.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:42:24 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/22 19:04:18 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:01:17 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,21 @@ void	get_rest_helper(char *str, t_expand *ex)
 		ex->n++;
 }
 
-int	path_creator_checker(char *path)
+int	path_creator_checker(t_environment *envr, char *path)
 {
 	if (path)
+	{
 		if (access(path, F_OK) == 0)
+		{
 			if (access(path, X_OK) == 0)
 				return (0);
+			else
+				envr->status = 126;
+		}
+		else
+			envr->status = 127;
+	}
+	else
+		envr->status = 127;
 	return (1);
 }

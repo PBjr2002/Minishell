@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:31:27 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/22 18:29:41 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:54:18 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ t_global	global_info(t_tree *tree, t_environment *envr,
 				int fd_in, int fd_out);
 void		exit_checker(t_tree *tree);
 void		get_rest_helper(char *str, t_expand *ex);
-int			path_creator_checker(char *path);
+int			path_creator_checker(t_environment *envr, char *path);
 
 //builtins_helper10.c
 void		cd_helper(t_tree *cmd, t_environment *envr, t_cd *cd);

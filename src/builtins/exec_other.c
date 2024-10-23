@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_other.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 15:51:38 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/22 18:45:34 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:01:23 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr)
 	{
 		printf("%s : No such file or directory\n", cmd->str);
 		clean_all_fds(envr->fds);
-		envr->status = 127;
+		//envr->status = 127;
 		return ;
 	}
 	signal_decider(IGNORE);
@@ -81,7 +81,7 @@ char	*path_creator(t_tree *cmd, t_environment *envr)
 		}
 		path = check_path(paths, cmd->str);
 	}
-	if (path_creator_checker(path) == 0)
+	if (path_creator_checker(envr, path) == 0)
 		return (path);
 	return (NULL);
 }
