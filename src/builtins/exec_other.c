@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 15:51:38 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/23 14:50:56 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:54:54 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr)
 	else
 	{
 		waitpid(id, &envr->status, 0);
-		fprintf(stderr, "Code -> %d\n", envr->status);
 		clean_all_fds(envr->fds);
 		envr->status = envr->status / 256;
 		free(path);
