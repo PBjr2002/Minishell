@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_other.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 15:51:38 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/23 13:01:23 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:50:56 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,17 @@ void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr)
 	{
 		printf("%s : No such file or directory\n", cmd->str);
 		clean_all_fds(envr->fds);
-		//envr->status = 127;
 		return ;
 	}
 	signal_decider(IGNORE);
+	signal_decider(CHILD);
 	id = fork();
 	if (id == 0)
 		executer(cmd, tree, envr, path);
 	else
 	{
 		waitpid(id, &envr->status, 0);
+		fprintf(stderr, "Code -> %d\n", envr->status);
 		clean_all_fds(envr->fds);
 		envr->status = envr->status / 256;
 		free(path);

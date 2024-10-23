@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 16:18:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/22 18:42:41 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:50:33 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,16 @@ void	here_doc(int signal, siginfo_t *info, void *context)
 	}
 }
 
+void	child(int signal, siginfo_t *info, void *context)
+{
+	(void) info;
+	(void) context;
+	if (signal == SIGINT)
+		ch_signal(130 * 256);
+	if (signal == SIGQUIT)
+		ch_signal(131 * 256);
+}
+
 void	signal_decider(t_signal type)
 {
 	static struct sigaction	sa;
@@ -66,7 +76,7 @@ void	signal_decider(t_signal type)
 	}
 	else if (type == CHILD)
 	{
-		sa.sa_handler = SIG_DFL;
+		sa.sa_sigaction = child;
 		sa.sa_flags = 0;
 		if (sigemptyset(&sa.sa_mask) != 0)
 			return ;
@@ -103,5 +113,3 @@ void	signal_decider_part2(t_signal type, struct sigaction sa)
 	}
 }
 
-//ls | cat | wc | echo
-//ls | grep s | wc | cat
