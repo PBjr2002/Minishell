@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_helper2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:18:00 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/22 18:45:31 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:42:39 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	execute_processes(t_tree *tree, t_environment *envr, int mode)
 		if (id == 0)
 			exec_child(tree, envr, 0);
 	}
-	close_fds(tree, envr);
 	id2 = fork();
 	if (id2 == 0)
 		exec_child(tree, envr, 1);

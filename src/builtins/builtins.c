@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:30:34 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/22 18:53:17 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/23 12:39:19 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,6 @@ int	redirect_solver(t_tree *tree, t_environment *envr, int write)
 	else if (tree->type == DOUBLE_OUT)
 		mode = redirect_double_out(tree, write);
 	envr->fds++;
-	printf("tree->str = %s\n", tree->str);
-	printf("tree->fd_in = %d\n", tree->fd_in);
-	printf("tree->fd_out = %d\n", tree->fd_out);
-	printf("------------------\n");
 	return (mode);
 }
 
