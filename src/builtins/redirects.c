@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirects.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 16:40:05 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/23 14:26:04 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:59:52 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	redirect_double_in(t_tree *tree, t_environment *envr)
 	if (tree->fd_in == -2)
 	{
 		tree->solved = true;
-		return (-1);
+		return (-2);
 	}
 	if (tree->left && tree->left->fd_out != 1)
 	{

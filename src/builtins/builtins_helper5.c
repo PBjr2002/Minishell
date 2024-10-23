@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_helper5.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 12:43:49 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/23 14:30:35 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:59:02 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,20 @@ int	search_redirect(t_tree *tree, t_environment *envr, int mode, int w)
 	if (tree->type == TYPE_PIPE)
 	{
 		if (tree->left && search_redirect(tree->left, envr, mode, w) == -2)
-			return (mode);
+			return (-2);
 		if (tree->right && search_redirect(tree->right, envr, mode, w) == -2)
-			return (mode);
+			return (-2);
 	}
 	else if (tree->type == TYPE_COMMAND && tree->left)
 	{
 		if (search_redirect(tree->left, envr, mode, w) == -2)
-			return (mode);
+			return (-2);
 	}
 	else if (tree->left && (tree->type == 1 || tree->type == 2
 			|| tree->type == 3 || tree->type == 4))
 	{
 		if (search_redirect(tree->left, envr, mode, w) == -2)
-			return (mode);
+			return (-2);
 		mode = redirect_solver(tree, envr, w);
 	}
 	else if (tree->type == 1 || tree->type == 2
