@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:11:51 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/23 14:25:35 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:25:34 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	exec_here_doc(t_tree *tree, t_environment *envr)
 	waitpid(envr->pid, &envr->status, 0);
 	if (WEXITSTATUS(envr->status) == 130)
 	{
+		envr->status /= 256;
 		clean_all_fds(envr->fds);
 		return (-2);
 	}

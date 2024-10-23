@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:56:39 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/17 19:06:01 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/23 15:17:44 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	double_quote_token_assist(t_lexer *lexer, bool *inside_quotes, int *n)
 			if (*inside_quotes == true)
 			{
 				*inside_quotes = false;
-				break ;
+					if (lexer->input[(*n) + 1] )
+						break ;
 			}
 		}
 		z = *n + 1;
