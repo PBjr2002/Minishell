@@ -6,7 +6,7 @@
 /*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:11:51 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/22 19:07:08 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:25:35 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	exec_here_doc(t_tree *tree, t_environment *envr)
 	if (WEXITSTATUS(envr->status) == 130)
 	{
 		clean_all_fds(envr->fds);
-		return (-1);
+		return (-2);
 	}
 	tree->solved = true;
 	return (close(fd[1]), fd[0]);

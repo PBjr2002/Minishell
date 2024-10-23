@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_helper8.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:21:37 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/23 12:35:43 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:31:06 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,14 @@ void	exec_cmd(t_tree *tree, t_environment *envr, int mode)
 		return ;
 	if (mode == 0)
 	{
-		if (search_redirect(tree, envr, 0, 0) == -1)
+		if (search_redirect(tree, envr, 0, 0) == -2)
 			return ;
 		while (tree->left && tree->left->type == TYPE_PIPE)
 			tree = tree->left;
 	}
 	else
 	{
-		if (search_redirect(tree, envr, 0, 1) == -1)
+		if (search_redirect(tree, envr, 0, 1) == -2)
 			return ;
 	}
 	if (tree->type == TYPE_PIPE)

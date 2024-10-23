@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 13:44:40 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/17 20:01:58 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:58:15 by lmiguel-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	command_id(t_token *token_list)
 			|| token_list->type == TYPE_DOLLAR) && first_word == true)
 		{
 			first_word = false;
-			token_list->expand = false;
 			if (token_list->type == TYPE_DOLLAR)
 				token_list->type = TYPE_DOLLAR_COMMAND;
 		}
