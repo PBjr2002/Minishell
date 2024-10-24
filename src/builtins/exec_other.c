@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_other.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 15:51:38 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/23 15:21:39 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:54:49 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr)
 		return ;
 	}
 	signal_decider(IGNORE);
-	signal_decider(CHILD);
 	id = fork();
 	if (id == 0)
 		executer(cmd, tree, envr, path);
@@ -33,7 +32,10 @@ void	exec_other(t_tree *tree, t_tree *cmd, t_environment *envr)
 	{
 		waitpid(id, &envr->status, 0);
 		clean_all_fds(envr->fds);
-		envr->status = envr->status / 256;
+		if (envr->status > 255)
+			envr->status = envr->status / 256;
+		if (envr->status == 2)
+			envr->status = 130;
 		free(path);
 	}
 }

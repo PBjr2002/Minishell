@@ -6,7 +6,7 @@
 /*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:35:25 by pauberna          #+#    #+#             */
-/*   Updated: 2024/10/23 15:46:11 by pauberna         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:54:22 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,9 @@ void	child(int signal, siginfo_t *info, void *context)
 	(void) info;
 	(void) context;
 	if (signal == SIGINT)
-		ch_signal(130 * 256);
+		ch_signal(130);
 	if (signal == SIGQUIT)
-		ch_signal(131 * 256);
+		ch_signal(131);
 }
 
 /* input = readline("\x1b[38;5;91;1mHellshell> \x1b[0m"); */

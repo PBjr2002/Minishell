@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_define_utils4.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmiguel- <lmiguel-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pauberna <pauberna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 18:56:39 by lmiguel-          #+#    #+#             */
-/*   Updated: 2024/10/23 15:17:44 by lmiguel-         ###   ########.fr       */
+/*   Updated: 2024/10/24 10:56:05 by pauberna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	double_quote_token_assist(t_lexer *lexer, bool *inside_quotes, int *n)
 			if (*inside_quotes == true)
 			{
 				*inside_quotes = false;
-					if (lexer->input[(*n) + 1] )
-						break ;
+				if (lexer->input[(*n) + 1])
+					break ;
 			}
 		}
 		z = *n + 1;
